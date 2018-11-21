@@ -1,11 +1,23 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-const title = 'My React Webpack Babel Boiler Plate ^^';
+import { createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
+
+import { Provider } from 'react-redux';
+
+import IfApp from './IfApp';
+import rootReducer from './redux/reducers';
+
+const store = createStore(rootReducer, applyMiddleware(thunk));
+
+const rootElement = document.getElementById('app');
 
 ReactDOM.render(
-  <div>{title}</div>,
-  document.getElementById('app')
+    <Provider store={store}>
+        <IfApp />
+    </Provider>,
+    rootElement
 );
 
 module.hot.accept();
