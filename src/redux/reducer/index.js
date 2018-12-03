@@ -1,7 +1,7 @@
 import { combineReducers } from "redux";
 
-import reducerTest from './reducerTest';
+import testReducer from './testReducer';
 
 export default combineReducers({
-    reducerTest
+    testReducer
 });
