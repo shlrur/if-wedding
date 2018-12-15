@@ -1,0 +1,19 @@
+{
+    "widgets_mst": {
+        "0": {
+            "id": 0,
+            "name": "greetings",
+            "width": "100%",
+            "height": "30%"
+        },
+        "1": {
+            "id": 1,
+            "name": "map",
+            "width": "100%",
+            "height": "30%"
+        }
+    },
+    "users": [
+        
+    ]
+}
