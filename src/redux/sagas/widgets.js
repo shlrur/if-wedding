@@ -1,11 +1,10 @@
-import firebase from 'firebase';
 import { all, call, fork, put, take, takeEvery } from 'redux-saga/effects';
 
 import {
 	types
-} from '../actions/widgets'
+} from '../actions/widgets';
 
-import rsf from '../rsf'
+import rsf from '../rsf';
 
 
 function* getWidgetTypesSaga() {

@@ -1,10 +1,17 @@
 export const types = {
-    WIDGET_TYPES: {
-        GET: 'WIDGET_TYPES.GET'
+    GET_WIDGET_TYPES: {
+        REQUEST: 'GET_WIDGET_TYPES.REQUEST',
+        SUCCESS: 'GET_WIDGET_TYPES.SUCCESS',
+        FAILURE: 'GET_WIDGET_TYPES.FAILURE'
     },
-    USING_WIDGETS: {
+    GET_USE_WIDGETS: {
         GET: 'USING_WIDGETS.GET'
     },
+    ADD_USE_WIDGET: {
+
+    },
+    DELETE_USE_WIDGET: {},
+    MODIFY_USE_WIDGET: {},
     USING_WIDGET: {
         ADD: 'USING_WIDGET.ADD',
         DELETE: 'USING_WIDGET.DELETE',

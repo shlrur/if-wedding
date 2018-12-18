@@ -2,22 +2,30 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import { createDashboard } from '../redux/actions/dashboard';
+import { getWidgetTypes } from '../redux/actions/widgets';
 
 class Dashboard extends Component {
     render() {
         return (
             <div>
                 <Authentication />
+                <button onClick={this.getWidgetTypes.bind(this)}>
+                    getWidgetTypes
+                </button>
             </div>
         );
+    }
+
+    getWidgetTypes() {
+        this.props.getWidgetTypes();
     }
 }
 
 const mapStateToProps = state => ({
-    widgets: state.dashboard.widgets
+    widgetTypes: state.widget.widgetTypes
 })
 const mapDispatchToProps = {
-    createDashboard
+    getWidgetTypes
 }
 
 export default connect(
