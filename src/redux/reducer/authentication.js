@@ -1,4 +1,4 @@
-import { types } from '../actions/login'
+import { types } from '../actions/authentication'
 
 const initialState = {
     loading: false,

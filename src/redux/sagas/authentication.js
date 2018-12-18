@@ -7,7 +7,7 @@ import {
 	loginFailure,
 	logoutSuccess,
 	logoutFailure
-} from '../actions/login'
+} from '../actions/authentication'
 
 import rsf from '../rsf'
 

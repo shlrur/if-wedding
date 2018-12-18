@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { login, logout } from '../redux/actions/login';
+import { login, logout } from '../redux/actions/authentication';
 
 class Authentication extends Component {
     render() {
