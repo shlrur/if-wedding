@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 
-import Authentication from './Authentication';
+import Authentication from './authentication';
+import Dashboard from './dashboard';
 
 class IfApp extends Component {
     render() {
         return (
-            <Authentication />
+            <div>
+                <Dashboard />
+            </div>
         );
     }
 }
