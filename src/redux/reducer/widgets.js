@@ -1,43 +1,47 @@
-import { types } from '../actions/widgets'
+import { types } from '../actions/widgets';
 
 const initialState = {
-    loading: false,
+    widgetTypesLoading: false,
     widgetTypes: null,
-    usingWidgets: null
-}
+    useWidgetsLoading: false,
+    useWidgets: null
+    // TODO
+};
 
 export default function loginReducer(state = initialState, action = {}) {
     switch (action.type) {
-        case types.WIDGET_TYPES.GET.REQUEST:
-            return {
-
-            }
-
-        case types.LOGIN.REQUEST:
-        case types.LOGOUT.REQUEST:
+        case types.GET_WIDGET_TYPES.REQUEST:
             return {
                 ...state,
-                loading: true
-            }
-        case types.LOGIN.SUCCESS:
+                widgetTypesLoading: true
+            };
+        case types.GET_WIDGET_TYPES.SUCCESS:
             return {
                 ...state,
-                loading: false,
-                loggedIn: true,
-                user: action.user
-            }
-        case types.LOGIN.FAILURE:
+                widgetTypesLoading: false,
+                widgetTypes: action.widgetTypes
+            };
+        case types.GET_WIDGET_TYPES.FAILURE:
             return {
                 ...state,
-                loading: false
+                widgetTypesLoading: false,
             }
-        case types.LOGOUT.SUCCESS:
-            return initialState
-        case types.LOGOUT.FAILURE:
+        case types.GET_USE_WIDGETS.REQUEST:
             return {
                 ...state,
-                loading: false
-            }
+                useWidgetsLoading: true
+            };
+        case types.GET_USE_WIDGETS.SUCCESS:
+            return {
+                ...state,
+                useWidgetsLoading: false,
+                useWidgets: action.useWidgets
+            };
+        case types.GET_USE_WIDGETS.FAILURE:
+            return {
+                ...state,
+                useWidgetsLoading: false
+            };
         default:
             return state
     }

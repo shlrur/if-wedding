@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { createDashboard } from '../redux/actions/dashboard';
-import { getWidgetTypes } from '../redux/actions/widgets';
+import { getWidgetTypesRequest } from '../redux/actions/widgets';
+
+import Authentication from './authentication';
 
 class Dashboard extends Component {
     render() {
@@ -17,7 +18,7 @@ class Dashboard extends Component {
     }
 
     getWidgetTypes() {
-        this.props.getWidgetTypes();
+        this.props.getWidgetTypesRequest();
     }
 }
 
@@ -25,7 +26,7 @@ const mapStateToProps = state => ({
     widgetTypes: state.widget.widgetTypes
 })
 const mapDispatchToProps = {
-    getWidgetTypes
+    getWidgetTypesRequest
 }
 
 export default connect(

@@ -39,6 +39,8 @@ function* loginStatusWatcher() {
 	while (true) {
 		const { user } = yield take(channel);
 
+		yield firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION);
+
 		if (user) yield put(loginSuccess(user));
 		else yield put(logoutSuccess());
 	}
