@@ -26,6 +26,7 @@ export const types = {
     }
 };
 
+// widget types
 export const getWidgetTypesRequest = () => ({
     type: types.GET_WIDGET_TYPES.REQUEST
 });
@@ -39,18 +40,30 @@ export const getWidgetTypesFailure = () => ({
     type: types.GET_WIDGET_TYPES.FAILURE
 });
 
-export const getUsingWidgetsRequest = () => ({
+
+// in use widgets
+export const getUseWidgetsRequest = () => ({
     type: types.GET_USE_WIDGETS.REQUEST
 });
 
-export const addUsingWidgetRequest = () => ({
+export const getUseWidgetsSuccess = (useWidgets) => ({
+    type: types.GET_USE_WIDGETS.SUCCESS,
+    useWidgets
+});
+
+export const getUseWidgetsFailure = () => ({
+    type: types.GET_USE_WIDGETS.FAILURE
+});
+
+
+export const addUseWidgetRequest = () => ({
     type: types.ADD_USING_WIDGET.REQUEST
 });
 
-export const deleteUsingWidgetRequest = () => ({
+export const deleteUseWidgetRequest = () => ({
     type: types.DELETE_USING_WIDGET.REQUEST
 });
 
-export const modifyUsingWidgetRequest = () => ({
+export const modifyUseWidgetRequest = () => ({
     type: types.MODIFY_USING_WIDGET.REQUEST
 });

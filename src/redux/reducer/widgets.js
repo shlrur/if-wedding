@@ -10,6 +10,7 @@ const initialState = {
 
 export default function loginReducer(state = initialState, action = {}) {
     switch (action.type) {
+        // widget types
         case types.GET_WIDGET_TYPES.REQUEST:
             return {
                 ...state,
@@ -26,6 +27,7 @@ export default function loginReducer(state = initialState, action = {}) {
                 ...state,
                 widgetTypesLoading: false,
             }
+        // in use widgets
         case types.GET_USE_WIDGETS.REQUEST:
             return {
                 ...state,

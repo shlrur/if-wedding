@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { getWidgetTypesRequest } from '../redux/actions/widgets';
+import {
+    getWidgetTypesRequest,
+    getUseWidgetsRequest
+} from '../redux/actions/widgets';
 
 import Authentication from './authentication';
 
@@ -11,7 +14,10 @@ class Dashboard extends Component {
             <div>
                 <Authentication />
                 <button onClick={this.getWidgetTypes.bind(this)}>
-                    getWidgetTypes
+                    get widget types
+                </button>
+                <button onClick={this.getUsingWidgets.bind(this)}>
+                    get in use widgets
                 </button>
             </div>
         );
@@ -20,13 +26,19 @@ class Dashboard extends Component {
     getWidgetTypes() {
         this.props.getWidgetTypesRequest();
     }
+
+    getUsingWidgets() {
+        this.props.getUseWidgetsRequest();
+    }
 }
 
 const mapStateToProps = state => ({
-    widgetTypes: state.widget.widgetTypes
+    widgetTypes: state.widget.widgetTypes,
+    usingWidgets: state.widget.usingWidgets
 })
 const mapDispatchToProps = {
-    getWidgetTypesRequest
+    getWidgetTypesRequest,
+    getUseWidgetsRequest
 }
 
 export default connect(
