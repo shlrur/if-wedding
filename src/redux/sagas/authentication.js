@@ -32,6 +32,29 @@ function* logoutSaga() {
 	}
 }
 
+function* registUser(user) {
+	try {
+		console.log(user.uid);
+		const snapshot = yield call(rsf.firestore.getDocument, `users/${user.uid}`);
+
+		if(!snapshot.exists) {
+			yield call(
+				rsf.firestore.setDocument,
+				`users/${user.uid}/using_widgets/testDoc`,
+				{
+					name: 'test'
+				}
+			)
+		}
+		// yield call(
+		// 	rsf.firestore.setDocument,
+		// 	`users/${uid}test`
+		// );
+	} catch (err) {
+		console.log(err);
+	}
+}
+
 function* loginStatusWatcher() {
 	// events on this channel fire when the user logs in or logs out
 	const channel = yield call(rsf.auth.channel);
@@ -41,8 +64,14 @@ function* loginStatusWatcher() {
 
 		yield firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION);
 
-		if (user) yield put(loginSuccess(user));
-		else yield put(logoutSuccess());
+		if (user) {
+			yield registUser(user);
+
+			yield put(loginSuccess(user));
+		}
+		else {
+			yield put(logoutSuccess());
+		}
 	}
 }
 

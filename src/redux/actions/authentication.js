@@ -8,6 +8,11 @@ export const types = {
         REQUEST: 'LOGOUT.REQUEST',
         SUCCESS: 'LOGOUT.SUCCESS',
         FAILURE: 'LOGOUT.FAILURE'
+    },
+    REGIST: {
+        REQUEST: 'REGIST.REQUEST',
+        SUCCESS: 'REGIST.SUCCESS',
+        FAILURE: 'REGIST.FAILURE'
     }
 }
 
