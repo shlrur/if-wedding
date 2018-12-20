@@ -35,9 +35,10 @@ function* getUseWidgetsSaga() {
 	try {
 		const user = yield select(getUser);
 		console.log(firebase);
+		console.log(rsf);
 		const snapshot = yield call(
 			rsf.firestore.getCollection,
-			rsf.firestore.collection(`using_widgets`).where('owner', '==', user.uid)
+			firebase.firestore().collection(`using_widgets`).where('owner', '==', user.uid)
 		);
 
 		let useWidgets;
