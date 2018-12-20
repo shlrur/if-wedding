@@ -56,9 +56,20 @@ export const getUseWidgetsFailure = () => ({
 });
 
 
-export const addUseWidgetRequest = () => ({
-    type: types.ADD_USING_WIDGET.REQUEST
+// add use widget
+export const addUseWidgetRequest = (addedWidget) => ({
+    type: types.ADD_USE_WIDGET.REQUEST,
+    addedWidget
 });
+
+export const addUseWidgetSuccess = () => ({
+    type: types.ADD_USE_WIDGET.SUCCESS
+});
+
+export const addUseWidgetFailure = () => ({
+    type: types.ADD_USE_WIDGET.FAILURE
+});
+
 
 export const deleteUseWidgetRequest = () => ({
     type: types.DELETE_USING_WIDGET.REQUEST

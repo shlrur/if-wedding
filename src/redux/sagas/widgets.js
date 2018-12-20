@@ -1,4 +1,5 @@
 import { all, call, fork, put, take, takeEvery, select } from 'redux-saga/effects';
+import firebase from 'firebase';
 
 import rsf from '../rsf';
 import {
@@ -33,7 +34,11 @@ function* getWidgetTypesSaga() {
 function* getUseWidgetsSaga() {
 	try {
 		const user = yield select(getUser);
-		const snapshot = yield call(rsf.firestore.getCollection, `users/${user.uid}/using_widgets`);
+		console.log(firebase);
+		const snapshot = yield call(
+			rsf.firestore.getCollection,
+			rsf.firestore.collection(`using_widgets`).where('owner', '==', user.uid)
+		);
 
 		let useWidgets;
 
@@ -46,13 +51,32 @@ function* getUseWidgetsSaga() {
 
 		yield put(getUseWidgetsSuccess(useWidgets));
 	} catch (err) {
+		console.log(err);
 		yield put(getUseWidgetsFailure(err));
+	}
+}
+
+function* addUseWidgetsSaga({ addedWidget }) {
+	try {
+		const user = yield select(getUser);
+
+		console.log(user.uid);
+		const doc = yield call(
+			rsf.firestore.addDocument,
+			`users/${user.uid}/using_widgets`,
+			addedWidget
+		);
+
+		console.log(doc);
+	} catch (err) {
+
 	}
 }
 
 export default function* widgetsRootSaga() {
 	yield all([
 		takeEvery(types.GET_WIDGET_TYPES.REQUEST, getWidgetTypesSaga),
-		takeEvery(types.GET_USE_WIDGETS.REQUEST, getUseWidgetsSaga)
+		takeEvery(types.GET_USE_WIDGETS.REQUEST, getUseWidgetsSaga),
+		takeEvery(types.ADD_USE_WIDGET.REQUEST, addUseWidgetsSaga)
 	]);
 }
