@@ -34,22 +34,38 @@ function* logoutSaga() {
 
 function* registUser(user) {
 	try {
-		console.log(user.uid);
-		const snapshot = yield call(rsf.firestore.getDocument, `users/${user.uid}`);
+		// create dashboard document
+		const dashDocRef = yield call(
+			rsf.firestore.addDocument,
+			`dashboards`,
+			{
+				last_contact_dtts: new Date().getTime()
+			}
+		)
+		
+		// create user document
+		yield call(
+			rsf.firestore.setDocument,
+			`users/${user.uid}`,
+			{
+				last_login_dtts: new Date().getTime(),
+				dashboard_ids: [dashDocRef.id]
+			}
+		)
+	} catch (err) {
+		console.log(err);
+	}
+}
 
-		if(!snapshot.exists) {
-			yield call(
-				rsf.firestore.setDocument,
-				`users/${user.uid}/using_widgets/testDoc`,
-				{
-					name: 'test'
-				}
-			)
-		}
-		// yield call(
-		// 	rsf.firestore.setDocument,
-		// 	`users/${uid}test`
-		// );
+function* updateUser(user) {
+	try {
+		yield call(
+			rsf.firestore.setDocument,
+			`users/${user.uid}`,
+			{
+				last_login_dtts: new Date().getTime()
+			},
+			{ merge: true });
 	} catch (err) {
 		console.log(err);
 	}
@@ -65,7 +81,17 @@ function* loginStatusWatcher() {
 		yield firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION);
 
 		if (user) {
-			yield registUser(user);
+			const snapshot = yield call(rsf.firestore.getDocument, `users/${user.uid}`);
+
+			if (snapshot.exists) {
+				yield updateUser(user);
+			} else {
+				yield registUser(user);
+			}
+
+			const userInfoSnapshot = yield call(rsf.firestore.getDocument, `users/${user.uid}`);
+
+			user = {...user, ...userInfoSnapshot.data()};
 
 			yield put(loginSuccess(user));
 		}

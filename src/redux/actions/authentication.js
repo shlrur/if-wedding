@@ -14,31 +14,40 @@ export const types = {
         SUCCESS: 'REGIST.SUCCESS',
         FAILURE: 'REGIST.FAILURE'
     }
-}
+};
 
+// login
 export const login = () => ({
     type: types.LOGIN.REQUEST
-})
+});
 
 export const loginSuccess = user => ({
     type: types.LOGIN.SUCCESS,
     user
-})
+});
 
 export const loginFailure = error => ({
     type: types.LOGIN.FAILURE,
     error
-})
+});
 
+
+// logout
 export const logout = () => ({
     type: types.LOGOUT.REQUEST
-})
+});
 
 export const logoutSuccess = () => ({
     type: types.LOGOUT.SUCCESS
-})
+});
 
 export const logoutFailure = error => ({
     type: types.LOGOUT.FAILURE,
     error
-})
+});
+
+
+// regist user
+export const regist = () => ({
+    type: types.REGIST.REQUEST
+});
