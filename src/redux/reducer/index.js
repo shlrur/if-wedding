@@ -5,6 +5,7 @@ import dashboard from './dashboard';
 import widget from './widgets';
 
 export default combineReducers({
-  login,
-  widget
+    login,
+    dashboard,
+    widget
 })
