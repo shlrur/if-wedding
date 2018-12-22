@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
-// import { connect } from 'react-redux';
+import { connect } from 'react-redux';
+
+import {
+    getDashboardRequest
+} from '../redux/actions/dashboard';
 
 import Authentication from './authentication';
 import WidgetContainer from './widgetContainer';
@@ -9,23 +13,27 @@ export default class Dashboard extends Component {
         return (
             <div>
                 <Authentication />
+                <button onClick={this.getDashboard.bind(this)}>
+                    get Dashboard
+                </button>
                 <WidgetContainer />
-                
             </div>
         );
     }
+
+    getDashboard() {
+
+    }
 }
 
-// const mapStateToProps = state => ({
-//     widgetTypes: state.widget.widgetTypes,
-//     usingWidgets: state.widget.usingWidgets
-// })
-// const mapDispatchToProps = {
-//     getWidgetTypesRequest,
-//     getUseWidgetsRequest
-// }
+const mapStateToProps = state => ({
+    dashboard: state.dashboard.dashboard
+})
+const mapDispatchToProps = {
+    getDashboardRequest
+}
 
-// export default connect(
-//     mapStateToProps,
-//     mapDispatchToProps
-// )(Dashboard)
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Dashboard)
