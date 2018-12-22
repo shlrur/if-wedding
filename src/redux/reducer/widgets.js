@@ -8,7 +8,7 @@ const initialState = {
     // TODO
 };
 
-export default function loginReducer(state = initialState, action = {}) {
+export default function widgetReducer(state = initialState, action = {}) {
     switch (action.type) {
         // widget types
         case types.GET_WIDGET_TYPES.REQUEST:

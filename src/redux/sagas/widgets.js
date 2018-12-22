@@ -38,7 +38,7 @@ function* getUseWidgetsSaga() {
 		console.log(rsf);
 		const snapshot = yield call(
 			rsf.firestore.getCollection,
-			firebase.firestore().collection(`using_widgets`).where('owner', '==', user.uid)
+			firebase.firestore().collection(`use_widgets`).where('owner', '==', user.uid)
 		);
 
 		let useWidgets;
@@ -64,7 +64,7 @@ function* addUseWidgetsSaga({ addedWidget }) {
 		console.log(user.uid);
 		const doc = yield call(
 			rsf.firestore.addDocument,
-			`users/${user.uid}/using_widgets`,
+			`users/${user.uid}/use_widgets`,
 			addedWidget
 		);
 
