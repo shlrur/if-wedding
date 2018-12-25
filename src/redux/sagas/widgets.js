@@ -9,20 +9,20 @@ import {
 	getUseWidgetsSuccess,
 	getUseWidgetsFailure
 } from '../actions/widgets';
-import { getUser } from './selector';
+import { getUser, getDashboard } from './selector';
 
 
 function* getWidgetTypesSaga() {
 	try {
 		const snapshot = yield call(rsf.firestore.getCollection, 'widget_types');
 
-		let widgetTypes;
+		let widgetTypes = [];
 
 		snapshot.forEach((widgetType) => {
-			widgetTypes = {
-				...widgetTypes,
-				[widgetType.id]: widgetType.data()
-			};
+			widgetTypes.push({
+				id: widgetType.id,
+				...widgetType.data()
+			});
 		});
 
 		yield put(getWidgetTypesSuccess(widgetTypes));
@@ -33,21 +33,25 @@ function* getWidgetTypesSaga() {
 
 function* getUseWidgetsSaga() {
 	try {
+		let useWidgets = [];
 		const user = yield select(getUser);
-		console.log(firebase);
-		console.log(rsf);
-		const snapshot = yield call(
+		const dashboard = yield select(getDashboard);
+
+		// const snapshot = yield call(
+		// 	rsf.firestore.getCollection,
+		// 	firebase.firestore().collection(`use_widgets`).where('owner', '==', user.uid)
+		// );
+
+		const widgetSnapshot = yield call(
 			rsf.firestore.getCollection,
-			firebase.firestore().collection(`use_widgets`).where('owner', '==', user.uid)
+			`users/${user.uid}/dashboards/${dashboard.id}/use_widgets`
 		);
 
-		let useWidgets;
-
-		snapshot.forEach((useWidget) => {
-			useWidgets = {
-				...useWidgets,
-				[useWidget.id]: useWidget.data()
-			};
+		widgetSnapshot.forEach((useWidget) => {
+			useWidgets.push({
+				id: useWidget.id,
+				...useWidget.data()
+			});
 		});
 
 		yield put(getUseWidgetsSuccess(useWidgets));
