@@ -34,24 +34,32 @@ function* logoutSaga() {
 
 function* registUser(user) {
 	try {
-		// create dashboard document
-		const dashDocRef = yield call(
-			rsf.firestore.addDocument,
-			`dashboards`,
-			{
-				last_contact_dtts: new Date().getTime()
-			}
-		)
-		
 		// create user document
 		yield call(
 			rsf.firestore.setDocument,
 			`users/${user.uid}`,
 			{
-				last_login_dtts: new Date().getTime(),
-				dashboard_ids: [dashDocRef.id]
+				last_login_dtts: new Date().getTime()
 			}
-		)
+		);
+
+		// create dashboard document
+		const dashboardRef = yield call(
+			rsf.firestore.addDocument,
+			`users/${user.uid}/dashboards`,
+			{
+				last_contact_dtts: new Date().getTime()
+			}
+		);
+		
+		// create dummy widget for saving dashboard
+		yield call(
+			rsf.firestore.setDocument,
+			`users/${user.uid}/dashboards/${dashboardRef.id}/use_widgets/dummy_widget`,
+			{
+				des: 'fake widget'
+			}
+		);
 	} catch (err) {
 		console.log(err);
 	}
