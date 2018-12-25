@@ -22,7 +22,7 @@ class Dashboard extends Component {
     }
 
     getDashboard() {
-
+        this.props.getDashboardRequest();
     }
 }
 

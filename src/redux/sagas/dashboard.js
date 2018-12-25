@@ -11,12 +11,27 @@ import { getUser } from './selector';
 
 function* getDashboardSaga() {
     try{
+        let dashboard;
         const user = yield select(getUser);
 
+        // const dashboardSnapshot = yield call(
+        //     rsf.firestore.getDocument,
+        //     firebase.firestore().collection(`dashboards`).where('owner', '==', user.uid)
+        // );
         const dashboardSnapshot = yield call(
-            rsf.firestore.getDocument,
-            firebase.firestore().collection(`dashboards`).where('owner', '==', user.uid)
+            rsf.firestore.getCollection,
+            `users/${user.uid}/dashboards`
         );
+
+        // TODO: implement multi dashboard... some day...
+        dashboardSnapshot.forEach((d) => {
+            dashboard = {
+                id: d.id,
+                ...d.data()
+            }
+        });
+
+        yield put(getDashboardSuccess(dashboard));
     } catch(err) {
         console.log(err);
     }
