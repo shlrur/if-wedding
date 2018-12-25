@@ -8,7 +8,7 @@ import {
 import Authentication from './authentication';
 import WidgetContainer from './widgetContainer';
 
-export default class Dashboard extends Component {
+class Dashboard extends Component {
     render() {
         return (
             <div>
