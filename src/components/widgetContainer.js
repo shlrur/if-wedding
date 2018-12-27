@@ -20,6 +20,15 @@ class WidgetContainer extends Component {
                 <button onClick={this.addUsingWidget.bind(this)}>
                     add in use widgets
                 </button>
+                {this.generateWidgetWrapper()}
+            </div>
+        );
+    }
+
+    generateWidgetWrapper() {
+        return (
+            <div>
+                asdasd
             </div>
         );
     }
