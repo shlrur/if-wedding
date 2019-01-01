@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import {
     getDashboardRequest
-} from '../redux/actions/dashboard';
+} from '../../redux/actions/dashboard';
 
 import Authentication from './authentication';
 import WidgetContainer from './widgetContainer';

@@ -5,7 +5,7 @@ import {
     getWidgetTypesRequest,
     getUseWidgetsRequest,
     addUseWidgetRequest
-} from '../redux/actions/widgets';
+} from '../../redux/actions/widgets';
 
 class WidgetContainer extends Component {
     render() {
@@ -26,6 +26,14 @@ class WidgetContainer extends Component {
     }
 
     generateWidgetWrapper() {
+        let tempWidgets = [
+            {name: 'greeting', des: 'first'},
+            {name: 'guestBook', des: 'second'},
+            {name: 'map', des: 'third'}
+        ];
+
+        
+
         return (
             <div>
                 asdasd
