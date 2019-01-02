@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
-import HaveToLogin from './common/haveToLogin';
+import PrivateRoute from './common/privateRoute';
+
+import login from './common/login';
 import Dashboard from './common/dashboard';
 
 class IfApp extends Component {
@@ -9,32 +11,12 @@ class IfApp extends Component {
         return (
             <Router>
                 <Switch>
-                    <Route path="/login" component={HaveToLogin} />
+                    <Route path="/login" component={login} />
                     <PrivateRoute path="/dashboard" component={Dashboard} />
                 </Switch>
             </Router>
         );
     }
-}
-
-function PrivateRoute({ component: Component, ...rest }) {
-    return (
-        <Route
-            {...rest}
-            render={(props) => {
-                fakeAuth.isAuthenticated ? (
-                    <Component {...props} />
-                ) : (
-                        <Redirect
-                            to={{
-                                pathname: "/login",
-                                state: { from: props.location }
-                            }}
-                        />
-                    )
-            }}
-        />
-    );
 }
 
 export default IfApp;

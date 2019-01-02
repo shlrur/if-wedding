@@ -3,6 +3,7 @@ import { types } from '../actions/authentication'
 const initialState = {
     loading: false,
     loggedIn: false,
+    isChecked: false,
     user: null
 }
 
@@ -19,6 +20,7 @@ export default function loginReducer(state = initialState, action = {}) {
                 ...state,
                 loading: false,
                 loggedIn: true,
+                isChecked: true,
                 user: action.user
             }
         case types.LOGIN.FAILURE:
@@ -27,7 +29,10 @@ export default function loginReducer(state = initialState, action = {}) {
                 loading: false
             }
         case types.LOGOUT.SUCCESS:
-            return initialState
+            return {
+                ...initialState,
+                isChecked: true
+            }
         case types.LOGOUT.FAILURE:
             return {
                 ...state,

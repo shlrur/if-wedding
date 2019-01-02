@@ -5,14 +5,12 @@ import {
     getDashboardRequest
 } from '../../redux/actions/dashboard';
 
-import Authentication from './authentication';
 import WidgetContainer from './widgetContainer';
 
 class Dashboard extends Component {
     render() {
         return (
             <div>
-                <Authentication />
                 <button onClick={this.getDashboard.bind(this)}>
                     get Dashboard
                 </button>
