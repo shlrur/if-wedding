@@ -17,8 +17,9 @@ export const types = {
 };
 
 // login
-export const login = () => ({
-    type: types.LOGIN.REQUEST
+export const login = providerName => ({
+    type: types.LOGIN.REQUEST,
+    providerName
 });
 
 export const loginSuccess = user => ({

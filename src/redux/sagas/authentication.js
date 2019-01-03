@@ -7,13 +7,28 @@ import {
 	loginFailure,
 	logoutSuccess,
 	logoutFailure
-} from '../actions/authentication'
+} from '../actions/authentication';
 
-import rsf from '../rsf'
+import rsf from '../rsf';
 
-const authProvider = new firebase.auth.GoogleAuthProvider();
+function* loginSaga({ providerName }) {
+	let authProvider = new firebase.auth.GoogleAuthProvider();
 
-function* loginSaga() {
+	switch (providerName) {
+		case 'google':
+			authProvider = new firebase.auth.GoogleAuthProvider();
+			break;
+		case 'facebook':
+			authProvider = new firebase.auth.FacebookAuthProvider();
+			break;
+		case 'twitter':
+			authProvider = new firebase.auth.TwitterAuthProvider();
+			break;
+		case 'github':
+			authProvider = new firebase.auth.GithubAuthProvider();
+			break;
+	}
+
 	try {
 		yield call(rsf.auth.signInWithPopup, authProvider);
 		// successful login will trigger the loginStatusWatcher, which will update the state
@@ -51,7 +66,7 @@ function* registUser(user) {
 				last_contact_dtts: new Date().getTime()
 			}
 		);
-		
+
 		// create dummy widget for saving dashboard
 		yield call(
 			rsf.firestore.setDocument,
@@ -99,7 +114,7 @@ function* loginStatusWatcher() {
 
 			const userInfoSnapshot = yield call(rsf.firestore.getDocument, `users/${user.uid}`);
 
-			user = {...user, ...userInfoSnapshot.data()};
+			user = { ...user, ...userInfoSnapshot.data() };
 
 			yield put(loginSuccess(user));
 		}

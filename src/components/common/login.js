@@ -6,44 +6,46 @@ import { login, logout } from '../../redux/actions/authentication';
 class Authentication extends Component {
     render() {
         let jsx;
-        
+
         if (this.props.isChecked) {
-            jsx = (
+            return (
                 <div>
-                    <button onClick={this.onAuthenticationHandle.bind(this)}>
-                        {this.props.user ? 'Logout' : 'Login'}
-                    </button>
-                    User: {this.props.user ? this.props.user.displayName : 'none'}
-                </div>
-            );
-        } else {
-            jsx = (
-                <div>
-                    loading...
+                    <button onClick={()=>{this.props.login('google')}}>google</button>
+                    <button onClick={()=>{this.props.login('facebook')}}>facebook</button>
+                    <button onClick={()=>{this.props.login('twitter')}}>twitter</button>
+                    <button onClick={()=>{this.props.login('github')}}>github</button>
+                    {/* User: {this.props.user ? this.props.user.displayName : 'none'} */}
                 </div>
             );
         }
-        return jsx;
+
+        return (
+            <div>
+                loading...
+            </div>
+        );
+
+
     }
 
-    onAuthenticationHandle() {
-        if (this.props.user) {
-            this.props.logout();
-        } else {
-            this.props.login();
-        }
+    onAuthenticationHandle(providerName) {
+        console.log(providerName);
+        
+            // this.props.login();
+        
     }
 
-    shouldComponentUpdate(nextProps, nextState) {
-        if (nextProps.user) {
+    shouldComponentUpdate(nextProps, nextStates) {
+        if (nextProps.loggedIn) {
             this.props.history.push('/dashboard');
         }
+
+        return true;
     }
 }
 
 const mapStateToProps = state => ({
     loggedIn: state.authentication.loggedIn,
-    user: state.authentication.user,
     isChecked: state.authentication.isChecked
 })
 const mapDispatchToProps = {
