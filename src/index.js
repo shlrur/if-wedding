@@ -9,6 +9,8 @@ import store from './redux/store';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
 
+import '../assets/styles/main.css';
+
 ReactDOM.render(
     <Provider store={store}>
         <IfApp />
