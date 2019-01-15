@@ -19,16 +19,24 @@ module.exports = {
                 use: ['style-loader', 'css-loader?sourceMap']
             },
             {
-                test: /\.(jpg|png|gif|svg|pdf|ico)$/,
+                test: /\.(png|jpg)$/,
                 use: [
                     {
-                        loader: 'file-loader',
-                        options: {
-                            name: '[path][name]-[hash:8].[ext]'
-                        },
-                    },
+                        loader: 'url-loader'
+                    }
                 ]
             }
+            // {
+            //     test: /\.(jpg|png|gif|svg|pdf|ico)$/,
+            //     use: [
+            //         {
+            //             loader: 'file-loader',
+            //             options: {
+            //                 name: '[path][name]-[hash:8].[ext]'
+            //             },
+            //         }
+            //     ]
+            // }
         ]
     },
     resolve: {

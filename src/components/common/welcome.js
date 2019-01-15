@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 
-import background from '../../../assets/images/index.jpg';
+// import background from '../../../assets/images/index.jpg';
 
 export default class Welcome extends Component {
     render() {
         return (
-            <div className="cover-container welcome-background text-center d-flex w-100 h-100 p-3 mx-auto flex-column" style={{backgroundImage: `url(${background})`}}>
+            <div className="cover-container welcome-background text-center d-flex w-100 h-100 p-3 mx-auto flex-column">
                 <header className="masthead mb-auto">
                     <div className="inner">
                         <h3 className="masthead-brand">If Wedding</h3>
