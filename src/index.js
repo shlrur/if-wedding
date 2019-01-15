@@ -11,11 +11,13 @@ import 'bootstrap/dist/js/bootstrap.min.js';
 
 import '../assets/styles/main.css';
 
-ReactDOM.render(
-    <Provider store={store}>
-        <IfApp />
-    </Provider>,
-    document.getElementById('app')
-);
+window.onload = () => {
+    ReactDOM.render(
+        <Provider store={store}>
+            <IfApp />
+        </Provider>,
+        document.getElementById('app')
+    );
+};
 
 module.hot.accept();
