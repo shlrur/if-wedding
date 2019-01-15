@@ -15,7 +15,7 @@ export default class NonAuthorized extends Component {
                             <h3 className="masthead-brand">If Wedding</h3>
                             <nav className="nav nav-masthead justify-content-center">
                                 <Link className={"nav-link " + (this.props.location.pathname === '/' ? 'active' : '')} to={`${this.props.match.url}`}>Welcome</Link>
-                                <a className="nav-link" href="/">Features</a>
+                                <Link className="nav-link " to={`${this.props.match.url}`}>Features</Link>
                                 <Link className={"nav-link " + (this.props.location.pathname.indexOf('contactus') !== -1 ? 'active' : '')} to={`${this.props.match.url}contactus`}>Contact</Link>
                                 <Link className={"nav-link " + (this.props.location.pathname.indexOf('login') !== -1 ? 'active' : '')} to={`${this.props.match.url}login`}>Sign up&in</Link>
                             </nav>
