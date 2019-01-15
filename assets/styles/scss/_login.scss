@@ -1,0 +1,24 @@
+.login {
+    .login-btn {
+        height: 100%;
+        width: 100%;
+    }
+
+    @mixin logo-background($imagePath) {
+        background: url($imagePath);
+        background-size: cover;
+        background-position: center;
+    }
+    #google {
+        @include logo-background("../images/icon/icon_google.png");
+    }
+    #facebook {
+        @include logo-background("../images/icon/icon_facebook.png");
+    }
+    #twitter {
+        @include logo-background("../images/icon/icon_twitter.png");
+    }
+    #github {
+        @include logo-background("../images/icon/icon_github.png");
+    }
+}

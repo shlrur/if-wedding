@@ -55,8 +55,9 @@ body {
   max-width: 42em;
 }
 
-.welcome-background {
-  background-image: url(../../assets/images/index.jpg);
+.unauthorized {
+  height: 100%;
+  background-image: url(../images/index.jpg);
   background-size: cover;
   background-position: center;
   -webkit-box-shadow: inset 0 0 0 1000px #b3957b2b;
@@ -82,7 +83,7 @@ body {
   border-bottom: .25rem solid transparent;
 }
 
-.nav-masthead .nav-link:hover, .nav-masthead .nav-link:focus {
+.nav-masthead .nav-link:hover {
   border-bottom-color: rgba(255, 255, 255, 0.25);
 }
 
@@ -121,5 +122,34 @@ body {
  */
 .mastfoot {
   color: rgba(255, 255, 255, 0.5);
+}
+
+.login .login-btn {
+  height: 100%;
+  width: 100%;
+}
+
+.login #google {
+  background: url("../images/icon/icon_google.png");
+  background-size: cover;
+  background-position: center;
+}
+
+.login #facebook {
+  background: url("../images/icon/icon_facebook.png");
+  background-size: cover;
+  background-position: center;
+}
+
+.login #twitter {
+  background: url("../images/icon/icon_twitter.png");
+  background-size: cover;
+  background-position: center;
+}
+
+.login #github {
+  background: url("../images/icon/icon_github.png");
+  background-size: cover;
+  background-position: center;
 }
 /*# sourceMappingURL=main.css.map */
