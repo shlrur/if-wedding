@@ -152,4 +152,17 @@ body {
   background-size: cover;
   background-position: center;
 }
+
+.widget-gallery .widget-grid {
+  border-width: 1px;
+  border-color: white;
+  border-style: dashed;
+}
+
+.widget-gallery .widget-wrapper-header {
+  border-width: 1px;
+  border-color: red;
+  border-style: dashed;
+  height: 10px;
+}
 /*# sourceMappingURL=main.css.map */

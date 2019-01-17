@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { login, logout } from '../../redux/actions/authentication';
+import { login } from '../../redux/actions/authentication';
 
 class Authentication extends Component {
     render() {
-        let jsx;
-
-        if (this.props.isChecked) {
+        // if (this.props.isChecked) {
             return (
                 <div className="container text-center login">
                     <h4 className="my-4">Start with</h4>
@@ -42,13 +40,13 @@ class Authentication extends Component {
                 //     {/* User: {this.props.user ? this.props.user.displayName : 'none'} */}
                 // </div>
             );
-        }
+        // }
 
-        return (
-            <div>
-                loading...
-            </div>
-        );
+        // return (
+        //     <div>
+        //         loading...
+        //     </div>
+        // );
 
 
     }
@@ -60,25 +58,24 @@ class Authentication extends Component {
 
     }
 
-    shouldComponentUpdate(nextProps, nextStates) {
-        if (nextProps.loggedIn) {
-            this.props.history.push('/dashboard');
-        }
+    // shouldComponentUpdate(nextProps, nextStates) {
+    //     if (nextProps.loggedIn) {
+    //         this.props.history.push('/dashboard');
+    //     }
 
-        return true;
-    }
+    //     return true;
+    // }
 }
 
-const mapStateToProps = state => ({
-    loggedIn: state.authentication.loggedIn,
-    isChecked: state.authentication.isChecked
-})
+// const mapStateToProps = state => ({
+//     loggedIn: state.authentication.loggedIn,
+//     isChecked: state.authentication.isChecked
+// })
 const mapDispatchToProps = {
-    login,
-    logout
+    login
 }
 
 export default connect(
-    mapStateToProps,
+    null,
     mapDispatchToProps
 )(Authentication)

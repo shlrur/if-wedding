@@ -8,19 +8,22 @@ import {
     logout
 } from '../../redux/actions/authentication';
 
-import WidgetContainer from './widgetContainer';
+import WidgetGallery from './widgetGallery';
 
 class Dashboard extends Component {
     render() {
         return (
             <div>
-                <button onClick={()=>{this.props.logout()}}>
-                    logout
+                {/* <button onClick={this.getWidgetTypes.bind(this)}>
+                    get widget types
                 </button>
-                <button onClick={this.getDashboard.bind(this)}>
-                    get Dashboard
+                <button onClick={this.getUsingWidgets.bind(this)}>
+                    get in use widgets
                 </button>
-                <WidgetContainer />
+                <button onClick={this.addUsingWidget.bind(this)}>
+                    add in use widgets
+                </button> */}
+                <WidgetGallery />
             </div>
         );
     }
