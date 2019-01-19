@@ -5,15 +5,14 @@ import PrivateRoute from './common/privateRoute';
 
 import nonauthorized from './nonauthorized/nonauthorizedContainer';
 import authorized from './authorized/authorizedContainer';
-import dashboard from './authorized/dashboard';
 
 class IfApp extends Component {
     render() {
         return (
             <Router>
                 <Switch>
-                    <PrivateRoute path="/dashboard" component={authorized} />
-                    <Route path="/" component={nonauthorized} />
+                    <PrivateRoute path="/auth" component={authorized} />
+                    <Route exact path="/" component={nonauthorized} />
                 </Switch>
             </Router>
         );

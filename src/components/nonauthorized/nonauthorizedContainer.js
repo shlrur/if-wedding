@@ -17,7 +17,7 @@ class NonAuthorizedContainer extends Component {
                                 <h3 className="masthead-brand">If Wedding</h3>
                                 <nav className="nav nav-masthead justify-content-center">
                                     <Link className={"nav-link " + (this.props.location.pathname === '/' ? 'active' : '')} to={`${this.props.match.url}`}>Welcome</Link>
-                                    <Link className="nav-link " to={`${this.props.match.url}`}>Features</Link>
+                                    {/* <Link className="nav-link " to={`${this.props.match.url}`}>Features</Link> */}
                                     <Link className={"nav-link " + (this.props.location.pathname.indexOf('contactus') !== -1 ? 'active' : '')} to={`${this.props.match.url}contactus`}>Contact</Link>
                                     <Link className={"nav-link " + (this.props.location.pathname.indexOf('login') !== -1 ? 'active' : '')} to={`${this.props.match.url}login`}>Sign up&in</Link>
                                 </nav>
@@ -25,8 +25,8 @@ class NonAuthorizedContainer extends Component {
                         </header>
     
                         <Route exact path={`${this.props.match.url}`} component={welcome} />
-                        <Route path={`${this.props.match.url}contactus`} component={contactus} />
-                        <Route path={`${this.props.match.url}login`} component={login} />
+                        <Route exact path={`${this.props.match.url}contactus`} component={contactus} />
+                        <Route exact path={`${this.props.match.url}login`} component={login} />
     
                         <footer className="mastfoot mt-auto">
                             <div className="inner">
@@ -47,7 +47,7 @@ class NonAuthorizedContainer extends Component {
 
     shouldComponentUpdate(nextProps, nextStates) {
         if (nextProps.loggedIn) {
-            this.props.history.push('/dashboard');
+            this.props.history.push('/auth/dashboard');
         }
 
         return true;
