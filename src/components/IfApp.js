@@ -12,7 +12,7 @@ class IfApp extends Component {
             <Router>
                 <Switch>
                     <PrivateRoute path="/auth" component={authorized} />
-                    <Route exact path="/" component={nonauthorized} />
+                    <Route path="/" component={nonauthorized} />
                 </Switch>
             </Router>
         );
