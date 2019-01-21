@@ -8,7 +8,7 @@ import {
     logout
 } from '../../redux/actions/authentication';
 
-import Dashboard from './dashboard';
+import Dashboards from './dashboard/dashboards';
 import Preview from './preview';
 import CoupleInformation from './coupleInform';
 
@@ -17,8 +17,8 @@ class AuthorizedContainer extends Component {
         if (this.props.isChecked) {
             const mainMenus = [
                 {
-                    alias: 'Dashboard',
-                    link: '/auth/dashboard'
+                    alias: 'Dashboards',
+                    link: '/auth/dashboards'
                 }, {
                     alias: 'Preview',
                     link: '/auth/preview'
@@ -70,7 +70,7 @@ class AuthorizedContainer extends Component {
                         </div>
                     </nav>
 
-                    <Route exact path={`${this.props.match.url}/dashboard`} component={Dashboard} />
+                    <Route exact path={`${this.props.match.url}/dashboards`} component={Dashboards} />
                     <Route exact path={`${this.props.match.url}/preview`} component={Preview} />
                     <Route exact path={`${this.props.match.url}/settings/coupleinform`} component={CoupleInformation} />
                 </div>

@@ -59,22 +59,22 @@ function* registUser(user) {
 		);
 
 		// create dashboard document
-		const dashboardRef = yield call(
-			rsf.firestore.addDocument,
-			`users/${user.uid}/dashboards`,
-			{
-				last_contact_dtts: new Date().getTime()
-			}
-		);
+		// const dashboardRef = yield call(
+		// 	rsf.firestore.addDocument,
+		// 	`users/${user.uid}/dashboards`,
+		// 	{
+		// 		last_contact_dtts: new Date().getTime()
+		// 	}
+		// ); * no need default dashboard
 
 		// create dummy widget for saving dashboard
-		yield call(
-			rsf.firestore.setDocument,
-			`users/${user.uid}/dashboards/${dashboardRef.id}/use_widgets/dummy_widget`,
-			{
-				des: 'fake widget'
-			}
-		);
+		// yield call(
+		// 	rsf.firestore.setDocument,
+		// 	`users/${user.uid}/dashboards/${dashboardRef.id}/use_widgets/dummy_widget`,
+		// 	{
+		// 		des: 'fake widget'
+		// 	}
+		// ); * no need fakewidget.
 	} catch (err) {
 		console.log(err);
 	}

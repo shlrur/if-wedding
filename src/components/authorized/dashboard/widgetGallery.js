@@ -3,15 +3,15 @@ import { connect } from 'react-redux';
 
 import GridLayout from 'react-grid-layout';
 
-import { getWidgetComponent } from '../widgets/widgets';
-import LightGreeting1 from '../widgets/greeting/light_1';
+import { getWidgetComponent } from '../../widgets/widgets';
+import LightGreeting1 from '../../widgets/bright/greeting1';
 import WidgetEditWrapper from './widgetEditWrapper';
 
 import {
     getWidgetTypesRequest,
     getUseWidgetsRequest,
     addUseWidgetRequest
-} from '../../redux/actions/widgets';
+} from '../../../redux/actions/widgets';
 
 class WidgetGallery extends Component {
     render() {

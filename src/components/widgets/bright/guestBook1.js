@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 
-export default class LightPhotoalbum1 extends Component {
+export default class BrightGuestbook1 extends Component {
     render() {
         return (
             <div>
-                Light Photoalbum 1
+                Bright Guestbook 1
             </div>
         );
     }

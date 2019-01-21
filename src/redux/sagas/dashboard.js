@@ -4,14 +4,14 @@ import firebase from 'firebase';
 import rsf from '../rsf';
 import {
 	types,
-	getDashboardSuccess,
-	getDashboardFailure
-} from '../actions/dashboard';
+	getDashboardsSuccess,
+	getDashboardsFailure
+} from '../actions/dashboards';
 import { getUser } from './selector';
 
-function* getDashboardSaga() {
+function* getDashboardsSaga() {
     try{
-        let dashboard;
+        let dashboards = [];
         const user = yield select(getUser);
 
         // const dashboardSnapshot = yield call(
@@ -25,20 +25,21 @@ function* getDashboardSaga() {
 
         // TODO: implement multi dashboard... some day...
         dashboardSnapshot.forEach((d) => {
-            dashboard = {
+            dashboards.push({
                 id: d.id,
                 ...d.data()
-            }
+            });
         });
 
-        yield put(getDashboardSuccess(dashboard));
+        yield put(getDashboardsSuccess(dashboards));
     } catch(err) {
         console.log(err);
+        yield put(getDashboardsFailure(err));
     }
 }
 
 export default function* dashboardRootSaga() {
 	yield all([
-		takeEvery(types.GET_DASHBOARD.REQUEST, getDashboardSaga)
+		takeEvery(types.GET_DASHBOARDS.REQUEST, getDashboardsSaga)
 	]);
 }
