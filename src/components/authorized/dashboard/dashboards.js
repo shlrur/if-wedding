@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import {
-    getDashboardRequest
+    getDashboardsRequest,
+    createDashboardRequest,
 } from '../../../redux/actions/dashboards';
 import {
     logout
@@ -12,9 +13,11 @@ import WidgetGallery from './widgetGallery';
 
 class Dashboards extends Component {
     constructor(props) {
+        super(props);
+
         this.state = {
             selectedDashboard: null
-        }
+        };
     }
 
     render() {
@@ -24,7 +27,7 @@ class Dashboards extends Component {
             return (
                 <div>
                     showing add dashboard window
-                    <button onClick={}>bright theme</button>
+                    <button onClick={this.createDashboard.bind(this, 'bright')}>bright theme</button>
                 </div>
             );
         } else {
@@ -50,12 +53,12 @@ class Dashboards extends Component {
 
     }
 
-    getDashboard() {
-        this.props.getDashboardRequest();
+    componentDidMount() {
+        this.props.getDashboardsRequest();
     }
 
-    componentDidMount() {
-
+    createDashboard(theme) {
+        this.props.createDashboardRequest(theme);
     }
 }
 
@@ -64,8 +67,8 @@ const mapStateToProps = state => ({
     loading: state.dashboard.loading
 })
 const mapDispatchToProps = {
-    getDashboardRequest,
-    logout
+    getDashboardsRequest,
+    createDashboardRequest
 }
 
 export default connect(

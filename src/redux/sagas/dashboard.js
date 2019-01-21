@@ -5,41 +5,79 @@ import rsf from '../rsf';
 import {
 	types,
 	getDashboardsSuccess,
-	getDashboardsFailure
+    getDashboardsFailure,
+    createDashboardSuccess,
+    createDashboardFailure
 } from '../actions/dashboards';
 import { getUser } from './selector';
 
 function* getDashboardsSaga() {
     try{
-        let dashboards = [];
+        let dashboards = [],
+            selectedDashboardInd = -1,
+            defaultDashboardId = null;
         const user = yield select(getUser);
 
         // const dashboardSnapshot = yield call(
         //     rsf.firestore.getDocument,
         //     firebase.firestore().collection(`dashboards`).where('owner', '==', user.uid)
         // );
-        const dashboardSnapshot = yield call(
+        const userSnapshot = yield call(
+            rsf.firestore.getDocument,
+            `users/${user.uid}`
+        );
+        const dashboardsSnapshot = yield call(
             rsf.firestore.getCollection,
             `users/${user.uid}/dashboards`
         );
 
-        // TODO: implement multi dashboard... some day...
-        dashboardSnapshot.forEach((d) => {
+        defaultDashboardId = userSnapshot.data().default_dashboard_id;
+
+        dashboardsSnapshot.forEach((d, ind) => {
             dashboards.push({
                 id: d.id,
                 ...d.data()
             });
+
+            if(defaultDashboardId && d.id === defaultDashboardId) {
+                selectedDashboardInd = ind;
+            }
         });
 
-        yield put(getDashboardsSuccess(dashboards));
+        selectedDashboardInd === -1 ? dashboards.length-1 : selectedDashboardInd;
+
+        yield put(getDashboardsSuccess(dashboards, selectedDashboardInd, defaultDashboardId));
     } catch(err) {
         console.log(err);
         yield put(getDashboardsFailure(err));
     }
 }
 
+function* createDashboardSaga({theme}) {
+    try {
+        const user = yield select(getUser);
+
+        const dashboardDocRef = yield call(
+            rsf.firestore.addDocument,
+            `users/${user.uid}/dashboards`,
+            {
+                theme,
+                created_dtts: new Date().getTime(),
+                last_contact_dtts: new Date().getTime()
+            }
+        );
+        
+        const dashboardSnapshot = yield call(rsf.firestore.getDocument, dashboardDocRef);
+
+        yield put(createDashboardSuccess(dashboardSnapshot.data()));
+    } catch(err) {
+        yield put(createDashboardFailure(err));
+    }
+}
+
 export default function* dashboardRootSaga() {
 	yield all([
-		takeEvery(types.GET_DASHBOARDS.REQUEST, getDashboardsSaga)
+        takeEvery(types.GET_DASHBOARDS.REQUEST, getDashboardsSaga),
+        takeEvery(types.CREATE_DASHBOARD.REQUEST, createDashboardSaga)
 	]);
 }

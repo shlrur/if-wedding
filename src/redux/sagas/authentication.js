@@ -54,7 +54,9 @@ function* registUser(user) {
 			rsf.firestore.setDocument,
 			`users/${user.uid}`,
 			{
-				last_login_dtts: new Date().getTime()
+				created_dtts: new Date().getTime(),
+				last_login_dtts: new Date().getTime(),
+				default_dashboard_id: null
 			}
 		);
 
