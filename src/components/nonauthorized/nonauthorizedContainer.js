@@ -49,7 +49,7 @@ class NonAuthorizedContainer extends Component {
 
     shouldComponentUpdate(nextProps, nextStates) {
         if (nextProps.loggedIn) {
-            this.props.history.push('/auth/dashboard');
+            this.props.history.push('/auth/dashboards');
         }
 
         return true;

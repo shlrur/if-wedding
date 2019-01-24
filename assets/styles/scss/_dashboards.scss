@@ -1,0 +1,29 @@
+.dashboards {
+    height: calc(100% - 56px);
+    display: flex;
+    justify-content: space-evenly;
+    .dashboard-container {
+        flex-basis: 700px;
+        .dashboard-header {
+            height: 50px;
+            display: flex;
+            justify-content: space-between;
+        }
+    }
+    .widget-types {
+        flex-basis: 400px;
+    }
+    .widget-gallery {
+        .widget-grid {
+            border-width: 1px;
+            border-color: white;
+            border-style: dashed;
+        }
+        .widget-wrapper-header {
+            border-width: 1px;
+            border-color: red;
+            border-style: dashed;
+            height: 10px;
+        }
+    }
+}

@@ -6,8 +6,8 @@ import {
     createDashboardRequest,
 } from '../../../redux/actions/dashboards';
 import {
-    logout
-} from '../../../redux/actions/authentication';
+    getWidgetTypesRequest
+} from '../../../redux/actions/widgets';
 
 import WidgetGallery from './widgetGallery';
 
@@ -16,12 +16,13 @@ class Dashboards extends Component {
         super(props);
 
         this.state = {
-            selectedDashboard: null
+            showedDashboard: null,
+            showedDashboardTheme: null
         };
     }
 
     render() {
-        if (this.props.loading) {
+        if (this.props.dashboardLoading) {
             return <div>loading...</div>
         } else if (this.props.dashboards.length === 0) {
             return (
@@ -31,11 +32,21 @@ class Dashboards extends Component {
                 </div>
             );
         } else {
-            if (!this.state.selectedDashboard) {
-
-            }
             return (
                 <div className="dashboards">
+                    <div className="dashboard-container">
+                        <div className="dashboard-header">
+                            <button>{'<'}</button>
+                            <span>asdasd</span>
+                            <button>{'>'}</button>
+                            <button>{'+'}</button>
+                            <button>{'-'}</button>
+                        </div>
+                        <div className="dashboard-body">
+                            <WidgetGallery dashboard={this.state.showedDashboard} />
+                        </div>
+                    </div>
+                    <WidgetTypes theme={this.state.showedDashboard ? this.state.showedDashboard.theme : null} />
                     {/* <button onClick={this.getWidgetTypes.bind(this)}>
                         get widget types
                     </button>
@@ -45,8 +56,6 @@ class Dashboards extends Component {
                     <button onClick={this.addUsingWidget.bind(this)}>
                         add in use widgets
                     </button> */}
-
-                    <WidgetGallery />
                 </div>
             );
         }
@@ -57,16 +66,36 @@ class Dashboards extends Component {
         this.props.getDashboardsRequest();
     }
 
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            showedDashboard: nextProps.dashboards[nextProps.selectedDashboardInd]
+        });
+
+        if(!this.state.showedDashboardTheme || this.state.showedDashboardTheme !== this.showedDashboard.theme) {
+            this.setState({
+                showedDashboardTheme: this.showedDashboard.theme
+            });
+
+            this.props.getWidgetTypesRequest(this.state.showedDashboardTheme);
+        }
+    }
+
     createDashboard(theme) {
         this.props.createDashboardRequest(theme);
     }
 }
 
 const mapStateToProps = state => ({
+    // dashboard
     dashboards: state.dashboard.dashboards,
-    loading: state.dashboard.loading
+    selectedDashboardInd: state.dashboard.selectedDashboardInd,
+    defaultDashboardId: state.dashboard.defaultDashboardId,
+    dashboardLoading: state.dashboard.loading,
+    // widget
+    widgetTypesLoading: state.widget.widgetTypesLoading
 })
 const mapDispatchToProps = {
+    getWidgetTypesRequest,
     getDashboardsRequest,
     createDashboardRequest
 }

@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import GridLayout from 'react-grid-layout';
 
 import { getWidgetComponent } from '../../widgets/widgets';
-import LightGreeting1 from '../../widgets/bright/greeting1';
 import WidgetEditWrapper from './widgetEditWrapper';
 
 import {
@@ -32,23 +31,23 @@ class WidgetGallery extends Component {
         let tempWidgets = [
             {
                 id: 'asdhkjhqwkdj', // psuedo code
-                themeName: 'light',
-                widgetName: 'LightGreeting1'
+                themeName: 'bright',
+                widgetName: 'BrightGreeting1'
             },
             {
                 id: 'sdfsdfsdf', // psuedo code
-                themeName: 'light',
-                widgetName: 'LightGuestbook1'
+                themeName: 'bright',
+                widgetName: 'BrightGuestbook1'
             },
             {
                 id: 'asdhkjhasdfqwkdj', // psuedo code
-                themeName: 'light',
-                widgetName: 'LightMap1'
+                themeName: 'bright',
+                widgetName: 'BrightMap1'
             },
             {
                 id: 'qersdfsdf', // psuedo code
-                themeName: 'light',
-                widgetName: 'LightPhotoalbum1'
+                themeName: 'bright',
+                widgetName: 'BrightPhotoalbum1'
             }
         ];
         var layout = [
@@ -67,11 +66,6 @@ class WidgetGallery extends Component {
                         </div>
                     );
                 })}
-                {/* {getWidgetComponent('LightGreeting1', 'a')} */}
-                {/* <div key="a">a</div> */}
-                {/* <div className="widget-grid" key='a'><WidgetEditWrapper widgetComponent={getWidgetComponent('LightGreeting1')} inform={tempWidgets[0]}/></div>
-                <div key="b">b</div>
-                <div key="c">c</div> */}
             </GridLayout>
         );
     }

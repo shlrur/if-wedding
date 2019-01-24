@@ -27,8 +27,9 @@ export const types = {
 };
 
 // widget types
-export const getWidgetTypesRequest = () => ({
-    type: types.GET_WIDGET_TYPES.REQUEST
+export const getWidgetTypesRequest = (theme) => ({
+    type: types.GET_WIDGET_TYPES.REQUEST,
+    theme
 });
 
 export const getWidgetTypesSuccess = (widgetTypes) => ({
