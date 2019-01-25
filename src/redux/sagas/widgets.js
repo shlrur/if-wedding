@@ -12,9 +12,12 @@ import {
 import { getUser, getDashboard } from './selector';
 
 
-function* getWidgetTypesSaga() {
+function* getWidgetTypesSaga({theme}) {
 	try {
-		const snapshot = yield call(rsf.firestore.getCollection, 'widget_types');
+		const snapshot = yield call(
+			rsf.firestore.getCollection,
+			firebase.firestore().collection('widget_types').where('theme', '==', theme)
+		);
 
 		let widgetTypes = [];
 

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 export default class WidgetEditWrapper extends Component {
     render() {
-        console.log(this.props);
+        // console.log(this.props);
         const WidgetComponent = this.props.widgetComponent;
         return (
             <div>

@@ -44,7 +44,7 @@ function* getDashboardsSaga() {
             }
         });
 
-        selectedDashboardInd === -1 ? dashboards.length-1 : selectedDashboardInd;
+        selectedDashboardInd = selectedDashboardInd === -1 ? dashboards.length-1 : selectedDashboardInd;
 
         yield put(getDashboardsSuccess(dashboards, selectedDashboardInd, defaultDashboardId));
     } catch(err) {

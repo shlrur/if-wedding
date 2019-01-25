@@ -5,10 +5,8 @@ import {
     getDashboardsRequest,
     createDashboardRequest,
 } from '../../../redux/actions/dashboards';
-import {
-    getWidgetTypesRequest
-} from '../../../redux/actions/widgets';
 
+import WidgetTypes from './widgetTypes';
 import WidgetGallery from './widgetGallery';
 
 class Dashboards extends Component {
@@ -16,13 +14,12 @@ class Dashboards extends Component {
         super(props);
 
         this.state = {
-            showedDashboard: null,
-            showedDashboardTheme: null
+            showedDashboard: null
         };
     }
 
     render() {
-        if (this.props.dashboardLoading) {
+        if (this.props.loading) {
             return <div>loading...</div>
         } else if (this.props.dashboards.length === 0) {
             return (
@@ -32,6 +29,7 @@ class Dashboards extends Component {
                 </div>
             );
         } else {
+            console.log('draw dashboard')
             return (
                 <div className="dashboards">
                     <div className="dashboard-container">
@@ -67,16 +65,11 @@ class Dashboards extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        this.setState({
-            showedDashboard: nextProps.dashboards[nextProps.selectedDashboardInd]
-        });
-
-        if(!this.state.showedDashboardTheme || this.state.showedDashboardTheme !== this.showedDashboard.theme) {
+        console.log('got dashboard');
+        if (nextProps.dashboards.length > 0) {
             this.setState({
-                showedDashboardTheme: this.showedDashboard.theme
+                showedDashboard: nextProps.dashboards[nextProps.selectedDashboardInd]
             });
-
-            this.props.getWidgetTypesRequest(this.state.showedDashboardTheme);
         }
     }
 
@@ -90,12 +83,9 @@ const mapStateToProps = state => ({
     dashboards: state.dashboard.dashboards,
     selectedDashboardInd: state.dashboard.selectedDashboardInd,
     defaultDashboardId: state.dashboard.defaultDashboardId,
-    dashboardLoading: state.dashboard.loading,
-    // widget
-    widgetTypesLoading: state.widget.widgetTypesLoading
+    loading: state.dashboard.loading
 })
 const mapDispatchToProps = {
-    getWidgetTypesRequest,
     getDashboardsRequest,
     createDashboardRequest
 }
