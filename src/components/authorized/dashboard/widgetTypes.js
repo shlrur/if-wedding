@@ -13,7 +13,7 @@ class WidgetTypes extends Component {
             showedDashboardTheme: props.theme
         };
 
-        if(this.state.showedDashboardTheme) {
+        if (this.state.showedDashboardTheme) {
             this.props.getWidgetTypesRequest(this.state.showedDashboardTheme);
         }
     }
@@ -21,7 +21,7 @@ class WidgetTypes extends Component {
     render() {
         if (this.props.loading) {
             return (
-                <div>loading...</div>
+                <div className="widget-types">loading...</div>
             );
         } else if (!this.props.widgetTypes) {
             return (
@@ -32,21 +32,31 @@ class WidgetTypes extends Component {
         }
         return (
             <div className="widget-types">
-                {this.props.widgetTypes.length}
+                {this.props.widgetTypes.map((widgetType) => {
+                    return (
+                        <div className="widget-type" key={widgetType.id}>
+                            {widgetType.alias}
+                            <button onClick={this.addWidget.bind(this, widgetType)}>add</button>
+                        </div>
+                    );
+                })}
             </div>
         );
     }
 
     componentWillReceiveProps(nextProps) {
-        console.log('got theme');
-
         if (!this.state.showedDashboardTheme || this.state.showedDashboardTheme !== nextProps.theme) {
+            console.log('got theme');
             this.setState({
                 showedDashboardTheme: nextProps.theme
             });
 
             this.props.getWidgetTypesRequest(this.state.showedDashboardTheme);
         }
+    }
+
+    addWidget(widgetType) {
+        
     }
 }
 

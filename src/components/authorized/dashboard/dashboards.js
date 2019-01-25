@@ -44,7 +44,7 @@ class Dashboards extends Component {
                             <WidgetGallery dashboard={this.state.showedDashboard} />
                         </div>
                     </div>
-                    <WidgetTypes theme={this.state.showedDashboard ? this.state.showedDashboard.theme : null} />
+                    <WidgetTypes theme={this.state.showedDashboard ? this.state.showedDashboard.theme : null} dashboardId={this.state.showedDashboard.id}/>
                     {/* <button onClick={this.getWidgetTypes.bind(this)}>
                         get widget types
                     </button>
@@ -65,8 +65,8 @@ class Dashboards extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        console.log('got dashboard');
         if (nextProps.dashboards.length > 0) {
+            console.log('got dashboard');
             this.setState({
                 showedDashboard: nextProps.dashboards[nextProps.selectedDashboardInd]
             });

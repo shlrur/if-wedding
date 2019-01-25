@@ -43,8 +43,9 @@ export const getWidgetTypesFailure = () => ({
 
 
 // in use widgets
-export const getUseWidgetsRequest = () => ({
-    type: types.GET_USE_WIDGETS.REQUEST
+export const getUseWidgetsRequest = (dashboardId) => ({
+    type: types.GET_USE_WIDGETS.REQUEST,
+    dashboardId
 });
 
 export const getUseWidgetsSuccess = (useWidgets) => ({

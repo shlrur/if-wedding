@@ -13,96 +13,106 @@ import {
 } from '../../../redux/actions/widgets';
 
 class WidgetGallery extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            dashboard: props.dashboard
+        }
+
+        this.props.getUseWidgetsRequest(this.state.dashboard.id);
+    }
+
     render() {
+        if (this.props.useWidgetsLoading) {
+            return (
+                <div className="widget-gallery">
+                    Loading...
+                </div>
+            );
+        } else if (!this.props.useWidgets || this.props.useWidgets.length === 0) {
+            return (
+                <div className="widget-gallery">
+                    No Widgets
+                </div>
+            );
+        }
         return (
             <div className="widget-gallery">
-
-                {this.generateWidgetWrapper()}
+                <GridLayout className="widget-grids" draggableHandle=".widget-wrapper-header" layout={this.state.dashboard.layout} cols={12} rowHeight={30} width={1200}>
+                    {this.props.useWidgets.map((widgetInform) => {
+                        return (
+                            <div className="widget-grid" key={widgetInform.id}>
+                                <WidgetEditWrapper widgetComponent={getWidgetComponent(widgetInform.widgetName)} inform={widgetInform} />
+                            </div>
+                        );
+                    })}
+                </GridLayout>
             </div>
         );
     }
 
-    componentDidMount() {
-        // getting in use widget list
-        this.props.getUseWidgetsRequest();
+    componentWillReceiveProps(nextProps) {
+        // get use widgets when dashboard changed
+        if (!this.state.dashboard || this.state.dashboard.id !== nextProps.dashboard.id) {
+            this.setState({
+                dashboard: nextProps.dashboard
+            });
+
+            this.props.getUseWidgetsRequest(this.state.dashboard.id);
+        }
     }
 
     generateWidgetWrapper() {
-        let tempWidgets = [
-            {
-                id: 'asdhkjhqwkdj', // psuedo code
-                themeName: 'bright',
-                widgetName: 'BrightGreeting1'
-            },
-            {
-                id: 'sdfsdfsdf', // psuedo code
-                themeName: 'bright',
-                widgetName: 'BrightGuestbook1'
-            },
-            {
-                id: 'asdhkjhasdfqwkdj', // psuedo code
-                themeName: 'bright',
-                widgetName: 'BrightMap1'
-            },
-            {
-                id: 'qersdfsdf', // psuedo code
-                themeName: 'bright',
-                widgetName: 'BrightPhotoalbum1'
-            }
-        ];
-        var layout = [
-            { i: 'asdhkjhqwkdj', x: 0, y: 0, w: 1, h: 2 },
-            { i: 'sdfsdfsdf', x: 1, y: 0, w: 3, h: 2, minW: 2, maxW: 4 },
-            { i: 'asdhkjhasdfqwkdj', x: 4, y: 0, w: 1, h: 2 },
-            { i: 'qersdfsdf', x: 6, y: 0, w: 1, h: 2 }
-        ];
+        // let tempWidgets = [
+        //     {
+        //         id: 'asdhkjhqwkdj', // psuedo code
+        //         themeName: 'bright',
+        //         widgetName: 'BrightGreeting1'
+        //     },
+        //     {
+        //         id: 'sdfsdfsdf', // psuedo code
+        //         themeName: 'bright',
+        //         widgetName: 'BrightGuestbook1'
+        //     },
+        //     {
+        //         id: 'asdhkjhasdfqwkdj', // psuedo code
+        //         themeName: 'bright',
+        //         widgetName: 'BrightMap1'
+        //     },
+        //     {
+        //         id: 'qersdfsdf', // psuedo code
+        //         themeName: 'bright',
+        //         widgetName: 'BrightPhotoalbum1'
+        //     }
+        // ];
+        // var layout = [
+        //     { i: 'asdhkjhqwkdj', x: 0, y: 0, w: 1, h: 2 },
+        //     { i: 'sdfsdfsdf', x: 1, y: 0, w: 3, h: 2, minW: 2, maxW: 4 },
+        //     { i: 'asdhkjhasdfqwkdj', x: 4, y: 0, w: 1, h: 2 },
+        //     { i: 'qersdfsdf', x: 6, y: 0, w: 1, h: 2 }
+        // ];
 
         return (
-            <GridLayout className="widget-grids" draggableHandle=".widget-wrapper-header" layout={layout} cols={12} rowHeight={30} width={1200}>
-                {tempWidgets.map((widgetInform) => {
+            <GridLayout className="widget-grids" draggableHandle=".widget-wrapper-header" layout={this.state.dashboard.layout} cols={12} rowHeight={30} width={1200}>
+                {this.props.useWidgets.map((widgetInform) => {
                     return (
                         <div className="widget-grid" key={widgetInform.id}>
-                            <WidgetEditWrapper widgetComponent={getWidgetComponent(widgetInform.widgetName)} inform={tempWidgets[0]}/>
+                            <WidgetEditWrapper widgetComponent={getWidgetComponent(widgetInform.widgetName)} inform={widgetInform} />
                         </div>
                     );
                 })}
             </GridLayout>
         );
     }
-
-    getWidgetTypes() {
-        this.props.getWidgetTypesRequest();
-    }
-
-    getUsingWidgets() {
-        this.props.getUseWidgetsRequest();
-    }
-
-    addUsingWidget() {
-        this.props.addUseWidgetRequest({
-            name: 'greeting',
-            position: {
-                x: 0,
-                y: 0,
-                w: 1,
-                h: 1
-            },
-            property: {
-                text1: 'hello',
-                text2: 'world'
-            }
-        });
-    }
 }
 
 const mapStateToProps = state => ({
-    widgetTypes: state.widget.widgetTypes,
-    usingWidgets: state.widget.usingWidgets
+    useWidgets: state.widget.useWidgets,
+    useWidgetsLoading: state.widget.useWidgetsLoading
 })
 const mapDispatchToProps = {
-    getWidgetTypesRequest,
-    getUseWidgetsRequest,
-    addUseWidgetRequest
+    getUseWidgetsRequest
 }
 
 export default connect(

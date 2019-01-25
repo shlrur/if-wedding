@@ -34,25 +34,17 @@ function* getWidgetTypesSaga({ theme }) {
 	}
 }
 
-function* getUseWidgetsSaga() {
+function* getUseWidgetsSaga({dashboardId}) {
 	try {
 		let useWidgets = [];
 		const user = yield select(getUser);
-		const dashboards = yield select(getDashboards);
-		const selectedDashboardInd = yield select(getSelectedDashboardInd);
-		const dashboard = dashboards[selectedDashboardInd];
 
-		// const snapshot = yield call(
-		// 	rsf.firestore.getCollection,
-		// 	firebase.firestore().collection(`use_widgets`).where('owner', '==', user.uid)
-		// );
-
-		const widgetSnapshot = yield call(
+		const useWidgetsSnapshot = yield call(
 			rsf.firestore.getCollection,
-			`users/${user.uid}/dashboards/${dashboard.id}/use_widgets`
+			`users/${user.uid}/dashboards/${dashboardId}/use_widgets`
 		);
 
-		widgetSnapshot.forEach((useWidget) => {
+		useWidgetsSnapshot.forEach((useWidget) => {
 			useWidgets.push({
 				id: useWidget.id,
 				...useWidget.data()
