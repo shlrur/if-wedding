@@ -63,7 +63,9 @@ function* createDashboardSaga({theme}) {
             {
                 theme,
                 created_dtts: new Date().getTime(),
-                last_contact_dtts: new Date().getTime()
+                last_contact_dtts: new Date().getTime(),
+                height: 0,
+                layout: []
             }
         );
         

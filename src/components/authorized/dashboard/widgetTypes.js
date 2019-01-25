@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import {
-    getWidgetTypesRequest
+    getWidgetTypesRequest,
+    addUseWidgetRequest
 } from '../../../redux/actions/widgets';
 
 class WidgetTypes extends Component {
@@ -56,7 +57,7 @@ class WidgetTypes extends Component {
     }
 
     addWidget(widgetType) {
-        
+        this.props.addUseWidgetRequest(this.props.dashboardId, widgetType);
     }
 }
 
@@ -65,7 +66,8 @@ const mapStateToProps = state => ({
     widgetTypes: state.widget.widgetTypes
 })
 const mapDispatchToProps = {
-    getWidgetTypesRequest
+    getWidgetTypesRequest,
+    addUseWidgetRequest
 }
 
 export default connect(

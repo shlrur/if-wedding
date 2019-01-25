@@ -39,7 +39,7 @@ class WidgetGallery extends Component {
         }
         return (
             <div className="widget-gallery">
-                <GridLayout className="widget-grids" draggableHandle=".widget-wrapper-header" layout={this.state.dashboard.layout} cols={12} rowHeight={30} width={1200}>
+                {/* <GridLayout className="widget-grids" draggableHandle=".widget-wrapper-header" layout={this.state.dashboard.layout} cols={12} rowHeight={30} width={1200}>
                     {this.props.useWidgets.map((widgetInform) => {
                         return (
                             <div className="widget-grid" key={widgetInform.id}>
@@ -47,7 +47,7 @@ class WidgetGallery extends Component {
                             </div>
                         );
                     })}
-                </GridLayout>
+                </GridLayout> */}
             </div>
         );
     }

@@ -34,7 +34,7 @@ function* getWidgetTypesSaga({ theme }) {
 	}
 }
 
-function* getUseWidgetsSaga({dashboardId}) {
+function* getUseWidgetsSaga({ dashboardId }) {
 	try {
 		let useWidgets = [];
 		const user = yield select(getUser);
@@ -58,18 +58,49 @@ function* getUseWidgetsSaga({dashboardId}) {
 	}
 }
 
-function* addUseWidgetsSaga({ addedWidget }) {
+function* addUseWidgetSaga({ addedWidgetType, dashboardId }) {
 	try {
 		const user = yield select(getUser);
 
-		console.log(user.uid);
+		// add widget
 		const doc = yield call(
 			rsf.firestore.addDocument,
-			`users/${user.uid}/use_widgets`,
-			addedWidget
+			`users/${user.uid}/dashboards/${dashboardId}/use_widgets`,
+			{
+				alias: addedWidgetType.alias,
+				name: addedWidgetType.name,
+				theme: addedWidgetType.theme
+			}
+		);
+		const addedWidget = yield call(
+			rsf.firestore.getDocument,
+			doc
 		);
 
-		console.log(doc);
+		// modify layout
+		const dashboardSnapshot = yield call(
+			rsf.firestore.getDocument,
+			`users/${user.uid}/dashboards/${dashboardId}`
+		);
+		let dashboard = dashboardSnapshot.data();
+		let layout = dashboard.layout;
+		
+		layout.push({
+			i: addedWidget.id,
+			x: 0,
+			y: dashboard.height,
+			...addedWidgetType.defaultLayout
+		});
+		
+		yield call(
+			rsf.firestore.setDocument,
+			`users/${user.uid}/dashboards/${dashboardId}`,
+			{
+				layout,
+				height: dashboard.height + addedWidgetType.defaultLayout.h
+			},
+			{ merge: true }
+		);
 	} catch (err) {
 
 	}
@@ -79,6 +110,6 @@ export default function* widgetsRootSaga() {
 	yield all([
 		takeEvery(types.GET_WIDGET_TYPES.REQUEST, getWidgetTypesSaga),
 		takeEvery(types.GET_USE_WIDGETS.REQUEST, getUseWidgetsSaga),
-		takeEvery(types.ADD_USE_WIDGET.REQUEST, addUseWidgetsSaga)
+		takeEvery(types.ADD_USE_WIDGET.REQUEST, addUseWidgetSaga)
 	]);
 }
