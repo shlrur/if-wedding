@@ -37,17 +37,19 @@ class WidgetGallery extends Component {
                 </div>
             );
         }
+        
+        console.log(this.props.useWidgets);
         return (
             <div className="widget-gallery">
-                {/* <GridLayout className="widget-grids" draggableHandle=".widget-wrapper-header" layout={this.state.dashboard.layout} cols={12} rowHeight={30} width={1200}>
+                <GridLayout className="widget-grids" draggableHandle=".widget-wrapper-header" layout={this.state.dashboard.layout} cols={12} rowHeight={30} width={1200}>
                     {this.props.useWidgets.map((widgetInform) => {
                         return (
                             <div className="widget-grid" key={widgetInform.id}>
-                                <WidgetEditWrapper widgetComponent={getWidgetComponent(widgetInform.widgetName)} inform={widgetInform} />
+                                <WidgetEditWrapper widgetComponent={getWidgetComponent(`${widgetInform.theme}_${widgetInform.name}`)} inform={widgetInform} />
                             </div>
                         );
                     })}
-                </GridLayout> */}
+                </GridLayout>
             </div>
         );
     }

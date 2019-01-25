@@ -7,7 +7,9 @@ import {
 	getWidgetTypesSuccess,
 	getWidgetTypesFailure,
 	getUseWidgetsSuccess,
-	getUseWidgetsFailure
+	getUseWidgetsFailure,
+	addUseWidgetSuccess,
+	addUseWidgetFailure
 } from '../actions/widgets';
 import { getUser, getDashboards, getSelectedDashboardInd } from './selector';
 
@@ -101,8 +103,10 @@ function* addUseWidgetSaga({ addedWidgetType, dashboardId }) {
 			},
 			{ merge: true }
 		);
-	} catch (err) {
 
+		yield put(addUseWidgetSuccess());
+	} catch (err) {
+		yield put(addUseWidgetFailure(err));
 	}
 }
 

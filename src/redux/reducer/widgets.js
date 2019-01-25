@@ -44,6 +44,25 @@ export default function widgetReducer(state = initialState, action = {}) {
                 ...state,
                 useWidgetsLoading: false
             };
+        // add in use widget
+        case types.ADD_USE_WIDGET.REQUEST:
+            return {
+                ...state,
+                widgetTypesLoading: true,
+                useWidgetsLoading: true
+            };
+        case types.ADD_USE_WIDGET.SUCCESS:
+            // return {
+            //     ...state,
+            //     widgetTypesLoading: false,
+            //     useWidgetsLoading: false,
+            // };
+        case types.ADD_USE_WIDGET.FAILURE:
+            return {
+                ...state,
+                widgetTypesLoading: false,
+                useWidgetsLoading: false
+            };
         default:
             return state
     }
