@@ -9,10 +9,10 @@ import {
 	getUseWidgetsSuccess,
 	getUseWidgetsFailure
 } from '../actions/widgets';
-import { getUser, getDashboard } from './selector';
+import { getUser, getDashboards, getSelectedDashboardInd } from './selector';
 
 
-function* getWidgetTypesSaga({theme}) {
+function* getWidgetTypesSaga({ theme }) {
 	try {
 		const snapshot = yield call(
 			rsf.firestore.getCollection,
@@ -38,7 +38,9 @@ function* getUseWidgetsSaga() {
 	try {
 		let useWidgets = [];
 		const user = yield select(getUser);
-		const dashboard = yield select(getDashboard);
+		const dashboards = yield select(getDashboards);
+		const selectedDashboardInd = yield select(getSelectedDashboardInd);
+		const dashboard = dashboards[selectedDashboardInd];
 
 		// const snapshot = yield call(
 		// 	rsf.firestore.getCollection,

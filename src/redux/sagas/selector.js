@@ -1,2 +1,4 @@
 export const getUser = state => state.authentication.user;
-export const getDashboard = state => state.dashboard.dashboard;
+
+export const getDashboards = state => state.dashboard.dashboards;
+export const getSelectedDashboardInd = state => state.dashboard.selectedDashboardInd;
