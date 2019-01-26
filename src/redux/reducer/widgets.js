@@ -80,6 +80,9 @@ export default function widgetReducer(state = initialState, action = {}) {
                 ...state,
                 useWidgetsLoading: false
             };
+        // reset widget states
+        case types.RESET_WIDGET_STATES:
+            return initialState;
         default:
             return state
     }

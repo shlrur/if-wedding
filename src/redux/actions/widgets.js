@@ -23,7 +23,8 @@ export const types = {
         REQUEST: 'MODIFY_USE_WIDGET.REQUEST',
         SUCCESS: 'MODIFY_USE_WIDGET.SUCCESS',
         FAILURE: 'MODIFY_USE_WIDGET.FAILURE'
-    }
+    },
+    RESET_WIDGET_STATES: 'RESET_WIDGET_STATES'
 };
 
 // widget types
@@ -90,6 +91,7 @@ export const deleteUseWidgetFailure = (widget) => ({
 });
 
 
-export const modifyUseWidgetRequest = () => ({
-    type: types.MODIFY_USE_WIDGET.REQUEST
+// reset widget states
+export const resetWidgetStates = () => ({
+    type: types.RESET_WIDGET_STATES
 });

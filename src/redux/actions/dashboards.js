@@ -13,7 +13,8 @@ export const types = {
         REQUEST: 'MODIFY_DASHBOARD_LAYOUT.REQUEST',
         SUCCESS: 'MODIFY_DASHBOARD_LAYOUT.SUCCESS',
         FAILURE: 'MODIFY_DASHBOARD_LAYOUT.FAILURE'
-    }
+    },
+    RESET_DASHBOARD_STATES: 'RESET_DASHBOARD_STATES'
 };
 
 // get dashboards
@@ -60,3 +61,8 @@ export const modifyDashboardLayoutSuccess = () => ({
 export const modifyDashboardLayoutFailure = () => ({
     type: types.MODIFY_DASHBOARD_LAYOUT.FAILURE
 });
+
+// reset dashboards state
+export const resetDashboardStates = () => ({
+    type: types.RESET_DASHBOARD_STATES
+})

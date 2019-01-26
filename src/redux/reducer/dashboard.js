@@ -61,6 +61,10 @@ export default function dashboardReducer(state = initialState, action = {}) {
             return {
                 ...state
             }
+
+        // reset dashboard states
+        case types.RESET_DASHBOARD_STATES:
+            return initialState;
         default:
             return state
     }

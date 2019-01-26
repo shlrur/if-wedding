@@ -4,7 +4,11 @@ import { connect } from 'react-redux';
 import {
     getDashboardsRequest,
     createDashboardRequest,
+    resetDashboardStates
 } from '../../../redux/actions/dashboards';
+import {
+    resetWidgetStates
+} from '../../../redux/actions/widgets';
 
 import WidgetTypes from './widgetTypes';
 import WidgetGallery from './widgetGallery';
@@ -60,6 +64,11 @@ class Dashboards extends Component {
 
     }
 
+    componentWillUnmount() {
+        this.props.resetDashboardStates();
+        this.props.resetWidgetStates();
+    }
+
     componentDidMount() {
         this.props.getDashboardsRequest();
     }
@@ -87,7 +96,9 @@ const mapStateToProps = state => ({
 })
 const mapDispatchToProps = {
     getDashboardsRequest,
-    createDashboardRequest
+    createDashboardRequest,
+    resetDashboardStates,
+    resetWidgetStates
 }
 
 export default connect(
