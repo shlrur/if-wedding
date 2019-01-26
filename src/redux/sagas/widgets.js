@@ -114,8 +114,8 @@ function* addUseWidgetSaga({ addedWidgetType, dashboardId }) {
 		dashboards[selectedDashboardInd].height = dashboard.height + addedWidgetType.defaultLayout.h;
 
 		yield put(addUseWidgetSuccess([
-			{ id: addedWidget.id, ...addedWidget.data() },
-			...useWidgets
+			...useWidgets,
+			{ id: addedWidget.id, ...addedWidget.data() }
 		]));
 	} catch (err) {
 		console.log(err);
