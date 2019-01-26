@@ -23,7 +23,10 @@
             border-width: 1px;
             border-color: red;
             border-style: dashed;
-            height: 10px;
+            height: 30px;
+            .delete_widget_btn {
+                float: right;
+            }
         }
     }
 }

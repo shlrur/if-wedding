@@ -9,9 +9,11 @@ import {
 	getUseWidgetsSuccess,
 	getUseWidgetsFailure,
 	addUseWidgetSuccess,
-	addUseWidgetFailure
+	addUseWidgetFailure,
+	deleteUseWidgetSuccess,
+	deleteUseWidgetFailure
 } from '../actions/widgets';
-import { getUser, getDashboards, getSelectedDashboardInd } from './selector';
+import { getUser, getUseWidgets, getDashboards, getSelectedDashboardInd } from './selector';
 
 
 function* getWidgetTypesSaga({ theme }) {
@@ -63,6 +65,7 @@ function* getUseWidgetsSaga({ dashboardId }) {
 function* addUseWidgetSaga({ addedWidgetType, dashboardId }) {
 	try {
 		const user = yield select(getUser);
+		const useWidgets = yield select(getUseWidgets);
 
 		// add widget
 		const doc = yield call(
@@ -86,14 +89,14 @@ function* addUseWidgetSaga({ addedWidgetType, dashboardId }) {
 		);
 		let dashboard = dashboardSnapshot.data();
 		let layout = dashboard.layout;
-		
+
 		layout.push({
 			i: addedWidget.id,
 			x: 0,
 			y: dashboard.height,
 			...addedWidgetType.defaultLayout
 		});
-		
+
 		yield call(
 			rsf.firestore.setDocument,
 			`users/${user.uid}/dashboards/${dashboardId}`,
@@ -104,9 +107,77 @@ function* addUseWidgetSaga({ addedWidgetType, dashboardId }) {
 			{ merge: true }
 		);
 
-		yield put(addUseWidgetSuccess());
+		const dashboards = yield select(getDashboards);
+		const selectedDashboardInd = yield select(getSelectedDashboardInd);
+
+		dashboards[selectedDashboardInd].layout = layout;
+		dashboards[selectedDashboardInd].height = dashboard.height + addedWidgetType.defaultLayout.h;
+
+		yield put(addUseWidgetSuccess([
+			{ id: addedWidget.id, ...addedWidget.data() },
+			...useWidgets
+		]));
 	} catch (err) {
+		console.log(err);
 		yield put(addUseWidgetFailure(err));
+	}
+}
+
+function* deleteUseWidgetSaga({ widget }) {
+	try {
+		const user = yield select(getUser);
+		const dashboards = yield select(getDashboards);
+		const selectedDashboardInd = yield select(getSelectedDashboardInd);
+		const useWidgets = yield select(getUseWidgets);
+
+		const dashboard = dashboards[selectedDashboardInd];
+
+		let layout = dashboard.layout;
+		let targetWidgetInd = -1;
+		let deletedHeight = 0;
+		let i;
+
+		for(i=0 ; i<layout.length ; i++) {
+			if(targetWidgetInd !== -1) {
+				layout[i].y -= deletedHeight;
+			}
+
+			if(layout[i].i === widget.id) {
+				targetWidgetInd = i;
+				deletedHeight = layout[i].h;
+			}
+		}
+
+		layout.splice(targetWidgetInd, 1);
+		
+		dashboard.height -= deletedHeight;
+
+		yield call(
+			rsf.firestore.setDocument,
+			`users/${user.uid}/dashboards/${dashboard.id}`,
+			{
+				layout,
+				height: dashboard.height
+			},
+			{ merge: true }
+		);
+
+		yield call(
+			rsf.firestore.deleteDocument,
+			`users/${user.uid}/dashboards/${dashboard.id}/use_widgets/${widget.id}`
+		)
+
+		for(i=0 ; i<useWidgets.length ; i++) {
+			if(useWidgets[i].id === widget.id) {
+				break;
+			}
+		}
+		useWidgets.splice(i, 1);
+
+		yield put(deleteUseWidgetSuccess());
+	} catch (err) {
+		console.log(err);
+		yield put(deleteUseWidgetFailure(err));
 	}
 }
 
@@ -114,6 +185,7 @@ export default function* widgetsRootSaga() {
 	yield all([
 		takeEvery(types.GET_WIDGET_TYPES.REQUEST, getWidgetTypesSaga),
 		takeEvery(types.GET_USE_WIDGETS.REQUEST, getUseWidgetsSaga),
-		takeEvery(types.ADD_USE_WIDGET.REQUEST, addUseWidgetSaga)
+		takeEvery(types.ADD_USE_WIDGET.REQUEST, addUseWidgetSaga),
+		takeEvery(types.DELETE_USE_WIDGET.REQUEST, deleteUseWidgetSaga)
 	]);
 }

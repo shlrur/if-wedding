@@ -8,7 +8,8 @@ export const types = {
         REQUEST: 'CREATE_DASHBOARD.REQUEST',
         SUCCESS: 'CREATE_DASHBOARD.SUCCESS',
         FAILURE: 'CREATE_DASHBOARD.FAILURE'
-    }
+    },
+    MODIFY_DASHBOARD: 'MODIFY_DASHBOARD'
 };
 
 // get dashboards
@@ -40,4 +41,10 @@ export const createDashboardSuccess = (dashboard) => ({
 
 export const createDashboardFailure = () => ({
     type: types.CREATE_DASHBOARD.FAILURE
+});
+
+// modify dashboard(for add, delete)
+export const modifyDashboard = (dashboard) => ({
+    type: types.MODIFY_DASHBOARD,
+    dashboard
 });

@@ -205,6 +205,10 @@ body {
   border-width: 1px;
   border-color: red;
   border-style: dashed;
-  height: 10px;
+  height: 30px;
+}
+
+.dashboards .widget-gallery .widget-wrapper-header .delete_widget_btn {
+  float: right;
 }
 /*# sourceMappingURL=main.css.map */

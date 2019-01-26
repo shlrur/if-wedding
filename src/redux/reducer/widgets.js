@@ -52,15 +52,32 @@ export default function widgetReducer(state = initialState, action = {}) {
                 useWidgetsLoading: true
             };
         case types.ADD_USE_WIDGET.SUCCESS:
-            // return {
-            //     ...state,
-            //     widgetTypesLoading: false,
-            //     useWidgetsLoading: false,
-            // };
+            return {
+                ...state,
+                widgetTypesLoading: false,
+                useWidgetsLoading: false,
+                useWidgets: action.useWidgets
+            };
         case types.ADD_USE_WIDGET.FAILURE:
             return {
                 ...state,
                 widgetTypesLoading: false,
+                useWidgetsLoading: false
+            };
+        // delete in use widget
+        case types.DELETE_USE_WIDGET.REQUEST:
+            return {
+                ...state,
+                useWidgetsLoading: true
+            };
+        case types.DELETE_USE_WIDGET.SUCCESS:
+            return {
+                ...state,
+                useWidgetsLoading: false
+            };
+        case types.DELETE_USE_WIDGET.FAILURE:
+            return {
+                ...state,
                 useWidgetsLoading: false
             };
         default:

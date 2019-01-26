@@ -65,8 +65,9 @@ export const addUseWidgetRequest = (dashboardId, addedWidgetType) => ({
     addedWidgetType
 });
 
-export const addUseWidgetSuccess = () => ({
-    type: types.ADD_USE_WIDGET.SUCCESS
+export const addUseWidgetSuccess = (useWidgets) => ({
+    type: types.ADD_USE_WIDGET.SUCCESS,
+    useWidgets
 });
 
 export const addUseWidgetFailure = () => ({
@@ -74,10 +75,21 @@ export const addUseWidgetFailure = () => ({
 });
 
 
-export const deleteUseWidgetRequest = () => ({
-    type: types.DELETE_USING_WIDGET.REQUEST
+// deleteUseWidget
+export const deleteUseWidgetRequest = (widget) => ({
+    type: types.DELETE_USE_WIDGET.REQUEST,
+    widget
 });
 
+export const deleteUseWidgetSuccess = () => ({
+    type: types.DELETE_USE_WIDGET.SUCCESS
+});
+
+export const deleteUseWidgetFailure = (widget) => ({
+    type: types.DELETE_USE_WIDGET.FAILURE
+});
+
+
 export const modifyUseWidgetRequest = () => ({
-    type: types.MODIFY_USING_WIDGET.REQUEST
+    type: types.MODIFY_USE_WIDGET.REQUEST
 });
