@@ -7,10 +7,11 @@ import { getWidgetComponent } from '../../widgets/widgets';
 import WidgetEditWrapper from './widgetEditWrapper';
 
 import {
-    getWidgetTypesRequest,
-    getUseWidgetsRequest,
-    addUseWidgetRequest
+    getUseWidgetsRequest
 } from '../../../redux/actions/widgets';
+import {
+    modifyDashboardLayoutRequest
+} from '../../../redux/actions/dashboards';
 
 class WidgetGallery extends Component {
     constructor(props) {
@@ -42,7 +43,7 @@ class WidgetGallery extends Component {
             <div className="widget-gallery">
                 <GridLayout className="widget-grids" draggableHandle=".widget-wrapper-header"
                     layout={this.state.dashboard.layout} cols={12} rowHeight={30} width={1200}
-                // verticalCompact={true}
+                    onLayoutChange={this.onLayoutChange.bind(this)}
                 >
                     {this.props.useWidgets.map((widgetInform) => {
                         return (
@@ -109,6 +110,10 @@ class WidgetGallery extends Component {
             </GridLayout>
         );
     }
+
+    onLayoutChange(layout) {
+        this.props.modifyDashboardLayoutRequest(layout);
+    }
 }
 
 const mapStateToProps = state => ({
@@ -116,7 +121,8 @@ const mapStateToProps = state => ({
     useWidgetsLoading: state.widget.useWidgetsLoading
 })
 const mapDispatchToProps = {
-    getUseWidgetsRequest
+    getUseWidgetsRequest,
+    modifyDashboardLayoutRequest
 }
 
 export default connect(

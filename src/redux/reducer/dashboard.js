@@ -49,11 +49,18 @@ export default function dashboardReducer(state = initialState, action = {}) {
             }
 
         // modify dashboard
-        case types.MODIFY_DASHBOARD:
+        case types.MODIFY_DASHBOARD_LAYOUT.REQUEST:
+            // return {
+            //     ...state
+            // }
+        case types.MODIFY_DASHBOARD_LAYOUT.SUCCESS:
+            // return {
+            //     ...state
+            // }
+        case types.MODIFY_DASHBOARD_LAYOUT.FAILURE:
             return {
-                ...state,
-                dashboards: action.dashboards
-            };
+                ...state
+            }
         default:
             return state
     }

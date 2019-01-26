@@ -9,7 +9,11 @@ export const types = {
         SUCCESS: 'CREATE_DASHBOARD.SUCCESS',
         FAILURE: 'CREATE_DASHBOARD.FAILURE'
     },
-    MODIFY_DASHBOARD: 'MODIFY_DASHBOARD'
+    MODIFY_DASHBOARD_LAYOUT: {
+        REQUEST: 'MODIFY_DASHBOARD_LAYOUT.REQUEST',
+        SUCCESS: 'MODIFY_DASHBOARD_LAYOUT.SUCCESS',
+        FAILURE: 'MODIFY_DASHBOARD_LAYOUT.FAILURE'
+    }
 };
 
 // get dashboards
@@ -43,8 +47,16 @@ export const createDashboardFailure = () => ({
     type: types.CREATE_DASHBOARD.FAILURE
 });
 
-// modify dashboard(for add, delete)
-export const modifyDashboard = (dashboard) => ({
-    type: types.MODIFY_DASHBOARD,
-    dashboard
+// modify dashboard layout
+export const modifyDashboardLayoutRequest = (layout) => ({
+    type: types.MODIFY_DASHBOARD_LAYOUT.REQUEST,
+    layout
+});
+
+export const modifyDashboardLayoutSuccess = () => ({
+    type: types.MODIFY_DASHBOARD_LAYOUT.SUCCESS
+});
+
+export const modifyDashboardLayoutFailure = () => ({
+    type: types.MODIFY_DASHBOARD_LAYOUT.FAILURE
 });

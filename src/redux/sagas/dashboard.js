@@ -3,16 +3,18 @@ import firebase from 'firebase';
 
 import rsf from '../rsf';
 import {
-	types,
-	getDashboardsSuccess,
+    types,
+    getDashboardsSuccess,
     getDashboardsFailure,
     createDashboardSuccess,
-    createDashboardFailure
+    createDashboardFailure,
+    modifyDashboardLayoutSuccess,
+    modifyDashboardLayoutFailure
 } from '../actions/dashboards';
-import { getUser } from './selector';
+import { getUser, getDashboards, getSelectedDashboardInd } from './selector';
 
 function* getDashboardsSaga() {
-    try{
+    try {
         let dashboards = [],
             selectedDashboardInd = -1,
             defaultDashboardId = null;
@@ -39,21 +41,21 @@ function* getDashboardsSaga() {
                 ...d.data()
             });
 
-            if(defaultDashboardId && d.id === defaultDashboardId) {
+            if (defaultDashboardId && d.id === defaultDashboardId) {
                 selectedDashboardInd = ind;
             }
         });
 
-        selectedDashboardInd = selectedDashboardInd === -1 ? dashboards.length-1 : selectedDashboardInd;
+        selectedDashboardInd = selectedDashboardInd === -1 ? dashboards.length - 1 : selectedDashboardInd;
 
         yield put(getDashboardsSuccess(dashboards, selectedDashboardInd, defaultDashboardId));
-    } catch(err) {
+    } catch (err) {
         console.log(err);
         yield put(getDashboardsFailure(err));
     }
 }
 
-function* createDashboardSaga({theme}) {
+function* createDashboardSaga({ theme }) {
     try {
         const user = yield select(getUser);
 
@@ -68,18 +70,57 @@ function* createDashboardSaga({theme}) {
                 layout: []
             }
         );
-        
+
         const dashboardSnapshot = yield call(rsf.firestore.getDocument, dashboardDocRef);
 
         yield put(createDashboardSuccess(dashboardSnapshot.data()));
-    } catch(err) {
+    } catch (err) {
         yield put(createDashboardFailure(err));
     }
 }
 
+function* modifyDashboardLayoutSaga({ layout }) {
+    try {
+        const user = yield select(getUser);
+        const dashboards = yield select(getDashboards);
+        const selectedDashboardInd = yield select(getSelectedDashboardInd);
+        const dashboard = dashboards[selectedDashboardInd];
+
+        let modifiedLayout = [];
+        let _i;
+
+        for(_i=0 ; _i<layout.length ; _i++) {
+            modifiedLayout.push({
+                i: layout[_i].i,
+                x: layout[_i].x,
+                y: layout[_i].y,
+                w: layout[_i].w,
+                h: layout[_i].h,
+                maxH: layout[_i].maxH,
+                minH: layout[_i].minH
+            });
+        }
+
+        yield call(
+            rsf.firestore.setDocument,
+            `users/${user.uid}/dashboards/${dashboard.id}`,
+            {
+                layout: modifiedLayout
+            },
+            { merge: true }
+        );
+
+        yield put(modifyDashboardLayoutSuccess());
+    } catch (err) {
+        console.log(err);
+        yield put(modifyDashboardLayoutFailure());
+    }
+}
+
 export default function* dashboardRootSaga() {
-	yield all([
+    yield all([
         takeEvery(types.GET_DASHBOARDS.REQUEST, getDashboardsSaga),
-        takeEvery(types.CREATE_DASHBOARD.REQUEST, createDashboardSaga)
-	]);
+        takeEvery(types.CREATE_DASHBOARD.REQUEST, createDashboardSaga),
+        takeEvery(types.MODIFY_DASHBOARD_LAYOUT.REQUEST, modifyDashboardLayoutSaga)
+    ]);
 }
