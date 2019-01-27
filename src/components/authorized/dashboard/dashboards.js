@@ -39,7 +39,7 @@ class Dashboards extends Component {
                     <div className="dashboard-container">
                         <div className="dashboard-header">
                             <button>{'<'}</button>
-                            <span>asdasd</span>
+                            <span>{this.state.showedDashboard.alias}</span>
                             <button>{'>'}</button>
                             <button>{'+'}</button>
                             <button>{'-'}</button>

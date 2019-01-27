@@ -87,25 +87,25 @@ function* addUseWidgetSaga({ addedWidgetType }) {
 		// add widget
 		const preAddedWidget = yield call(
 			rsf.firestore.addDocument,
-			`users/${user.uid}/dashboards/${dashboardId}/use_widgets`,
+			`users/${user.uid}/dashboards/${dashboard.id}/use_widgets`,
 			{
 				alias: addedWidgetType.alias,
 				name: addedWidgetType.name,
 				theme: addedWidgetType.theme
 			}
 		);
-		const AddedWidget = yield call(
+		const addedWidget = yield call(
 			rsf.firestore.getDocument,
 			preAddedWidget
 		);
 
 		widgetLayout.y = dashboard.height;
-		widgetLayout.i = AddedWidget.id;
+		widgetLayout.i = addedWidget.id;
 
 		// set dashboard
 		yield call(
 			rsf.firestore.setDocument,
-			`users/${user.uid}/dashboards/${dashboardId}`,
+			`users/${user.uid}/dashboards/${dashboard.id}`,
 			{
 				layout: [...dashboard.layout, widgetLayout],
 				height: dashboard.height + widgetLayout.h
@@ -113,16 +113,11 @@ function* addUseWidgetSaga({ addedWidgetType }) {
 			{ merge: true }
 		);
 
-		const addedWidgets = yield call(
-			rsf.firestore.getDocument,
-			`users/${user.uid}/dashboards/${dashboardId}/use_widgets`
-		);
-
 		// add widget into props.useWidgets
 		useWidgets.push({
-			id: AddedWidget.id,
+			id: addedWidget.id,
 			layout: widgetLayout,
-			...AddedWidget.data()
+			...addedWidget.data()
 		})
 
 		yield put(addUseWidgetSuccess(useWidgets));

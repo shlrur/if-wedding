@@ -60,17 +60,18 @@ function* createDashboardSaga({ theme }) {
             rsf.firestore.addDocument,
             `users/${user.uid}/dashboards`,
             {
-                alias: `dashboard ${now.getMonth()+1}/${now.getDate()} ${now.getHours()}:${now.getMinutes()}`,
+                alias: `dashboard ${now.getMonth() + 1}/${now.getDate()} ${now.getHours()}:${now.getMinutes()}`,
                 theme,
                 created_dtts: now.getTime(),
                 // last_contact_dtts: new Date().getTime(),
-                height: 0
+                height: 0,
+                layout: []
             }
         );
 
         const dashboardSnapshot = yield call(rsf.firestore.getDocument, dashboardDocRef);
 
-        yield put(createDashboardSuccess(dashboardSnapshot.data()));
+        yield put(createDashboardSuccess({id: dashboardSnapshot.id, ...dashboardSnapshot.data()}));
     } catch (err) {
         yield put(createDashboardFailure(err));
     }
@@ -79,25 +80,26 @@ function* createDashboardSaga({ theme }) {
 function* modifyDashboardLayoutSaga({ layout }) {
     try {
         const user = yield select(getUser);
-        const dashboards = yield select(getDashboards);
-        const selectedDashboardInd = yield select(getSelectedDashboardInd);
-        const dashboard = dashboards[selectedDashboardInd];
+        const _dashboards = yield select(getDashboards); // not use
+        const _selectedDashboardInd = yield select(getSelectedDashboardInd); // not use
+        const dashboard = _dashboards[_selectedDashboardInd];
 
         let modifiedLayout = [];
-        let _i;
+        let ind;
 
-        for(_i=0 ; _i<layout.length ; _i++) {
+        for (ind = 0; ind < layout.length; ind++) {
             modifiedLayout.push({
-                i: layout[_i].i,
-                x: layout[_i].x,
-                y: layout[_i].y,
-                w: layout[_i].w,
-                h: layout[_i].h,
-                maxH: layout[_i].maxH,
-                minH: layout[_i].minH
+                i: layout[ind].i,
+                x: layout[ind].x,
+                y: layout[ind].y,
+                w: layout[ind].w,
+                h: layout[ind].h,
+                maxH: layout[ind].maxH,
+                minH: layout[ind].minH
             });
         }
 
+        // 
         yield call(
             rsf.firestore.setDocument,
             `users/${user.uid}/dashboards/${dashboard.id}`,
