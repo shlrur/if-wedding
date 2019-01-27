@@ -57,7 +57,7 @@ class WidgetTypes extends Component {
     }
 
     addWidget(widgetType) {
-        this.props.addUseWidgetRequest(this.props.dashboardId, widgetType);
+        this.props.addUseWidgetRequest(widgetType);
     }
 }
 

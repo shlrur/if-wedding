@@ -1,5 +1,5 @@
-import { all, call, fork, put, take, takeEvery, select } from 'redux-saga/effects';
-import firebase from 'firebase';
+import { all, call, put, takeEvery, select } from 'redux-saga/effects';
+// import firebase from 'firebase';
 
 import rsf from '../rsf';
 import {
@@ -11,7 +11,7 @@ import {
     modifyDashboardLayoutSuccess,
     modifyDashboardLayoutFailure
 } from '../actions/dashboards';
-import { getUser, getDashboards, getSelectedDashboardInd } from './selector';
+import { getUser } from './selector';
 
 function* getDashboardsSaga() {
     try {
@@ -20,10 +20,6 @@ function* getDashboardsSaga() {
             defaultDashboardId = null;
         const user = yield select(getUser);
 
-        // const dashboardSnapshot = yield call(
-        //     rsf.firestore.getDocument,
-        //     firebase.firestore().collection(`dashboards`).where('owner', '==', user.uid)
-        // );
         const userSnapshot = yield call(
             rsf.firestore.getDocument,
             `users/${user.uid}`
@@ -58,16 +54,17 @@ function* getDashboardsSaga() {
 function* createDashboardSaga({ theme }) {
     try {
         const user = yield select(getUser);
+        const now = new Date();
 
         const dashboardDocRef = yield call(
             rsf.firestore.addDocument,
             `users/${user.uid}/dashboards`,
             {
+                alias: `dashboard ${now.getMonth()+1}/${now.getDate()} ${now.getHours()}:${now.getMinutes()}`,
                 theme,
-                created_dtts: new Date().getTime(),
-                last_contact_dtts: new Date().getTime(),
-                height: 0,
-                layout: []
+                created_dtts: now.getTime(),
+                // last_contact_dtts: new Date().getTime(),
+                height: 0
             }
         );
 

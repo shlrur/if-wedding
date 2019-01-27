@@ -42,15 +42,27 @@ function* getUseWidgetsSaga({ dashboardId }) {
 	try {
 		let useWidgets = [];
 		const user = yield select(getUser);
+		const _dashboards = yield select(getDashboards); // no use
+		const _selectedDashboardInd = yield select(getSelectedDashboardInd); // no use
+		const dashboard = _dashboards[_selectedDashboardInd];
 
 		const useWidgetsSnapshot = yield call(
 			rsf.firestore.getCollection,
 			`users/${user.uid}/dashboards/${dashboardId}/use_widgets`
 		);
 
+		let ind;
 		useWidgetsSnapshot.forEach((useWidget) => {
+			// search layout
+			for (ind = 0; ind < dashboard.layout.length; ind++) {
+				if (dashboard.layout[ind].i === useWidget.id) {
+					break;
+				}
+			}
+
 			useWidgets.push({
 				id: useWidget.id,
+				layout: dashboard.layout[ind],
 				...useWidget.data()
 			});
 		});
@@ -62,13 +74,18 @@ function* getUseWidgetsSaga({ dashboardId }) {
 	}
 }
 
-function* addUseWidgetSaga({ addedWidgetType, dashboardId }) {
+function* addUseWidgetSaga({ addedWidgetType }) {
 	try {
 		const user = yield select(getUser);
-		const useWidgets = yield select(getUseWidgets);
+		const _dashboards = yield select(getDashboards); // no use
+		const _selectedDashboardInd = yield select(getSelectedDashboardInd); // no use
+		const dashboard = _dashboards[_selectedDashboardInd];
+		const widgetLayout = { ...addedWidgetType.defaultLayout };
+		const _useWidgets = yield select(getUseWidgets); // no use
+		const useWidgets = [..._useWidgets];
 
 		// add widget
-		const doc = yield call(
+		const preAddedWidget = yield call(
 			rsf.firestore.addDocument,
 			`users/${user.uid}/dashboards/${dashboardId}/use_widgets`,
 			{
@@ -77,46 +94,38 @@ function* addUseWidgetSaga({ addedWidgetType, dashboardId }) {
 				theme: addedWidgetType.theme
 			}
 		);
-		const addedWidget = yield call(
+		const AddedWidget = yield call(
 			rsf.firestore.getDocument,
-			doc
+			preAddedWidget
 		);
 
-		// modify layout
-		const dashboardSnapshot = yield call(
-			rsf.firestore.getDocument,
-			`users/${user.uid}/dashboards/${dashboardId}`
-		);
-		let dashboard = dashboardSnapshot.data();
-		let layout = dashboard.layout;
+		widgetLayout.y = dashboard.height;
+		widgetLayout.i = AddedWidget.id;
 
-		layout.push({
-			i: addedWidget.id,
-			x: 0,
-			y: dashboard.height,
-			...addedWidgetType.defaultLayout
-		});
-
+		// set dashboard
 		yield call(
 			rsf.firestore.setDocument,
 			`users/${user.uid}/dashboards/${dashboardId}`,
 			{
-				layout,
-				height: dashboard.height + addedWidgetType.defaultLayout.h
+				layout: [...dashboard.layout, widgetLayout],
+				height: dashboard.height + widgetLayout.h
 			},
 			{ merge: true }
 		);
 
-		const dashboards = yield select(getDashboards);
-		const selectedDashboardInd = yield select(getSelectedDashboardInd);
+		const addedWidgets = yield call(
+			rsf.firestore.getDocument,
+			`users/${user.uid}/dashboards/${dashboardId}/use_widgets`
+		);
 
-		dashboards[selectedDashboardInd].layout = layout;
-		dashboards[selectedDashboardInd].height = dashboard.height + addedWidgetType.defaultLayout.h;
+		// add widget into props.useWidgets
+		useWidgets.push({
+			id: AddedWidget.id,
+			layout: widgetLayout,
+			...AddedWidget.data()
+		})
 
-		yield put(addUseWidgetSuccess([
-			...useWidgets,
-			{ id: addedWidget.id, ...addedWidget.data() }
-		]));
+		yield put(addUseWidgetSuccess(useWidgets));
 	} catch (err) {
 		console.log(err);
 		yield put(addUseWidgetFailure(err));
@@ -126,55 +135,59 @@ function* addUseWidgetSaga({ addedWidgetType, dashboardId }) {
 function* deleteUseWidgetSaga({ widget }) {
 	try {
 		const user = yield select(getUser);
-		const dashboards = yield select(getDashboards);
-		const selectedDashboardInd = yield select(getSelectedDashboardInd);
-		const useWidgets = yield select(getUseWidgets);
+		const _dashboards = yield select(getDashboards); // no use
+		const _selectedDashboardInd = yield select(getSelectedDashboardInd); // no use
+		const dashboard = _dashboards[_selectedDashboardInd];
+		const layout = [...dashboard.layout];
+		const _useWidgets = yield select(getUseWidgets); // no use
+		const useWidgets = [..._useWidgets];
 
-		const dashboard = dashboards[selectedDashboardInd];
-
-		let layout = dashboard.layout;
-		let targetWidgetInd = -1;
-		let deletedHeight = 0;
-		let i;
-
-		for(i=0 ; i<layout.length ; i++) {
-			if(targetWidgetInd !== -1) {
-				layout[i].y -= deletedHeight;
-			}
-
-			if(layout[i].i === widget.id) {
-				targetWidgetInd = i;
-				deletedHeight = layout[i].h;
-			}
-		}
-
-		layout.splice(targetWidgetInd, 1);
-		
-		dashboard.height -= deletedHeight;
-
-		yield call(
-			rsf.firestore.setDocument,
-			`users/${user.uid}/dashboards/${dashboard.id}`,
-			{
-				layout,
-				height: dashboard.height
-			},
-			{ merge: true }
-		);
-
+		// delete widget in use_widgets
 		yield call(
 			rsf.firestore.deleteDocument,
 			`users/${user.uid}/dashboards/${dashboard.id}/use_widgets/${widget.id}`
 		)
 
-		for(i=0 ; i<useWidgets.length ; i++) {
-			if(useWidgets[i].id === widget.id) {
-				break;
+		// set dashboard height and layout
+		useWidgets.sort((a, b) => { return a.layout.y - b.layout.y });
+		layout.sort((a, b) => { return a.y - b.y });
+
+		let ind;
+		let deletedWidgetInd = -1;
+		for (ind = 0; ind < useWidgets.length; ind++) {
+			if (deletedWidgetInd !== -1) {
+				// after found
+				useWidgets[ind].layout.y -= widget.height;
+				layout.y -= widget.height;
+			}
+
+			if (useWidgets[ind].id === widget.id) {
+				// find
+				deletedWidgetInd = ind;
+
+				// delete widget on firestore
+				yield call(
+					rsf.firestore.deleteDocument,
+					`users/${user.uid}/dashboards/${dashboard.id}/use_widgets/${useWidgets[ind].id}`
+				);
 			}
 		}
-		useWidgets.splice(i, 1);
 
-		yield put(deleteUseWidgetSuccess());
+		useWidgets.splice(deletedWidgetInd, 1);
+		layout.splice(deletedWidgetInd, 1);
+
+		// set dashboard
+		yield call(
+			rsf.firestore.setDocument,
+			`users/${user.uid}/dashboards/${dashboard.id}`,
+			{
+				layout,
+				height: dashboard.height - widget.layout.h
+			},
+			{ merge: true }
+		);
+
+		yield put(deleteUseWidgetSuccess(useWidgets));
 	} catch (err) {
 		console.log(err);
 		yield put(deleteUseWidgetFailure(err));

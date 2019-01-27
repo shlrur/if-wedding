@@ -48,7 +48,7 @@ class Dashboards extends Component {
                             <WidgetGallery dashboard={this.state.showedDashboard} />
                         </div>
                     </div>
-                    <WidgetTypes theme={this.state.showedDashboard ? this.state.showedDashboard.theme : null} dashboardId={this.state.showedDashboard.id}/>
+                    <WidgetTypes theme={this.state.showedDashboard ? this.state.showedDashboard.theme : null} />
                     {/* <button onClick={this.getWidgetTypes.bind(this)}>
                         get widget types
                     </button>

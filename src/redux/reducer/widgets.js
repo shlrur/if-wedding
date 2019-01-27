@@ -73,7 +73,8 @@ export default function widgetReducer(state = initialState, action = {}) {
         case types.DELETE_USE_WIDGET.SUCCESS:
             return {
                 ...state,
-                useWidgetsLoading: false
+                useWidgetsLoading: false,
+                useWidgets: action.useWidgets
             };
         case types.DELETE_USE_WIDGET.FAILURE:
             return {

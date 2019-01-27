@@ -60,9 +60,8 @@ export const getUseWidgetsFailure = () => ({
 
 
 // add use widget
-export const addUseWidgetRequest = (dashboardId, addedWidgetType) => ({
+export const addUseWidgetRequest = (addedWidgetType) => ({
     type: types.ADD_USE_WIDGET.REQUEST,
-    dashboardId,
     addedWidgetType
 });
 
