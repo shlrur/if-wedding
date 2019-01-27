@@ -99,6 +99,7 @@ function* addUseWidgetSaga({ addedWidgetType }) {
 			preAddedWidget
 		);
 
+		widgetLayout.x = 0;
 		widgetLayout.y = dashboard.height;
 		widgetLayout.i = addedWidget.id;
 
@@ -112,6 +113,8 @@ function* addUseWidgetSaga({ addedWidgetType }) {
 			},
 			{ merge: true }
 		);
+		dashboard.layout = [...dashboard.layout, widgetLayout];
+		dashboard.height += widgetLayout.h;
 
 		// add widget into props.useWidgets
 		useWidgets.push({
@@ -152,8 +155,8 @@ function* deleteUseWidgetSaga({ widget }) {
 		for (ind = 0; ind < useWidgets.length; ind++) {
 			if (deletedWidgetInd !== -1) {
 				// after found
-				useWidgets[ind].layout.y -= widget.height;
-				layout.y -= widget.height;
+				// useWidgets[ind].layout.y -= widget.layout.h;
+				layout[ind].y -= widget.layout.h;
 			}
 
 			if (useWidgets[ind].id === widget.id) {
@@ -181,6 +184,8 @@ function* deleteUseWidgetSaga({ widget }) {
 			},
 			{ merge: true }
 		);
+		dashboard.layout = layout;
+		dashboard.height -= widget.layout.h;
 
 		yield put(deleteUseWidgetSuccess(useWidgets));
 	} catch (err) {

@@ -49,15 +49,6 @@ class Dashboards extends Component {
                         </div>
                     </div>
                     <WidgetTypes theme={this.state.showedDashboard ? this.state.showedDashboard.theme : null} />
-                    {/* <button onClick={this.getWidgetTypes.bind(this)}>
-                        get widget types
-                    </button>
-                    <button onClick={this.getUsingWidgets.bind(this)}>
-                        get in use widgets
-                    </button>
-                    <button onClick={this.addUsingWidget.bind(this)}>
-                        add in use widgets
-                    </button> */}
                 </div>
             );
         }

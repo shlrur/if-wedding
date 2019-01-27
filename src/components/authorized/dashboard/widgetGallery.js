@@ -68,49 +68,6 @@ class WidgetGallery extends Component {
     onLayoutChange(layout) {
         // this.props.modifyDashboardLayoutRequest(layout);
     }
-
-    generateWidgetWrapper() {
-        // let tempWidgets = [
-        //     {
-        //         id: 'asdhkjhqwkdj', // psuedo code
-        //         themeName: 'bright',
-        //         widgetName: 'BrightGreeting1'
-        //     },
-        //     {
-        //         id: 'sdfsdfsdf', // psuedo code
-        //         themeName: 'bright',
-        //         widgetName: 'BrightGuestbook1'
-        //     },
-        //     {
-        //         id: 'asdhkjhasdfqwkdj', // psuedo code
-        //         themeName: 'bright',
-        //         widgetName: 'BrightMap1'
-        //     },
-        //     {
-        //         id: 'qersdfsdf', // psuedo code
-        //         themeName: 'bright',
-        //         widgetName: 'BrightPhotoalbum1'
-        //     }
-        // ];
-        // var layout = [
-        //     { i: 'asdhkjhqwkdj', x: 0, y: 0, w: 1, h: 2 },
-        //     { i: 'sdfsdfsdf', x: 1, y: 0, w: 3, h: 2, minW: 2, maxW: 4 },
-        //     { i: 'asdhkjhasdfqwkdj', x: 4, y: 0, w: 1, h: 2 },
-        //     { i: 'qersdfsdf', x: 6, y: 0, w: 1, h: 2 }
-        // ];
-
-        return (
-            <GridLayout className="widget-grids" draggableHandle=".widget-wrapper-header" layout={this.state.dashboard.layout} cols={12} rowHeight={30} width={1200}>
-                {this.props.useWidgets.map((widgetInform) => {
-                    return (
-                        <div className="widget-grid" key={widgetInform.id}>
-                            <WidgetEditWrapper widgetComponent={getWidgetComponent(widgetInform.widgetName)} inform={widgetInform} />
-                        </div>
-                    );
-                })}
-            </GridLayout>
-        );
-    }
 }
 
 const mapStateToProps = state => ({
