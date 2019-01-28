@@ -137,6 +137,7 @@ function* modifyDashboardLayoutSaga({ layout }) {
 
         let modifiedLayout = [];
         let ind;
+        let height = 0;
 
         for (ind = 0; ind < layout.length; ind++) {
             modifiedLayout.push({
@@ -148,6 +149,7 @@ function* modifyDashboardLayoutSaga({ layout }) {
                 maxH: layout[ind].maxH,
                 minH: layout[ind].minH
             });
+            height += layout[ind].h;
         }
 
         useWidgets.forEach((useWidget) => {
@@ -162,16 +164,16 @@ function* modifyDashboardLayoutSaga({ layout }) {
         console.log(modifiedLayout);
 
         dashboard.layout = modifiedLayout;
+        dashboard.height = height;
 
         yield call(
-            rsf.firestore.updateDocument,
+            rsf.firestore.setDocument,
             `users/${user.uid}/dashboards/${dashboard.id}`,
-            'layout',
-            modifiedLayout
-            // {
-            //     layout: modifiedLayout
-            // },
-            // { merge: true }
+            {
+                height: height,
+                layout: modifiedLayout
+            },
+            { merge: true }
         );
 
         yield put(modifyDashboardLayoutSuccess());

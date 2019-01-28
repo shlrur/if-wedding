@@ -17,11 +17,7 @@ class WidgetGallery extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            dashboard: props.dashboard
-        };
-
-        this.props.getUseWidgetsRequest(this.state.dashboard.id);
+        this.props.getUseWidgetsRequest(props.dashboard.id);
     }
 
     render() {
@@ -61,18 +57,48 @@ class WidgetGallery extends Component {
 
     componentWillReceiveProps(nextProps) {
         // get use widgets when dashboard "changed"
-        if (!this.state.dashboard || this.state.dashboard.id !== nextProps.dashboard.id) {
-            this.setState({
-                dashboard: nextProps.dashboard
-            });
+        if (!this.props.dashboard || this.props.dashboard.id !== nextProps.dashboard.id) {
 
             this.props.getUseWidgetsRequest(nextProps.dashboard.id);
         }
     }
 
     onLayoutChange(layout) {
-        this.props.modifyDashboardLayoutRequest(layout);
-        // console.log(layout);
+        let dashboardLayout = [...this.props.dashboard.layout];
+
+        // if each other dashboard layout, just return.
+        if (layout.length !== dashboardLayout.length) {
+            return;
+        }
+
+        dashboardLayout.sort((a, b) => { return a.y - b.y; });
+        layout.sort((a, b) => { return a.y - b.y; });
+
+        if(dashboardLayout[0].i !== layout[0].i) {
+            return ;
+        }
+
+        // if perfectely same layout, just return.
+        let isSame = true,
+            ind;
+
+        for(ind=0 ; ind<layout.length ; ind++) {
+            isSame = (
+                layout[ind].i === dashboardLayout[ind].i &&
+                layout[ind].x === dashboardLayout[ind].x &&
+                layout[ind].y === dashboardLayout[ind].y &&
+                layout[ind].h === dashboardLayout[ind].h &&
+                layout[ind].w === dashboardLayout[ind].w
+            ) && isSame;
+
+            if(!isSame) {
+                break;
+            }
+        }
+
+        if(!isSame) {
+            this.props.modifyDashboardLayoutRequest(layout);
+        }
     }
 }
 
