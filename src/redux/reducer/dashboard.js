@@ -48,6 +48,25 @@ export default function dashboardReducer(state = initialState, action = {}) {
                 loading: false
             };
 
+        // delete dashboard
+        case types.DELETE_DASHBOARD.REQUEST:
+            return {
+                ...state,
+                loading: true
+            };
+        case types.DELETE_DASHBOARD.SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                dashboards: action.dashboards,
+                selectedDashboardInd: action.selectedDashboardInd
+            };
+        case types.DELETE_DASHBOARD.FAILURE:
+            return {
+                ...state,
+                loading: false
+            };
+
         // modify dashboard
         case types.MODIFY_DASHBOARD_LAYOUT.REQUEST:
             return {

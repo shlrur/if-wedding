@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import {
     getDashboardsRequest,
     createDashboardRequest,
+    deleteDashboardRequest,
     resetDashboardStates,
     getPrevDashboard,
     getNextDashboard
@@ -21,7 +22,8 @@ class Dashboards extends Component {
 
         this.state = {
             showedDashboard: null,
-            showingCreateDashboardModal: false
+            showingCreateDashboardModal: false,
+            showingDeleteDashboardModal: false
         };
     }
 
@@ -31,9 +33,17 @@ class Dashboards extends Component {
         } else if (this.props.dashboards.length === 0 || this.state.showingCreateDashboardModal) {
             return (
                 <div>
-                    showing add dashboard window
+                    <p>showing add dashboard modal</p>
                     <button onClick={() => { this.setState({ showingCreateDashboardModal: false }); }}>Close</button>
                     <button onClick={this.createDashboard.bind(this, 'bright')}>bright theme</button>
+                </div>
+            );
+        } else if(this.state.showingDeleteDashboardModal) {
+            return (
+                <div>
+                    <p>showing delete dashboard modal</p>
+                    <button onClick={() => { this.setState({ showingDeleteDashboardModal: false }); }}>Close</button>
+                    <button onClick={this.deleteDashboard.bind(this, this.state.showedDashboard)}>Delete!!!!</button>
                 </div>
             );
         } else {
@@ -46,7 +56,7 @@ class Dashboards extends Component {
                             <span>{this.state.showedDashboard.alias}</span>
                             <button onClick={this.getNextDashboard.bind(this)} disabled={this.props.dashboards.length - 1 === this.props.selectedDashboardInd}>{'>'}</button>
                             <button onClick={() => { this.setState({ showingCreateDashboardModal: true }); }}>{'+'}</button>
-                            <button>{'-'}</button>
+                            <button onClick={() => { this.setState({ showingDeleteDashboardModal: true }); }}>{'-'}</button>
                         </div>
                         <div className="dashboard-body">
                             <WidgetGallery dashboard={this.state.showedDashboard} />
@@ -90,6 +100,12 @@ class Dashboards extends Component {
 
         this.setState({ showingCreateDashboardModal: false });
     }
+
+    deleteDashboard(dashboard) {
+        this.props.deleteDashboardRequest(dashboard);
+
+        this.setState({ showingDeleteDashboardModal: false });
+    }
 }
 
 const mapStateToProps = state => ({
@@ -102,6 +118,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
     getDashboardsRequest,
     createDashboardRequest,
+    deleteDashboardRequest,
     resetDashboardStates,
     resetWidgetStates,
     getPrevDashboard,

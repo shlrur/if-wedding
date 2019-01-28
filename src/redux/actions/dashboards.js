@@ -9,6 +9,11 @@ export const types = {
         SUCCESS: 'CREATE_DASHBOARD.SUCCESS',
         FAILURE: 'CREATE_DASHBOARD.FAILURE'
     },
+    DELETE_DASHBOARD: {
+        REQUEST: 'DELETE_DASHBOARD.REQUEST',
+        SUCCESS: 'DELETE_DASHBOARD.SUCCESS',
+        FAILURE: 'DELETE_DASHBOARD.FAILURE'
+    },
     MODIFY_DASHBOARD_LAYOUT: {
         REQUEST: 'MODIFY_DASHBOARD_LAYOUT.REQUEST',
         SUCCESS: 'MODIFY_DASHBOARD_LAYOUT.SUCCESS',
@@ -54,6 +59,22 @@ export const createDashboardSuccess = (dashboard) => ({
 
 export const createDashboardFailure = () => ({
     type: types.CREATE_DASHBOARD.FAILURE
+});
+
+// delete dashboard
+export const deleteDashboardRequest = (dashboard) => ({
+    type: types.DELETE_DASHBOARD.REQUEST,
+    dashboard
+});
+
+export const deleteDashboardSuccess = (dashboards, selectedDashboardInd) => ({
+    type: types.DELETE_DASHBOARD.SUCCESS,
+    dashboards,
+    selectedDashboardInd
+});
+
+export const deleteDashboardFailure = () => ({
+    type: types.DELETE_DASHBOARD.FAILURE
 });
 
 // modify dashboard layout

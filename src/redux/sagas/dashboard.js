@@ -8,6 +8,8 @@ import {
     getDashboardsFailure,
     createDashboardSuccess,
     createDashboardFailure,
+    deleteDashboardSuccess,
+    deleteDashboardFailure,
     modifyDashboardLayoutSuccess,
     modifyDashboardLayoutFailure
 } from '../actions/dashboards';
@@ -77,6 +79,54 @@ function* createDashboardSaga({ theme }) {
     }
 }
 
+function* deleteDashboardSaga({ dashboard }) {
+    try {
+        const user = yield select(getUser);
+        const useWidgets = yield select(getUseWidgets);
+        const _dashboards = yield select(getDashboards); // not use
+        const dashboards = [..._dashboards];
+
+        let selectedDashboardInd;
+
+        let ind;
+
+        // delete widgets on firestore
+        for (ind = 0; ind < useWidgets.length; ind++) {
+            yield call(
+                rsf.firestore.deleteDocument,
+                `users/${user.uid}/dashboards/${dashboard.id}/use_widgets/${useWidgets[ind].id}`
+            );
+        }
+
+        // delete dashboard on firestore
+        yield call(
+            rsf.firestore.deleteDocument,
+            `users/${user.uid}/dashboards/${dashboard.id}`
+        );
+
+        // delete redux dashboard
+        for (ind = 0; ind < dashboards.length; ind++) {
+            if (dashboards[ind].id === dashboard.id) {
+                break;
+            }
+        }
+
+        if(ind === dashboards.length-1) {
+            selectedDashboardInd = ind-1;
+        } else {
+            selectedDashboardInd = ind;
+        }
+
+        dashboards.splice(ind, 1);
+
+        yield put(deleteDashboardSuccess(dashboards, selectedDashboardInd));
+
+    } catch (err) {
+        console.log(err);
+        yield put(deleteDashboardFailure(err));
+    }
+}
+
 function* modifyDashboardLayoutSaga({ layout }) {
     try {
         const user = yield select(getUser);
@@ -135,6 +185,7 @@ export default function* dashboardRootSaga() {
     yield all([
         takeEvery(types.GET_DASHBOARDS.REQUEST, getDashboardsSaga),
         takeEvery(types.CREATE_DASHBOARD.REQUEST, createDashboardSaga),
+        takeEvery(types.DELETE_DASHBOARD.REQUEST, deleteDashboardSaga),
         takeEvery(types.MODIFY_DASHBOARD_LAYOUT.REQUEST, modifyDashboardLayoutSaga)
     ]);
 }
