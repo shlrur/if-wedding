@@ -9,6 +9,9 @@ import WidgetEditWrapper from './widgetEditWrapper';
 import {
     getUseWidgetsRequest
 } from '../../../redux/actions/widgets';
+import {
+    modifyDashboardLayoutRequest
+} from '../../../redux/actions/dashboards';
 
 class WidgetGallery extends Component {
     constructor(props) {
@@ -36,6 +39,8 @@ class WidgetGallery extends Component {
             );
         }
 
+        console.log('set widgets');
+        console.log(this.props.useWidgets);
         return (
             <div className="widget-gallery">
                 <GridLayout className="widget-grids" draggableHandle=".widget-wrapper-header"
@@ -66,7 +71,8 @@ class WidgetGallery extends Component {
     }
 
     onLayoutChange(layout) {
-        // this.props.modifyDashboardLayoutRequest(layout);
+        this.props.modifyDashboardLayoutRequest(layout);
+        // console.log(layout);
     }
 }
 
@@ -75,7 +81,8 @@ const mapStateToProps = state => ({
     useWidgetsLoading: state.widget.useWidgetsLoading
 });
 const mapDispatchToProps = {
-    getUseWidgetsRequest
+    getUseWidgetsRequest,
+    modifyDashboardLayoutRequest
 };
 
 export default connect(

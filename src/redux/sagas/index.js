@@ -4,10 +4,10 @@ import authentication from './authentication';
 import dashboards from './dashboard';
 import widgets from './widgets';
 
-export default function * rootSaga () {
-  yield all([
-    fork(authentication),
-    fork(dashboards),
-    fork(widgets)
-  ])
+export default function* rootSaga() {
+    yield all([
+        fork(authentication),
+        fork(dashboards),
+        fork(widgets)
+    ]);
 }

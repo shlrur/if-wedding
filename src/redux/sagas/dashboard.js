@@ -11,7 +11,7 @@ import {
     modifyDashboardLayoutSuccess,
     modifyDashboardLayoutFailure
 } from '../actions/dashboards';
-import { getUser, getDashboards, getSelectedDashboardInd } from './selector';
+import { getUser, getDashboards, getSelectedDashboardInd, getUseWidgets } from './selector';
 
 function* getDashboardsSaga() {
     try {
@@ -60,7 +60,7 @@ function* createDashboardSaga({ theme }) {
             rsf.firestore.addDocument,
             `users/${user.uid}/dashboards`,
             {
-                alias: `dashboard ${now.getMonth() + 1}/${now.getDate()} ${now.getHours()}:${now.getMinutes()}`,
+                alias: `dashboard ${now.getMonth() + 1}/${now.getDate()} ${now.toTimeString().split(' ')[0]}`,
                 theme,
                 created_dtts: now.getTime(),
                 // last_contact_dtts: new Date().getTime(),
@@ -71,7 +71,7 @@ function* createDashboardSaga({ theme }) {
 
         const dashboardSnapshot = yield call(rsf.firestore.getDocument, dashboardDocRef);
 
-        yield put(createDashboardSuccess({id: dashboardSnapshot.id, ...dashboardSnapshot.data()}));
+        yield put(createDashboardSuccess({ id: dashboardSnapshot.id, ...dashboardSnapshot.data() }));
     } catch (err) {
         yield put(createDashboardFailure(err));
     }
@@ -83,6 +83,7 @@ function* modifyDashboardLayoutSaga({ layout }) {
         const _dashboards = yield select(getDashboards); // not use
         const _selectedDashboardInd = yield select(getSelectedDashboardInd); // not use
         const dashboard = _dashboards[_selectedDashboardInd];
+        const useWidgets = yield select(getUseWidgets);
 
         let modifiedLayout = [];
         let ind;
@@ -99,14 +100,28 @@ function* modifyDashboardLayoutSaga({ layout }) {
             });
         }
 
-        // 
+        useWidgets.forEach((useWidget) => {
+            for (ind = 0; ind < modifiedLayout.length; ind++) {
+                if (useWidget.id === modifiedLayout[ind].i) {
+                    useWidget.layout = { ...modifiedLayout[ind] };
+                }
+            }
+        });
+
+        console.log(dashboard);
+        console.log(modifiedLayout);
+
+        dashboard.layout = modifiedLayout;
+
         yield call(
-            rsf.firestore.setDocument,
+            rsf.firestore.updateDocument,
             `users/${user.uid}/dashboards/${dashboard.id}`,
-            {
-                layout: modifiedLayout
-            },
-            { merge: true }
+            'layout',
+            modifiedLayout
+            // {
+            //     layout: modifiedLayout
+            // },
+            // { merge: true }
         );
 
         yield put(modifyDashboardLayoutSuccess());

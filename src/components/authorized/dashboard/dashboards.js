@@ -88,7 +88,7 @@ class Dashboards extends Component {
     createDashboard(theme) {
         this.props.createDashboardRequest(theme);
 
-        this.setState({ showingCreateDashboardModal: true });
+        this.setState({ showingCreateDashboardModal: false });
     }
 }
 

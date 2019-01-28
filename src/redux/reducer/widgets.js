@@ -26,7 +26,7 @@ export default function widgetReducer(state = initialState, action = {}) {
             return {
                 ...state,
                 widgetTypesLoading: false,
-            }
+            };
         // in use widgets
         case types.GET_USE_WIDGETS.REQUEST:
             return {
@@ -85,6 +85,6 @@ export default function widgetReducer(state = initialState, action = {}) {
         case types.RESET_WIDGET_STATES:
             return initialState;
         default:
-            return state
+            return state;
     }
 }

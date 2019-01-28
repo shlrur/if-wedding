@@ -1,11 +1,11 @@
-import { types } from '../actions/authentication'
+import { types } from '../actions/authentication';
 
 const initialState = {
     loading: false,
     loggedIn: false,
     isChecked: false,
     user: null
-}
+};
 
 export default function loginReducer(state = initialState, action = {}) {
     switch (action.type) {
@@ -14,7 +14,7 @@ export default function loginReducer(state = initialState, action = {}) {
             return {
                 ...state,
                 loading: true
-            }
+            };
         case types.LOGIN.SUCCESS:
             return {
                 ...state,
@@ -22,23 +22,23 @@ export default function loginReducer(state = initialState, action = {}) {
                 loggedIn: true,
                 isChecked: true,
                 user: action.user
-            }
+            };
         case types.LOGIN.FAILURE:
             return {
                 ...state,
                 loading: false
-            }
+            };
         case types.LOGOUT.SUCCESS:
             return {
                 ...initialState,
                 isChecked: true
-            }
+            };
         case types.LOGOUT.FAILURE:
             return {
                 ...state,
                 loading: false
-            }
+            };
         default:
-            return state
+            return state;
     }
 }
