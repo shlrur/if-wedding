@@ -1,5 +1,5 @@
 import { all, call, put, takeEvery, select } from 'redux-saga/effects';
-// import firebase from 'firebase';
+import firebase from 'firebase';
 
 import rsf from '../rsf';
 import {
@@ -11,7 +11,7 @@ import {
     modifyDashboardLayoutSuccess,
     modifyDashboardLayoutFailure
 } from '../actions/dashboards';
-import { getUser } from './selector';
+import { getUser, getDashboards, getSelectedDashboardInd } from './selector';
 
 function* getDashboardsSaga() {
     try {
@@ -26,7 +26,7 @@ function* getDashboardsSaga() {
         );
         const dashboardsSnapshot = yield call(
             rsf.firestore.getCollection,
-            `users/${user.uid}/dashboards`
+            firebase.firestore().collection(`users/${user.uid}/dashboards`).orderBy('created_dtts')
         );
 
         defaultDashboardId = userSnapshot.data().default_dashboard_id;

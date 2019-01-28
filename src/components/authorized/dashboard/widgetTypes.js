@@ -52,7 +52,7 @@ class WidgetTypes extends Component {
                 showedDashboardTheme: nextProps.theme
             });
 
-            this.props.getWidgetTypesRequest(this.state.showedDashboardTheme);
+            this.props.getWidgetTypesRequest(nextProps.theme);
         }
     }
 
@@ -64,13 +64,13 @@ class WidgetTypes extends Component {
 const mapStateToProps = state => ({
     loading: state.widget.widgetTypesLoading,
     widgetTypes: state.widget.widgetTypes
-})
+});
 const mapDispatchToProps = {
     getWidgetTypesRequest,
     addUseWidgetRequest
-}
+};
 
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(WidgetTypes)
+)(WidgetTypes);

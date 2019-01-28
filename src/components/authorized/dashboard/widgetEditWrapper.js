@@ -23,14 +23,14 @@ class WidgetEditWrapper extends Component {
     }
 }
 
-const mapStateToProps = state => ({
+// const mapStateToProps = state => ({
 
-})
+// });
 const mapDispatchToProps = {
     deleteUseWidgetRequest
-}
+};
 
 export default connect(
     null,
     mapDispatchToProps
-)(WidgetEditWrapper)
+)(WidgetEditWrapper);

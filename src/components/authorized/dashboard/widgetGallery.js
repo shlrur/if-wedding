@@ -16,7 +16,7 @@ class WidgetGallery extends Component {
 
         this.state = {
             dashboard: props.dashboard
-        }
+        };
 
         this.props.getUseWidgetsRequest(this.state.dashboard.id);
     }
@@ -61,7 +61,7 @@ class WidgetGallery extends Component {
                 dashboard: nextProps.dashboard
             });
 
-            this.props.getUseWidgetsRequest(this.state.dashboard.id);
+            this.props.getUseWidgetsRequest(nextProps.dashboard.id);
         }
     }
 
@@ -73,12 +73,12 @@ class WidgetGallery extends Component {
 const mapStateToProps = state => ({
     useWidgets: state.widget.useWidgets,
     useWidgetsLoading: state.widget.useWidgetsLoading
-})
+});
 const mapDispatchToProps = {
     getUseWidgetsRequest
-}
+};
 
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(WidgetGallery)
+)(WidgetGallery);

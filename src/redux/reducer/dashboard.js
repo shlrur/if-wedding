@@ -50,16 +50,30 @@ export default function dashboardReducer(state = initialState, action = {}) {
 
         // modify dashboard
         case types.MODIFY_DASHBOARD_LAYOUT.REQUEST:
-            // return {
-            //     ...state
-            // }
+        // return {
+        //     ...state
+        // }
         case types.MODIFY_DASHBOARD_LAYOUT.SUCCESS:
-            // return {
-            //     ...state
-            // }
+        // return {
+        //     ...state
+        // }
         case types.MODIFY_DASHBOARD_LAYOUT.FAILURE:
             return {
                 ...state
+            }
+
+        // get prev dashboard
+        case types.GET_PREV_DASHBOARD.REQUEST:
+            return {
+                ...state,
+                selectedDashboardInd: state.selectedDashboardInd - 1
+            }
+
+        // get next dashboard
+        case types.GET_NEXT_DASHBOARD.REQUEST:
+            return {
+                ...state,
+                selectedDashboardInd: state.selectedDashboardInd + 1
             }
 
         // reset dashboard states

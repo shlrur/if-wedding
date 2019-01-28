@@ -14,6 +14,14 @@ export const types = {
         SUCCESS: 'MODIFY_DASHBOARD_LAYOUT.SUCCESS',
         FAILURE: 'MODIFY_DASHBOARD_LAYOUT.FAILURE'
     },
+    GET_PREV_DASHBOARD: {
+        REQUEST: 'GET_PREV_DASHBOARD.REQUEST',
+        SUCCESS: 'GET_PREV_DASHBOARD.SUCCESS'
+    },
+    GET_NEXT_DASHBOARD: {
+        REQUEST: 'GET_NEXT_DASHBOARD.REQUEST',
+        SUCCESS: 'GET_NEXT_DASHBOARD.SUCCESS'
+    },
     RESET_DASHBOARD_STATES: 'RESET_DASHBOARD_STATES'
 };
 
@@ -62,7 +70,17 @@ export const modifyDashboardLayoutFailure = () => ({
     type: types.MODIFY_DASHBOARD_LAYOUT.FAILURE
 });
 
+// get prev dashboard
+export const getPrevDashboard = () => ({
+    type: types.GET_PREV_DASHBOARD.REQUEST
+});
+
+// get next dashboard
+export const getNextDashboard = () => ({
+    type: types.GET_NEXT_DASHBOARD.REQUEST
+});
+
 // reset dashboards state
 export const resetDashboardStates = () => ({
     type: types.RESET_DASHBOARD_STATES
-})
+});
