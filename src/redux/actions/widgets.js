@@ -86,7 +86,7 @@ export const deleteUseWidgetSuccess = (useWidgets) => ({
     useWidgets
 });
 
-export const deleteUseWidgetFailure = (widget) => ({
+export const deleteUseWidgetFailure = () => ({
     type: types.DELETE_USE_WIDGET.FAILURE
 });
 
