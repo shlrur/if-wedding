@@ -18,7 +18,6 @@ class BrightPhotoalbum1 extends Component {
     }
 
     render() {
-        console.log('test', _.isEqual([1, 2], [2, 1]), _.isEqual([1, 2], [1, 2]));
         return (
             <div>
                 <input id={`${this.props.inform.id}-setImages`}
@@ -31,11 +30,12 @@ class BrightPhotoalbum1 extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
+        console.log('props changed!!');
         let widgetProp = nextProps.useWidgets.filter((useWidget) => {
             return useWidget.id === this.props.inform.id;
         })[0];
 
-        if(!_.isEqual(this.state.showingImageUrls, widgetProp.configs.showingImageUrls)) {
+        if (!_.isEqual(this.state.showingImageUrls, widgetProp.configs.showingImageUrls)) {
             this.setState({
                 showingImageUrls: widgetProp.configs.showingImageUrls
             });
@@ -43,12 +43,15 @@ class BrightPhotoalbum1 extends Component {
     }
 
     setImages(e) {
+        // TODO: limit file size.
         this.setState({
             addingImages: e.target.files
         });
     }
 
     uploadImages() {
+        this.props.setAlbumWidgetImagesRequest([...this.state.addingImages], this.props.inform.id);
+
         this.setState({
             addingImages: []
         });

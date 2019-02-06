@@ -12,15 +12,16 @@ export const types = {
 };
 
 // set images
-export const setAlbumWidgetImagesRequest = (images) => ({
+export const setAlbumWidgetImagesRequest = (images, widgetId) => ({
     type: types.SET_ALBUM_WIDGET_IMAGES.REQUEST,
-    images
+    images,
+    widgetId
 });
 
-export const setAlbumWidgetImagesSuccess = (urls) => ({
-    type: types.SET_ALBUM_WIDGET_IMAGES.SUCCESS,
-    urls
-});
+// export const setAlbumWidgetImagesSuccess = (urls) => ({
+//     type: types.SET_ALBUM_WIDGET_IMAGES.SUCCESS,
+//     urls
+// });
 
 export const setAlbumWidgetImagesFailure = () => ({
     type: types.SET_ALBUM_WIDGET_IMAGES.FAILURE
@@ -33,10 +34,10 @@ export const getAlbumWidgetImagesRequest = (urls) => ({
     urls
 });
 
-export const getAlbumWidgetImagesSuccess = (images) => ({
-    type: types.GET_ALBUM_WIDGET_IMAGES.SUCCESS,
-    images
-});
+// export const getAlbumWidgetImagesSuccess = (images) => ({
+//     type: types.GET_ALBUM_WIDGET_IMAGES.SUCCESS,
+//     images
+// });
 
 export const getAlbumWidgetImagesFailure = () => ({
     type: types.GET_ALBUM_WIDGET_IMAGES.FAILURE

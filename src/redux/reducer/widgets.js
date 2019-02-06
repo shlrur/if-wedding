@@ -84,6 +84,12 @@ export default function widgetReducer(state = initialState, action = {}) {
         // reset widget states
         case types.RESET_WIDGET_STATES:
             return initialState;
+        // changed widget configs
+        case types.CHANGED_USE_WIDGETS_CONFIGS:
+            return {
+                ...state,
+                useWidgets: action.useWidgets
+            };
         default:
             return state;
     }
