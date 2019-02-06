@@ -91,7 +91,8 @@ function* addUseWidgetSaga({ addedWidgetType }) {
             {
                 alias: addedWidgetType.alias,
                 name: addedWidgetType.name,
-                theme: addedWidgetType.theme
+                theme: addedWidgetType.theme,
+                configs: addedWidgetType.defaultConfigs
             }
         );
         const addedWidget = yield call(

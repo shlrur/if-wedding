@@ -10,9 +10,10 @@ class WidgetEditWrapper extends Component {
         return (
             <div>
                 <div className="widget-wrapper-header" >
+                    {this.props.inform.alias}
                     <button className="delete_widget_btn" onClick={this.deleteWidget.bind(this)}>X</button>
                 </div>
-                <WidgetComponent></WidgetComponent>
+                <WidgetComponent inform={this.props.inform}></WidgetComponent>
             </div>
         );
     }
