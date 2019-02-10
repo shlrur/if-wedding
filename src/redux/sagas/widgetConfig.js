@@ -22,60 +22,40 @@ function* setAlbumWidgetImagesSaga({ images, widgetId }) {
                 return _useWidget.id === widgetId;
             })[0]
         };
+
         let i;
         let task;
-        let subscribe;
-
-        var next = function (snapshot) {
-            console.log(snapshot)
-        };
-        var error = function (error) {
-            console.log('upload image error: ', error);
-        };
-        var complete = function () {
-            console.log('image upload complete');
-        };
+        let fileUniqName;
+        let uploadedFileInfos = [];
 
         for (i = 0; i < images.length; i++) {
-            task = yield call(rsf.storage.uploadFile, `test-${i}`, images[i]);
+            let time = new Date();
+            fileUniqName = `${user.uid}/${useWidget.id}/${time.getTime()}`;
+            task = yield call(rsf.storage.uploadFile, fileUniqName, images[i]);
 
-            // subscribe = eventChannel(emit => task.task.on('state_changed', emit));
-            task.task
-                .then(snapshot => console.log('0 ', snapshot.ref.getDownloadURL()))
-                .then((url) => {
-                    console.log('1 ', url);
-                })
-                .catch((error) => {
-                    // A full list of error codes is available at
-                    // https://firebase.google.com/docs/storage/web/handle-errors
-                    switch (error.code) {
-                        case 'storage/unauthorized':
-                            // User doesn't have permission to access the object
-                            break;
-                        case 'storage/canceled':
-                            // User canceled the upload
-                            break;
-                        //  ...
-                        case 'storage/unknown':
-                            // Unknown error occurred, inspect error.serverResponse
-                            break;
-                    }
+            const promise = new Promise((resolve) => {
+                task.task.on('state_changed', (snapshot) => {
+                    var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                    console.log('Upload is ' + progress + '% done');
+                }, (error) => {
+                    throw(error);
+                }, () => {
+                    task.task.snapshot.ref.getDownloadURL().then((downloadURL) => {
+                        resolve({
+                            fileName: fileUniqName,
+                            fileUrl: downloadURL
+                        });
+                    });
                 });
+            });
 
-            // subscribe({
-            //     'next': (snapshot) => {
-            //         console.log(snapshot);
-            //     },
-            //     'error': (err) => {
-            //         console.log('upload image error: ', err);
-            //     },
-            //     'complete': () => {
-            //         console.log('image upload complete');
-            //     }
-            // });
+            const uploadInfo = yield promise;
+            uploadedFileInfos.push(uploadInfo);
 
             yield task;
         }
+
+        console.log(uploadedFileInfos);
 
         useWidget.configs.showingImageUrls = ['123', '456'];
 
