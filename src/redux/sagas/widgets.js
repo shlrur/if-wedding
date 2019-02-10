@@ -141,6 +141,15 @@ function* deleteUseWidgetSaga({ widget }) {
         const _useWidgets = yield select(getUseWidgets); // no use
         const useWidgets = [..._useWidgets];
 
+        let ind;
+
+        if (widget.name.indexOf('photoAlbum') !== -1) {
+            // delete images if widget is album
+            for(ind=0 ; ind<widget.configs.showingImageInfos.length ; ind++) {
+                yield call(rsf.storage.deleteFile, widget.configs.showingImageInfos[ind].filePath);
+            }
+        }
+
         // delete widget in use_widgets
         yield call(
             rsf.firestore.deleteDocument,
@@ -151,24 +160,16 @@ function* deleteUseWidgetSaga({ widget }) {
         useWidgets.sort((a, b) => { return a.layout.y - b.layout.y; });
         layout.sort((a, b) => { return a.y - b.y; });
 
-        let ind;
         let deletedWidgetInd = -1;
         for (ind = 0; ind < useWidgets.length; ind++) {
             if (deletedWidgetInd !== -1) {
                 // after found
-                // useWidgets[ind].layout.y -= widget.layout.h;
                 layout[ind].y -= widget.layout.h;
             }
 
             if (useWidgets[ind].id === widget.id) {
                 // find
                 deletedWidgetInd = ind;
-
-                // delete widget on firestore
-                yield call(
-                    rsf.firestore.deleteDocument,
-                    `users/${user.uid}/dashboards/${dashboard.id}/use_widgets/${useWidgets[ind].id}`
-                );
             }
         }
 

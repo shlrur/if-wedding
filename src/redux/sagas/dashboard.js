@@ -88,10 +88,17 @@ function* deleteDashboardSaga({ dashboard }) {
 
         let selectedDashboardInd;
 
-        let ind;
+        let ind, jnd;
 
         // delete widgets on firestore
         for (ind = 0; ind < useWidgets.length; ind++) {
+            if (useWidgets[ind].name.indexOf('photoAlbum') !== -1) {
+                // delete images if widget is album
+                for(jnd=0 ; jnd<useWidgets[ind].configs.showingImageInfos.length ; jnd++) {
+                    yield call(rsf.storage.deleteFile, useWidgets[ind].configs.showingImageInfos[jnd].filePath);
+                }
+            }
+
             yield call(
                 rsf.firestore.deleteDocument,
                 `users/${user.uid}/dashboards/${dashboard.id}/use_widgets/${useWidgets[ind].id}`

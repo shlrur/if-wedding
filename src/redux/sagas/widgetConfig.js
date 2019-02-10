@@ -31,7 +31,7 @@ function* setAlbumWidgetImagesSaga({ images, widgetId }) {
 
         for (i = 0; i < images.length; i++) {
             let time = new Date();
-            uniqFilePath = `${user.uid}/${useWidget.id}/${time.getTime()}`;
+            uniqFilePath = `${user.uid}/${dashboard.id}/${useWidget.id}/${time.getTime()}`;
             task = yield call(rsf.storage.uploadFile, uniqFilePath, images[i]);
 
             const promise = new Promise((resolve) => {
