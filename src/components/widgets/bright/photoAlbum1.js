@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import _ from 'lodash';
+import ImageGallery from 'react-image-gallery';
 
 import {
     getAlbumWidgetImagesRequest,
@@ -13,18 +14,25 @@ class BrightPhotoalbum1 extends Component {
 
         this.state = {
             addingImages: [],
-            showingImageUrls: []
+            showingImageInfos: this.props.inform.configs.showingImageInfos
         };
     }
 
     render() {
+        const images = this.state.showingImageInfos.map((imageInfo) => {
+            return {
+                original: imageInfo.fileUrl,
+                thumbnail: imageInfo.fileUrl
+            };
+        });
+
         return (
-            <div>
+            <div className="widget-photo-album">
                 <input id={`${this.props.inform.id}-setImages`}
                     type="file" multiple accept='image/*' onChange={this.setImages.bind(this)}></input>
                 <button onClick={this.uploadImages.bind(this)}>upload</button>
 
-                {this.showingImageUrls}
+                <ImageGallery items={images}/>
             </div>
         );
     }
@@ -35,9 +43,9 @@ class BrightPhotoalbum1 extends Component {
             return useWidget.id === this.props.inform.id;
         })[0];
 
-        if (!_.isEqual(this.state.showingImageUrls, widgetProp.configs.showingImageUrls)) {
+        if (!_.isEqual(this.state.showingImageInfos, widgetProp.configs.showingImageInfos)) {
             this.setState({
-                showingImageUrls: widgetProp.configs.showingImageUrls
+                showingImageInfos: widgetProp.configs.showingImageInfos
             });
         }
     }

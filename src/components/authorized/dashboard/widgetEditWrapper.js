@@ -8,7 +8,7 @@ class WidgetEditWrapper extends Component {
         // console.log(this.props);
         const WidgetComponent = this.props.widgetComponent;
         return (
-            <div>
+            <div style={{height:'100%'}}>
                 <div className="widget-wrapper-header" >
                     {this.props.inform.alias}
                     <button className="delete_widget_btn" onClick={this.deleteWidget.bind(this)}>X</button>

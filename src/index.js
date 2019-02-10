@@ -11,6 +11,7 @@ import 'bootstrap/dist/js/bootstrap.min.js';
 
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
+import 'react-image-gallery/styles/css/image-gallery.css';
 
 import '../assets/styles/main.css';
 
@@ -23,4 +24,4 @@ window.onload = () => {
     );
 };
 
-module.hot.accept();
+// module.hot.accept();

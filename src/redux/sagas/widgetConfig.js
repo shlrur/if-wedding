@@ -1,21 +1,22 @@
-import { eventChannel } from 'redux-saga';
 import { all, call, put, takeEvery, select } from 'redux-saga/effects';
-import firebase from 'firebase';
 
 import rsf from '../rsf';
 import {
     types,
-    getAlbumWidgetImagesSuccess,
-    getAlbumWidgetImagesFailure,
-    setAlbumWidgetImagesSuccess,
+    // getAlbumWidgetImagesSuccess,
+    // getAlbumWidgetImagesFailure,
+    // setAlbumWidgetImagesSuccess,
     setAlbumWidgetImagesFailure
 } from '../actions/widgetConfig';
 import { changedUseWidgetsConfigs } from '../actions/widgets';
-import { getUser, getUseWidgets } from './selector';
+import { getUser, getUseWidgets, getDashboards, getSelectedDashboardInd } from './selector';
 
 function* setAlbumWidgetImagesSaga({ images, widgetId }) {
     try {
         const user = yield select(getUser);
+        const _dashboards = yield select(getDashboards); // no use
+        const _selectedDashboardInd = yield select(getSelectedDashboardInd); // no use
+        const dashboard = _dashboards[_selectedDashboardInd];
         const _useWidgets = yield select(getUseWidgets); // no use
         const useWidget = {
             ..._useWidgets.filter((_useWidget) => {
@@ -25,13 +26,13 @@ function* setAlbumWidgetImagesSaga({ images, widgetId }) {
 
         let i;
         let task;
-        let fileUniqName;
+        let uniqFilePath;
         let uploadedFileInfos = [];
 
         for (i = 0; i < images.length; i++) {
             let time = new Date();
-            fileUniqName = `${user.uid}/${useWidget.id}/${time.getTime()}`;
-            task = yield call(rsf.storage.uploadFile, fileUniqName, images[i]);
+            uniqFilePath = `${user.uid}/${useWidget.id}/${time.getTime()}`;
+            task = yield call(rsf.storage.uploadFile, uniqFilePath, images[i]);
 
             const promise = new Promise((resolve) => {
                 task.task.on('state_changed', (snapshot) => {
@@ -42,7 +43,7 @@ function* setAlbumWidgetImagesSaga({ images, widgetId }) {
                 }, () => {
                     task.task.snapshot.ref.getDownloadURL().then((downloadURL) => {
                         resolve({
-                            fileName: fileUniqName,
+                            filePath: uniqFilePath,
                             fileUrl: downloadURL
                         });
                     });
@@ -55,9 +56,16 @@ function* setAlbumWidgetImagesSaga({ images, widgetId }) {
             yield task;
         }
 
-        console.log(uploadedFileInfos);
+        useWidget.configs.showingImageInfos = uploadedFileInfos;
 
-        useWidget.configs.showingImageUrls = ['123', '456'];
+        yield call(
+            rsf.firestore.setDocument,
+            `users/${user.uid}/dashboards/${dashboard.id}/use_widgets/${useWidget.id}`,
+            {
+                configs: useWidget.configs
+            },
+            { merge: true }
+        );
 
         let changedUseWidgets = _useWidgets.map((_useWidget) => {
             if (_useWidget.id === useWidget.id) {

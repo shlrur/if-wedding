@@ -48,6 +48,10 @@ body {
   max-width: 42em;
 }
 
+.mykim {
+  color: antiquewhite;
+}
+
 .unauthorized {
   height: 100%;
   background-image: url(../images/index.jpg);
@@ -210,5 +214,13 @@ body {
 
 .dashboards .widget-gallery .widget-wrapper-header .delete_widget_btn {
   float: right;
+}
+
+.widget-photo-album {
+  height: calc(100% - 30px);
+}
+
+.widget-photo-album .image-gallery {
+  height: 100%;
 }
 /*# sourceMappingURL=main.css.map */
