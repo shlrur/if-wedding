@@ -5,7 +5,6 @@ import { deleteUseWidgetRequest } from '../../../redux/actions/widgets';
 
 class WidgetEditWrapper extends Component {
     render() {
-        // console.log(this.props);
         const WidgetComponent = this.props.widgetComponent;
         return (
             <div style={{height:'100%'}}>
@@ -19,7 +18,6 @@ class WidgetEditWrapper extends Component {
     }
 
     deleteWidget() {
-        console.log(this.props.inform);
         this.props.deleteUseWidgetRequest(this.props.inform);
     }
 }

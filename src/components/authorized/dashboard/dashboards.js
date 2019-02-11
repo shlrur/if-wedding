@@ -47,7 +47,6 @@ class Dashboards extends Component {
                 </div>
             );
         } else {
-            console.log('draw dashboard');
             return (
                 <div className="dashboards">
                     <div className="dashboard-container">
@@ -80,7 +79,6 @@ class Dashboards extends Component {
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.dashboards.length > 0) {
-            console.log('got dashboard');
             this.setState({
                 showedDashboard: nextProps.dashboards[nextProps.selectedDashboardInd]
             });

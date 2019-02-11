@@ -1,0 +1,17 @@
+.wedding-information {
+    height: calc(100% - 56px);
+    .couple-information {
+        label {
+            font-size: 1.12rem;
+        }
+    }
+    .wedding-hall-map {
+        height: 500px;
+        #map {
+            width: calc(100% - 300px);
+        }
+        #map-search {
+            width: 300px;
+        }
+    }
+}

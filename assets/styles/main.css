@@ -32,7 +32,7 @@ a:focus, a:hover {
  */
 html {
   height: 100%;
-  background-color: #333;
+  background-color: #fff;
 }
 
 body {
@@ -222,5 +222,25 @@ body {
 
 .widget-photo-album .image-gallery {
   height: 100%;
+}
+
+.wedding-information {
+  height: calc(100% - 56px);
+}
+
+.wedding-information .couple-information label {
+  font-size: 1.12rem;
+}
+
+.wedding-information .wedding-hall-map {
+  height: 500px;
+}
+
+.wedding-information .wedding-hall-map #map {
+  width: calc(100% - 300px);
+}
+
+.wedding-information .wedding-hall-map #map-search {
+  width: 300px;
 }
 /*# sourceMappingURL=main.css.map */

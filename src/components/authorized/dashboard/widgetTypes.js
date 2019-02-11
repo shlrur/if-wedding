@@ -47,7 +47,6 @@ class WidgetTypes extends Component {
 
     componentWillReceiveProps(nextProps) {
         if (!this.state.showedDashboardTheme || this.state.showedDashboardTheme !== nextProps.theme) {
-            console.log('got theme');
             this.setState({
                 showedDashboardTheme: nextProps.theme
             });

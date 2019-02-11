@@ -26,7 +26,5 @@ export default class ContactUs extends Component {
 
     submitFormHandler(event) {
         event.preventDefault();
-
-        console.log(event.target.name.value);
     }
 }

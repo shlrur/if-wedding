@@ -35,12 +35,12 @@ class WidgetGallery extends Component {
             );
         }
 
-        console.log('set widgets');
-        console.log(this.props.useWidgets);
         return (
             <div className="widget-gallery">
                 <GridLayout className="widget-grids" draggableHandle=".widget-wrapper-header"
-                    cols={12} rowHeight={30} width={1200}
+                    cols={1} rowHeight={30} width={700}
+                    verticalCompact={true} compactType={'vertical'}
+                    margin={[0, 10]}
                     onLayoutChange={this.onLayoutChange.bind(this)}
                 >
                     {this.props.useWidgets.map((widgetInform) => {

@@ -13,6 +13,11 @@ export const types = {
         REQUEST: 'REGIST.REQUEST',
         SUCCESS: 'REGIST.SUCCESS',
         FAILURE: 'REGIST.FAILURE'
+    },
+    SET_WEDDING_INFORMATION: {
+        REQUEST: 'SET_WEDDING_INFORMATION.REQUEST',
+        SUCCESS: 'SET_WEDDING_INFORMATION.SUCCESS',
+        FAILURE: 'SET_WEDDING_INFORMATION.FAILURE'
     }
 };
 
@@ -51,4 +56,20 @@ export const logoutFailure = error => ({
 // regist user
 export const regist = () => ({
     type: types.REGIST.REQUEST
+});
+
+
+// set wedding information
+export const setWeddingInformation = (inform) => ({
+    type: types.SET_WEDDING_INFORMATION.REQUEST,
+    inform
+});
+
+export const setWeddingInformationSuccess = () => ({
+    type: types.SET_WEDDING_INFORMATION.SUCCESS
+});
+
+export const setWeddingInformationFailure = error => ({
+    type: types.SET_WEDDING_INFORMATION.FAILURE,
+    error
 });

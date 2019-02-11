@@ -38,6 +38,17 @@ export default function loginReducer(state = initialState, action = {}) {
                 ...state,
                 loading: false
             };
+        case types.SET_WEDDING_INFORMATION.REQUEST:
+            return {
+                ...state,
+                loading: true
+            };
+        case types.SET_WEDDING_INFORMATION.SUCCESS:
+        case types.SET_WEDDING_INFORMATION.FAILURE:
+            return {
+                ...state,
+                loading: false
+            };
         default:
             return state;
     }

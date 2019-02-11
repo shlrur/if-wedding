@@ -167,9 +167,6 @@ function* modifyDashboardLayoutSaga({ layout }) {
             }
         });
 
-        console.log(dashboard);
-        console.log(modifiedLayout);
-
         dashboard.layout = modifiedLayout;
         dashboard.height = height;
 

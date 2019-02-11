@@ -38,7 +38,6 @@ class BrightPhotoalbum1 extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        console.log('props changed!!');
         let widgetProp = nextProps.useWidgets.filter((useWidget) => {
             return useWidget.id === this.props.inform.id;
         })[0];

@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Route, Link, Switch } from 'react-router-dom';
-
-import PrivateRoute from '../common/privateRoute';
+import { Route, Link } from 'react-router-dom';
 
 import {
     logout
@@ -10,7 +8,7 @@ import {
 
 import Dashboards from './dashboard/dashboards';
 import Preview from './preview';
-import CoupleInformation from './coupleInform';
+import WeddingInformation from './weddingInform';
 
 class AuthorizedContainer extends Component {
     render() {
@@ -24,16 +22,7 @@ class AuthorizedContainer extends Component {
                     link: '/auth/preview'
                 }
             ];
-            const settingMenus = [
-                {
-                    alias: 'Couple Information',
-                    link: '/auth/settings/coupleinform'
-                }, {
-                    alias: 'Withdraw',
-                    link: '/auth/withdraw'
-                }
-            ];
-            console.log(this.props.match.url);
+
             return (
                 <div className="authorized-container">
                     <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -44,7 +33,7 @@ class AuthorizedContainer extends Component {
                         <div className="collapse navbar-collapse navbar-contents" id="navbarNav">
                             <ul className="navbar-nav">
                                 {mainMenus.map((menu, ind) => {
-                                    return <li className={"nav-item " + (this.props.location.pathname === menu.link ? 'active' : '')} key={ind}>
+                                    return <li className={`nav-item ${(this.props.location.pathname === menu.link ? 'active' : '')}`} key={ind}>
                                         <Link className="nav-link" to={menu.link}>
                                             {menu.alias}
                                             {this.props.location.pathname === menu.link ? <span className="sr-only">(current)</span> : ''}
@@ -58,13 +47,15 @@ class AuthorizedContainer extends Component {
                                         Settings
                                     </a>
                                     <div className="dropdown-menu dropdown-menu-lg-right" aria-labelledby="navbarDropdown">
-                                        <a className="dropdown-item" >Couple Information</a>
+                                        <Link className="dropdown-item" to="/auth/settings/weddinginform">
+                                            Wedding Information
+                                        </Link>
                                         <div className="dropdown-divider"></div>
                                         <a className="dropdown-item" >Withdraw</a>
                                     </div>
                                 </li>
                                 <li className="nav-item">
-                                    <a className="nav-link" onClick={() => { this.props.logout() }}>Logout</a>
+                                    <a className="nav-link" onClick={() => { this.props.logout(); }}>Logout</a>
                                 </li>
                             </ul>
                         </div>
@@ -72,7 +63,7 @@ class AuthorizedContainer extends Component {
 
                     <Route exact path={`${this.props.match.url}/dashboards`} component={Dashboards} />
                     <Route exact path={`${this.props.match.url}/preview`} component={Preview} />
-                    <Route exact path={`${this.props.match.url}/settings/coupleinform`} component={CoupleInformation} />
+                    <Route exact path={`${this.props.match.url}/settings/weddinginform`} component={WeddingInformation} />
                 </div>
             );
         } else {
@@ -92,12 +83,12 @@ const mapStateToProps = state => ({
     loggedIn: state.authentication.loggedIn,
     isChecked: state.authentication.isChecked,
     dashboard: state.dashboard.dashboard
-})
+});
 const mapDispatchToProps = {
     logout
-}
+};
 
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(AuthorizedContainer)
+)(AuthorizedContainer);

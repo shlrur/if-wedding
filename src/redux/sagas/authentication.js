@@ -56,27 +56,17 @@ function* registUser(user) {
             {
                 created_dtts: new Date().getTime(),
                 last_login_dtts: new Date().getTime(),
-                default_dashboard_id: null
+                default_dashboard_id: null,
+                weddingInformation: {
+                    groom: null,
+                    bride: null,
+                    greetingText: null,
+                    weddingHall: {
+                        address: null
+                    }
+                }
             }
         );
-
-        // create dashboard document
-        // const dashboardRef = yield call(
-        // 	rsf.firestore.addDocument,
-        // 	`users/${user.uid}/dashboards`,
-        // 	{
-        // 		last_contact_dtts: new Date().getTime()
-        // 	}
-        // ); * no need default dashboard
-
-        // create dummy widget for saving dashboard
-        // yield call(
-        // 	rsf.firestore.setDocument,
-        // 	`users/${user.uid}/dashboards/${dashboardRef.id}/use_widgets/dummy_widget`,
-        // 	{
-        // 		des: 'fake widget'
-        // 	}
-        // ); * no need fakewidget.
     } catch (err) {
         console.log(err);
     }
