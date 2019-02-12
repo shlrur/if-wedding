@@ -8,14 +8,14 @@ export default class WeddingHallSearchMap extends Component {
             searchKeyword: '',
             searchedPlaces: [],
             markers: [],
-            selectedPlace: null
+            selectedPlace: this.props.weddingPlace
         };
     }
     render() {
         return (
             <div className="text-center">
                 <h2>결혼식 장소</h2>
-                {this.state.selectedPlace ? this.state.selectedPlace.place_name : ''}
+                {this.state.selectedPlace ? this.state.selectedPlace.place_name : '선택하세요.'}
                 <div className="row wedding-hall-map">
                     <div id="map" />
                     <div id="map-search">
@@ -26,41 +26,39 @@ export default class WeddingHallSearchMap extends Component {
                         <ul id="placesList">
                             {
                                 this.state.searchedPlaces.map((place, ind) => {
+                                    let address;
                                     if (place.road_address_name) {
-                                        return (
-                                            <li className="item" key={ind}
-                                                onClick={this.searchedPlacesClickHandler.bind(this, ind)}
-                                                onMouseOver={this.searchedPlacesMouseOverHandler.bind(this, ind)}
-                                                onMouseOut={this.searchedPlacesMouseOutHandler.bind(this)}>
-                                                <span className={`markerbg marker_${ind + 1}`}></span>
-                                                <div className="info">
-                                                    <h5>{place.place_name}</h5>
-                                                    <span>{place.road_address_name}</span>
-                                                    <span className="jibun gray">{place.address_name}</span>
-                                                    <span className="tel">{place.phone}</span>
-                                                </div>
-                                            </li>
+                                        address = (
+                                            <div className="address">
+                                                <span>{place.road_address_name}</span>
+                                                <span className="jibun gray">{place.address_name}</span>
+                                            </div>
                                         );
                                     } else {
-                                        return (
-                                            <li className="item" key={ind}
-                                                onClick={this.searchedPlacesClickHandler.bind(this, ind)}
-                                                onMouseOver={this.searchedPlacesMouseOverHandler.bind(this, ind)}
-                                                onMouseOut={this.searchedPlacesMouseOutHandler.bind(this)}>
-                                                <span className={`markerbg marker_${ind + 1}`}></span>
-                                                <div className="info">
-                                                    <h5>{place.place_name}</h5>
-                                                    <span>{place.address_name}</span>
-                                                    <span className="tel">{place.phone}</span>
-                                                </div>
-                                            </li>
+                                        address = (
+                                            <div className="address">
+                                                <span>{place.address_name}</span>
+                                            </div>
                                         );
                                     }
+
+                                    return (
+                                        <li className="item" key={ind}
+                                            onClick={this.searchedPlacesClickHandler.bind(this, ind)}
+                                            onMouseOver={this.searchedPlacesMouseOverHandler.bind(this, ind)}
+                                            onMouseOut={this.searchedPlacesMouseOutHandler.bind(this)}>
+                                            <div className="info">
+                                                <h5>{place.place_name}</h5>
+                                                {address}
+                                                <span className="tel">{place.phone}</span>
+                                            </div>
+                                            <button onClick={this.selectPlaceHandler.bind(this, ind)}>선택</button>
+                                        </li>
+                                    );
                                 })
                             }
                         </ul>
-                        <div id="pagination">
-                        </div>
+                        <div id="pagination"></div>
                     </div>
                 </div>
             </div>
@@ -76,7 +74,10 @@ export default class WeddingHallSearchMap extends Component {
         this.ps = new window.daum.maps.services.Places();
         this.infowindow = new window.daum.maps.InfoWindow({ zIndex: 1 });
 
-        if (navigator.geolocation) {
+        if (this.state.selectedPlace) {
+            const { selectedPlace } = this.state;
+            this.map.setCenter(new window.daum.maps.LatLng(selectedPlace.y, selectedPlace.x));
+        } else if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition((position) => {
                 this.map.setCenter(new window.daum.maps.LatLng(position.coords.latitude, position.coords.longitude));
             });
@@ -84,7 +85,8 @@ export default class WeddingHallSearchMap extends Component {
     }
 
     searchedPlacesClickHandler(ind) {
-        this.map.setLevel(4);
+        this.map.setLevel(4, { animate: true });
+        this.map.setCenter(new window.daum.maps.LatLng(Number(this.state.searchedPlaces[ind].y), Number(this.state.searchedPlaces[ind].x)));
     }
 
     searchedPlacesMouseOverHandler(ind) {
@@ -94,6 +96,14 @@ export default class WeddingHallSearchMap extends Component {
 
     searchedPlacesMouseOutHandler() {
         this.infowindow.close();
+    }
+
+    selectPlaceHandler(ind) {
+        this.setState({
+            selectedPlace: this.state.searchedPlaces[ind]
+        });
+
+        this.props.onSelectWeddingPlace(this.state.searchedPlaces[ind]);
     }
 
     placeSearch() {

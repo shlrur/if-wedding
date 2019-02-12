@@ -1,15 +1,17 @@
 import firebase from 'firebase';
-import { all, call, fork, put, take, takeEvery } from 'redux-saga/effects';
+import { all, call, fork, put, take, takeEvery, select } from 'redux-saga/effects';
 
+import rsf from '../rsf';
 import {
     types,
     loginSuccess,
     loginFailure,
     logoutSuccess,
-    logoutFailure
+    logoutFailure,
+    setWeddingInformationSuccess,
+    setWeddingInformationFailure
 } from '../actions/authentication';
-
-import rsf from '../rsf';
+import { getUser } from './selector';
 
 function* loginSaga({ providerName }) {
     let authProvider = new firebase.auth.GoogleAuthProvider();
@@ -58,12 +60,24 @@ function* registUser(user) {
                 last_login_dtts: new Date().getTime(),
                 default_dashboard_id: null,
                 weddingInformation: {
-                    groom: null,
-                    bride: null,
-                    greetingText: null,
-                    weddingHall: {
-                        address: null
-                    }
+                    groom: {
+                        firstName: '',
+                        familyName: '',
+                        appellation: '',
+                        fatherName: '',
+                        motherName: '',
+                        phoneNumber: ''
+                    },
+                    bride: {
+                        firstName: '',
+                        familyName: '',
+                        appellation: '',
+                        fatherName: '',
+                        motherName: '',
+                        phoneNumber: ''
+                    },
+                    greetingText: '',
+                    weddingPlace: null
                 }
             }
         );
@@ -80,9 +94,13 @@ function* updateUser(user) {
             {
                 last_login_dtts: new Date().getTime()
             },
-            { merge: true });
+            { merge: true }
+        );
+
+        yield put(setWeddingInformationSuccess());
     } catch (err) {
         console.log(err);
+        yield put(setWeddingInformationFailure());
     }
 }
 
@@ -116,10 +134,26 @@ function* loginStatusWatcher() {
     }
 }
 
+function* setWeddingInformationSaga({ information }) {
+    try {
+        const user = yield select(getUser);
+
+        yield call(
+            rsf.firestore.setDocument,
+            `users/${user.uid}`,
+            { weddingInformation: information },
+            { merge: true }
+        );
+    } catch (err) {
+        console.log(err);
+    }
+}
+
 export default function* loginRootSaga() {
     yield fork(loginStatusWatcher);
     yield all([
         takeEvery(types.LOGIN.REQUEST, loginSaga),
-        takeEvery(types.LOGOUT.REQUEST, logoutSaga)
+        takeEvery(types.LOGOUT.REQUEST, logoutSaga),
+        takeEvery(types.SET_WEDDING_INFORMATION.REQUEST, setWeddingInformationSaga)
     ]);
 }

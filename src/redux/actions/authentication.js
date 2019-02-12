@@ -60,9 +60,9 @@ export const regist = () => ({
 
 
 // set wedding information
-export const setWeddingInformation = (inform) => ({
+export const setWeddingInformation = (information) => ({
     type: types.SET_WEDDING_INFORMATION.REQUEST,
-    inform
+    information
 });
 
 export const setWeddingInformationSuccess = () => ({
