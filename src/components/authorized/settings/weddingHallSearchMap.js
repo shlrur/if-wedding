@@ -7,13 +7,15 @@ export default class WeddingHallSearchMap extends Component {
         this.state = {
             searchKeyword: '',
             searchedPlaces: [],
-            markers: []
+            markers: [],
+            selectedPlace: null
         };
     }
     render() {
         return (
             <div className="text-center">
                 <h2>결혼식 장소</h2>
+                {this.state.selectedPlace ? this.state.selectedPlace.place_name : ''}
                 <div className="row wedding-hall-map">
                     <div id="map" />
                     <div id="map-search">
@@ -27,6 +29,7 @@ export default class WeddingHallSearchMap extends Component {
                                     if (place.road_address_name) {
                                         return (
                                             <li className="item" key={ind}
+                                                onClick={this.searchedPlacesClickHandler.bind(this, ind)}
                                                 onMouseOver={this.searchedPlacesMouseOverHandler.bind(this, ind)}
                                                 onMouseOut={this.searchedPlacesMouseOutHandler.bind(this)}>
                                                 <span className={`markerbg marker_${ind + 1}`}></span>
@@ -41,6 +44,7 @@ export default class WeddingHallSearchMap extends Component {
                                     } else {
                                         return (
                                             <li className="item" key={ind}
+                                                onClick={this.searchedPlacesClickHandler.bind(this, ind)}
                                                 onMouseOver={this.searchedPlacesMouseOverHandler.bind(this, ind)}
                                                 onMouseOut={this.searchedPlacesMouseOutHandler.bind(this)}>
                                                 <span className={`markerbg marker_${ind + 1}`}></span>
@@ -79,8 +83,13 @@ export default class WeddingHallSearchMap extends Component {
         }
     }
 
+    searchedPlacesClickHandler(ind) {
+        this.map.setLevel(4);
+    }
+
     searchedPlacesMouseOverHandler(ind) {
         this.displayInfowindow(this.state.markers[ind], this.state.searchedPlaces[ind].place_name);
+        this.map.setCenter(new window.daum.maps.LatLng(Number(this.state.searchedPlaces[ind].y), Number(this.state.searchedPlaces[ind].x)));
     }
 
     searchedPlacesMouseOutHandler() {
