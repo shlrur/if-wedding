@@ -238,9 +238,16 @@ body {
 
 .wedding-information .wedding-hall-map #map {
   width: calc(100% - 300px);
+  height: 100%;
 }
 
 .wedding-information .wedding-hall-map #map-search {
   width: 300px;
+  height: 100%;
+}
+
+.wedding-information .wedding-hall-map #map-search #placesList {
+  height: calc(100% - 60px);
+  overflow: auto;
 }
 /*# sourceMappingURL=main.css.map */

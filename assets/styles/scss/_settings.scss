@@ -9,9 +9,15 @@
         height: 500px;
         #map {
             width: calc(100% - 300px);
+            height: 100%;
         }
         #map-search {
             width: 300px;
+            height: 100%;
+            #placesList {
+                height: calc(100% - 60px);
+                overflow: auto;
+            }
         }
     }
 }

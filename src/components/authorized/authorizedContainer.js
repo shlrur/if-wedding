@@ -8,7 +8,7 @@ import {
 
 import Dashboards from './dashboard/dashboards';
 import Preview from './preview';
-import WeddingInformation from './weddingInform';
+import WeddingInformation from './settings/weddingInform';
 
 class AuthorizedContainer extends Component {
     render() {
