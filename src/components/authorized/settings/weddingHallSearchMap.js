@@ -5,7 +5,9 @@ export default class WeddingHallSearchMap extends Component {
         super(props);
 
         this.state = {
-            searchKeyword: ''
+            searchKeyword: '',
+            searchedPlaces: [],
+            markers: []
         };
     }
     render() {
@@ -20,8 +22,41 @@ export default class WeddingHallSearchMap extends Component {
                             <button onClick={this.placeSearch.bind(this)}>찾기</button>
                         </div>
                         <ul id="placesList">
+                            {
+                                this.state.searchedPlaces.map((place, ind) => {
+                                    if (place.road_address_name) {
+                                        return (
+                                            <li className="item" key={ind}
+                                                onMouseOver={this.searchedPlacesMouseOverHandler.bind(this, ind)}
+                                                onMouseOut={this.searchedPlacesMouseOutHandler.bind(this)}>
+                                                <span className={`markerbg marker_${ind + 1}`}></span>
+                                                <div className="info">
+                                                    <h5>{place.place_name}</h5>
+                                                    <span>{place.road_address_name}</span>
+                                                    <span className="jibun gray">{place.address_name}</span>
+                                                    <span className="tel">{place.phone}</span>
+                                                </div>
+                                            </li>
+                                        );
+                                    } else {
+                                        return (
+                                            <li className="item" key={ind}
+                                                onMouseOver={this.searchedPlacesMouseOverHandler.bind(this, ind)}
+                                                onMouseOut={this.searchedPlacesMouseOutHandler.bind(this)}>
+                                                <span className={`markerbg marker_${ind + 1}`}></span>
+                                                <div className="info">
+                                                    <h5>{place.place_name}</h5>
+                                                    <span>{place.address_name}</span>
+                                                    <span className="tel">{place.phone}</span>
+                                                </div>
+                                            </li>
+                                        );
+                                    }
+                                })
+                            }
                         </ul>
-                        <div id="pagination"></div>
+                        <div id="pagination">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -44,8 +79,15 @@ export default class WeddingHallSearchMap extends Component {
         }
     }
 
+    searchedPlacesMouseOverHandler(ind) {
+        this.displayInfowindow(this.state.markers[ind], this.state.searchedPlaces[ind].place_name);
+    }
+
+    searchedPlacesMouseOutHandler() {
+        this.infowindow.close();
+    }
+
     placeSearch() {
-        console.log(this.state.searchKeyword);
         if (!this.state.searchKeyword.replace(/^\s+|\s+$/g, '')) {
             console.log('no keyword');
 
@@ -85,14 +127,11 @@ export default class WeddingHallSearchMap extends Component {
 
     // 검색 결과 목록과 마커를 표출하는 함수입니다
     displayPlaces(places) {
-
-        var listEl = document.getElementById('placesList'),
-            menuEl = document.getElementById('map-search'),
-            fragment = document.createDocumentFragment(),
+        var menuEl = document.getElementById('placesList'),
             bounds = new window.daum.maps.LatLngBounds();
 
-        // 검색 결과 목록에 추가된 항목들을 제거합니다
-        this.removeAllChildNods(listEl);
+        let searchedPlaces = [];
+        let markers = [];
 
         // 지도에 표시되고 있는 마커를 제거합니다
         this.removeMarker();
@@ -101,8 +140,10 @@ export default class WeddingHallSearchMap extends Component {
 
             // 마커를 생성하고 지도에 표시합니다
             var placePosition = new window.daum.maps.LatLng(places[i].y, places[i].x),
-                marker = this.addMarker(placePosition, i),
-                itemEl = this.getListItem(i, places[i]); // 검색 결과 항목 Element를 생성합니다
+                marker = this.addMarker(placePosition, i);
+
+            searchedPlaces.push(places[i]);
+            markers.push(marker);
 
             // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
             // LatLngBounds 객체에 좌표를 추가합니다
@@ -120,48 +161,23 @@ export default class WeddingHallSearchMap extends Component {
                     this.infowindow.close();
                 });
 
-                itemEl.onmouseover = () => {
-                    this.displayInfowindow(marker, title);
-                };
+                // itemEl.onmouseover = () => {
+                //     this.displayInfowindow(marker, title);
+                // };
 
-                itemEl.onmouseout = () => {
-                    this.infowindow.close();
-                };
+                // itemEl.onmouseout = () => {
+                //     this.infowindow.close();
+                // };
             })(marker, places[i].place_name);
-
-            fragment.appendChild(itemEl);
         }
 
         // 검색결과 항목들을 검색결과 목록 Elemnet에 추가합니다
-        listEl.appendChild(fragment);
+        // listEl.appendChild(fragment);
+        this.setState({ searchedPlaces, markers });
         menuEl.scrollTop = 0;
 
         // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
         this.map.setBounds(bounds);
-    }
-
-    // 검색결과 항목을 Element로 반환하는 함수입니다
-    getListItem(index, places) {
-
-        var el = document.createElement('li'),
-            itemStr = '<span class="markerbg marker_' + (index + 1) + '"></span>' +
-                '<div class="info">' +
-                '   <h5>' + places.place_name + '</h5>';
-
-        if (places.road_address_name) {
-            itemStr += '    <span>' + places.road_address_name + '</span>' +
-                '   <span class="jibun gray">' + places.address_name + '</span>';
-        } else {
-            itemStr += '    <span>' + places.address_name + '</span>';
-        }
-
-        itemStr += '  <span class="tel">' + places.phone + '</span>' +
-            '</div>';
-
-        el.innerHTML = itemStr;
-        el.className = 'item';
-
-        return el;
     }
 
     // 마커를 생성하고 지도 위에 마커를 표시하는 함수입니다
@@ -230,12 +246,5 @@ export default class WeddingHallSearchMap extends Component {
 
         this.infowindow.setContent(content);
         this.infowindow.open(this.map, marker);
-    }
-
-    // 검색결과 목록의 자식 Element를 제거하는 함수입니다
-    removeAllChildNods(el) {
-        while (el.hasChildNodes()) {
-            el.removeChild(el.lastChild);
-        }
     }
 }
