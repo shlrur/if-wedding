@@ -2,6 +2,17 @@
  * Globals
  */
 
+@font-face {
+  font-family: OpenSans;
+  src: local(OpenSans),
+       url('../../fonts/OpenSans.eot') format('embedded-opentype'),
+       url(OpenSans.woff2) format('woff2'),
+       url(OpenSans.woff) format('woff'),
+       url(NanumSquareR.ttf) format('truetype');
+  font-style: normal;
+  unicode-range: U+0-10FFFF; 
+}
+
 /* Links */
 
 a {
@@ -50,9 +61,4 @@ body {
 
 .cover-container {
     max-width: 42em;
-}
-
-// mykim test
-.mykim {
-  color:antiquewhite;
 }
