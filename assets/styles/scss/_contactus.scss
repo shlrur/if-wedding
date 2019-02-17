@@ -1,0 +1,22 @@
+.contact-us {
+    .form-control {
+        border: 1px solid #ddd;
+        border-radius: 0;
+    }
+    input::placeholder,
+    textarea::placeholder {
+        color: #b7b7b7;
+        font-weight: 300;
+    }
+}
+
+@media (max-width: 768px) {
+    .contact-us {
+        input {
+            margin-bottom: 10px;
+        }
+        textarea {
+            height: 120px !important;
+        }
+    }
+}

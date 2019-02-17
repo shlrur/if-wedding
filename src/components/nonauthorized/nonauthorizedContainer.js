@@ -12,13 +12,13 @@ class NonAuthorizedContainer extends Component {
             return (
                 <div className="unauthorized">
                     <div className="cover-container welcome-background text-center d-flex w-100 h-100 p-3 mx-auto flex-column">
-                        <header className="masthead mb-auto">
+                        <header className="masthead">
                             <div className="inner">
-                                <h3 className="masthead-brand">If Wedding</h3>
-                                <nav className="nav nav-masthead justify-content-center">
+                                <span className="masthead-brand">If Wedding</span>
+                                <nav className="nav nav-masthead justify-content-center menu-bar">
                                     <Link className={`nav-link ${(this.props.location.pathname === '/' ? 'active' : '')}`} to={`${this.props.match.url}`}>Welcome</Link>
                                     <Link className={`nav-link ${(this.props.location.pathname.indexOf('contactus') !== -1 ? 'active' : '')}`} to={`${this.props.match.url}contactus`}>Contact</Link>
-                                    <Link className={`nav-link ${(this.props.location.pathname.indexOf('login') !== -1 ? 'active' : '')}`} to={`${this.props.match.url}login`}>Sign up&in</Link>
+                                    <Link className={`nav-link ${(this.props.location.pathname.indexOf('login') !== -1 ? 'active' : '')}`} to={`${this.props.match.url}login`}>Sign in</Link>
                                 </nav>
                             </div>
                         </header>

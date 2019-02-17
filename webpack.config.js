@@ -26,6 +26,10 @@ module.exports = {
                         loader: 'url-loader'
                     }
                 ]
+            },
+            {
+                test: /\.(eot|woff|woff2|svg|ttf)([\?]?.*)$/,
+                use: ['file-loader']
             }
         ]
     },

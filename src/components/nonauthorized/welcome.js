@@ -7,8 +7,8 @@ export default class Welcome extends Component {
         return (
             <main role="main" className="inner cover">
                 <h1 className="cover-heading">당신의 결혼을 축하드립니다.</h1>
-                <p className="lead">자신만의 청첩장을 직접 만들어보세요. 무료입니다.</p>
-                <p className="lead">
+                <p>무료로 청첩장을 직접 만들어보세요.</p>
+                <p>
                     <Link className="btn btn-lg btn-secondary" to="/login">Start</Link>
                 </p>
             </main>
