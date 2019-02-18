@@ -1,6 +1,25 @@
 /*
  * Globals
  */
+@font-face {
+  font-family: OpenSans;
+  src: local(OpenSans), url("../fonts/OpenSans.eot") format("embedded-opentype"), url("../fonts/OpenSans.woff2") format("woff2"), url("../fonts/OpenSans.woff") format("woff"), url("../fonts/OpenSans.ttf") format("truetype");
+  font-style: normal;
+  unicode-range: U+0-10FFFF;
+}
+
+html, body {
+  font-size: 13px;
+}
+
+html, h1, h2, h3, h4, h5, h6, a, p {
+  font-family: OpenSans, sans-serif;
+}
+
+ul {
+  list-style-type: none;
+}
+
 /* Links */
 a {
   color: #fff;
@@ -27,6 +46,27 @@ a:focus, a:hover {
   border: .05rem solid #fff;
 }
 
+.btn-success,
+.btn-success.focus,
+.btn-success:focus,
+.btn-success.disabled,
+.btn-success.disabled:hover,
+.btn-success:disabled,
+.btn-success:not(:disabled):not(.disabled).active,
+.btn-success:not(:disabled):not(.disabled):active,
+.show > .btn-success.dropdown-toggle {
+  background-color: #222222;
+  border-color: #222222;
+  border-radius: 0;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+}
+
+.btn-success:hover {
+  background-color: #2f2f2f;
+  border-color: #2f2f2f;
+}
+
 /*
  * Base structure
  */
@@ -45,11 +85,7 @@ body {
 }
 
 .cover-container {
-  max-width: 42em;
-}
-
-.mykim {
-  color: antiquewhite;
+  max-width: 55em;
 }
 
 .unauthorized {
@@ -63,39 +99,34 @@ body {
   display: -ms-flexbox;
   display: -webkit-box;
   display: flex;
-  text-shadow: 0 0.05rem 0.1rem rgba(0, 0, 0, 0.5);
 }
 
 /*
  * Header
  */
 .masthead {
-  margin-bottom: 2rem;
+  margin-bottom: 5rem;
 }
 
 .masthead-brand {
   margin-bottom: 0;
+  text-transform: uppercase;
 }
 
 .nav-masthead .nav-link {
   padding: .25rem 0;
-  font-weight: 700;
-  color: rgba(255, 255, 255, 0.5);
-  background-color: transparent;
-  border-bottom: .25rem solid transparent;
 }
 
 .nav-masthead .nav-link:hover {
-  border-bottom-color: rgba(255, 255, 255, 0.25);
+  color: #222;
 }
 
 .nav-masthead .nav-link + .nav-link {
-  margin-left: 1rem;
+  margin-left: 2rem;
 }
 
 .nav-masthead .active {
-  color: #fff;
-  border-bottom-color: #fff;
+  color: #222;
 }
 
 @media (min-width: 48em) {
@@ -105,6 +136,11 @@ body {
   .nav-masthead {
     float: right;
   }
+}
+
+.menu-bar {
+  font-size: 13px;
+  text-transform: uppercase;
 }
 
 /*
@@ -122,37 +158,82 @@ body {
 /*
  * Footer
  */
+footer {
+  font-size: 12px;
+}
+
 .mastfoot {
   color: rgba(255, 255, 255, 0.5);
 }
 
+.login .row {
+  padding-left: 0;
+}
+
 .login .login-btn {
-  height: 100%;
-  width: 100%;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
 }
 
 .login #google {
   background: url("../images/icon/icon_google.png");
-  background-size: cover;
+  background-size: 100%;
   background-position: center;
+  background-repeat: no-repeat;
+  background-size: 90%;
+  background-color: #d95032;
 }
 
 .login #facebook {
   background: url("../images/icon/icon_facebook.png");
-  background-size: cover;
+  background-size: 100%;
   background-position: center;
+  background-repeat: no-repeat;
+  background-size: 65%;
+  background-position: 10px 14px;
+  background-color: #3c579e;
 }
 
 .login #twitter {
   background: url("../images/icon/icon_twitter.png");
-  background-size: cover;
+  background-size: 100%;
   background-position: center;
+  background-repeat: no-repeat;
+  background-size: 82%;
+  background-color: #55acee;
 }
 
 .login #github {
   background: url("../images/icon/icon_github.png");
-  background-size: cover;
+  background-size: 100%;
   background-position: center;
+  background-repeat: no-repeat;
+  background-color: #000000;
+}
+
+@media (max-width: 768px) {
+  .login .login-btn {
+    width: 100%;
+    height: 50px;
+    border-radius: 0;
+  }
+  .login #google {
+    background-size: 45px;
+    margin-bottom: 12px;
+  }
+  .login #facebook {
+    background-size: 36px;
+    background-position: 48% 4px;
+    margin-bottom: 12px;
+  }
+  .login #twitter {
+    background-size: 45px;
+    margin-bottom: 12px;
+  }
+  .login #github {
+    background-size: 45px;
+  }
 }
 
 .authorized-container {
@@ -249,5 +330,47 @@ body {
 .wedding-information .wedding-hall-map #map-search #placesList {
   height: calc(100% - 60px);
   overflow: auto;
+}
+
+.contact-us .form-control {
+  border: 1px solid #ddd;
+  border-radius: 0;
+}
+
+.contact-us input::-webkit-input-placeholder,
+.contact-us textarea::-webkit-input-placeholder {
+  color: #b7b7b7;
+  font-weight: 300;
+}
+
+.contact-us input:-ms-input-placeholder,
+.contact-us textarea:-ms-input-placeholder {
+  color: #b7b7b7;
+  font-weight: 300;
+}
+
+.contact-us input::-ms-input-placeholder,
+.contact-us textarea::-ms-input-placeholder {
+  color: #b7b7b7;
+  font-weight: 300;
+}
+
+.contact-us input::placeholder,
+.contact-us textarea::placeholder {
+  color: #b7b7b7;
+  font-weight: 300;
+}
+
+@media (max-width: 768px) {
+  .contact-us input {
+    margin-bottom: 10px;
+  }
+  .contact-us textarea {
+    height: 120px !important;
+  }
+}
+
+.cover-heading {
+  margin-top: 4%;
 }
 /*# sourceMappingURL=main.css.map */

@@ -5,14 +5,14 @@ import React, { Component } from 'react';
 export default class ContactUs extends Component {
     render() {
         return (
-            <div className="container">
-                <h4 className="my-3 text-center">Contact Us</h4>
+            <div className="container contact-us">
+                <h4 className="my-4 text-center">Contact Us</h4>
                 <form onSubmit={this.submitFormHandler}>
                     <div className="form-row">
                         <div className="col-md-6">
-                            <input type="text" className="form-control" placeholder="Your Name" id="name" />
-                            <input type="email" className="form-control mt-1" placeholder="Your Email" id="email" />
-                            <input type="number" className="form-control mt-1" placeholder="Your Phone" id="number" />
+                            <input type="text" className="form-control" placeholder="Name" id="name" />
+                            <input type="email" className="form-control mt-1" placeholder="Email" id="email" />
+                            <input type="tel" className="form-control mt-1" placeholder="Phone" id="number" />
                         </div>
                         <div className="col-md-6">
                             <textarea className="form-control h-100" placeholder="May I help you?" id="content" />

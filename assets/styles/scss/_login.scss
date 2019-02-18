@@ -1,24 +1,64 @@
 .login {
+    .row {
+        padding-left: 0;
+    }
+
     .login-btn {
-        height: 100%;
-        width: 100%;
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
     }
 
     @mixin logo-background($imagePath) {
         background: url($imagePath);
-        background-size: cover;
+        background-size: 100%;
         background-position: center;
+        background-repeat: no-repeat;
     }
     #google {
         @include logo-background("../images/icon/icon_google.png");
+        background-size: 90%;
+        background-color: #d95032;
     }
     #facebook {
         @include logo-background("../images/icon/icon_facebook.png");
+        background-size: 65%;
+        background-position: 10px 14px;
+        background-color: #3c579e;
     }
     #twitter {
         @include logo-background("../images/icon/icon_twitter.png");
+        background-size: 82%;
+        background-color: #55acee;
     }
     #github {
         @include logo-background("../images/icon/icon_github.png");
+        background-color: #000000;
+    }
+}
+
+@media (max-width: 768px) {
+    .login {
+        .login-btn {
+            width: 100%;
+            height: 50px;
+            border-radius: 0;
+        }
+        #google {
+            background-size: 45px;
+            margin-bottom: 12px;
+        }
+        #facebook {
+            background-size: 36px;
+            background-position: 48% 4px;
+            margin-bottom: 12px;
+        }
+        #twitter {
+            background-size: 45px;
+            margin-bottom: 12px;
+        }
+        #github {
+            background-size: 45px;
+        }
     }
 }
