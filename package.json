@@ -42,6 +42,8 @@
     "dependencies": {
         "bootstrap": "^4.2.1",
         "firebase": "^5.8.1",
+        "i18next": "^15.0.4",
+        "i18next-browser-languagedetector": "^3.0.1",
         "immutable": "^4.0.0-rc.12",
         "jquery": "^3.3.1",
         "lodash": "^4.17.11",
@@ -49,6 +51,7 @@
         "react": "^16.7.0",
         "react-dom": "^16.7.0",
         "react-grid-layout": "^0.16.6",
+        "react-i18next": "^10.1.2",
         "react-image-gallery": "^0.8.12",
         "react-redux": "^5.1.1",
         "react-router": "^4.3.1",
