@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Route, Link } from 'react-router-dom';
 
+import i18n from '../../i18n/i18n';
+
 import welcome from './welcome';
 import contactus from './contactus';
 import login from './login';
@@ -18,7 +20,7 @@ class NonAuthorizedContainer extends Component {
                                 <nav className="nav nav-masthead justify-content-center menu-bar">
                                     <Link className={`nav-link ${(this.props.location.pathname === '/' ? 'active' : '')}`} to={`${this.props.match.url}`}>Welcome</Link>
                                     <Link className={`nav-link ${(this.props.location.pathname.indexOf('contactus') !== -1 ? 'active' : '')}`} to={`${this.props.match.url}contactus`}>Contact</Link>
-                                    <Link className={`nav-link ${(this.props.location.pathname.indexOf('login') !== -1 ? 'active' : '')}`} to={`${this.props.match.url}login`}>Sign in</Link>
+                                    <Link className={`nav-link ${(this.props.location.pathname.indexOf('login') !== -1 ? 'active' : '')}`} to={`${this.props.match.url}login`}>{i18n.t('label.signIn')}</Link>
                                 </nav>
                             </div>
                         </header>
