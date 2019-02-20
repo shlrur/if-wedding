@@ -7,10 +7,10 @@ export default class Welcome extends Component {
     render() {
         return (
             <main role="main" className="inner cover">
-                <h1 className="cover-heading">{i18n.t('label.congratulation')}</h1>
-                <p>무료로 청첩장을 직접 만들어보세요.</p>
+                <h1 className="cover-heading">{i18n.t('nonauth.congratulation')}</h1>
+                <p>{i18n.t('nonauth.forfree')}</p>
                 <p>
-                    <Link className="btn btn-lg btn-secondary" to="/login">Start</Link>
+                    <Link className="btn btn-lg btn-secondary" to="/login">{i18n.t('nonauth.start')}</Link>
                 </p>
             </main>
         );

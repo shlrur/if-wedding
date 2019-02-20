@@ -1,8 +1,48 @@
 {
     "translation": {
-        "label": {
+        "nonauth": {
             "signIn": "Sign In",
-            "congratulation": "Congratulations on Your Marriage."
+            "congratulation": "Congratulations on Your Marriage.",
+            "welcome": "Welcome",
+            "contact": "Contact",
+            "forfree": "Make your own wedding invitations for free.",
+            "start": "Start",
+            "contactus": "Contact Us",
+            "name": "Name",
+            "email": "E-mail",
+            "phone": "Phone",
+            "contents": "May I help you?",
+            "sendemail": "Send E-mail"
+        },
+        "weddingInform": {
+            "save": "Save",
+            "bride": "Bride",
+            "groom": "Groom",
+            "familyName": "last Name",
+            "firstName": "First Name",
+            "kinshipTerms": "Kinship Terms",
+            "fatherName": "Father's Name",
+            "motherName": "Mother's Name",
+            "phone": "Phone",
+            "greeting": "Greeting Text",
+            "greetingPlaceholder": "Please join us and give us a lot of blessings and encouragement.",
+            "weddingPlace": "Wedding Hall Place",
+            "bridePlaceholder": {
+                "familyName": "Capulet",
+                "firstName": "Juliet",
+                "kinshipTerms": "Daughter",
+                "fatherName": "Capulet",
+                "motherName": "Lady Capulet",
+                "phone": "010-1234-5678"
+            },
+            "groomPlaceholder": {
+                "familyName": "Montague",
+                "firstName": "Romeo",
+                "kinshipTerms": "Son",
+                "fatherName": "Montague",
+                "motherName": "Lady Montague",
+                "phone": "010-5678-1234"
+            }
         }
     }
 }

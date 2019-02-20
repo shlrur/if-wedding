@@ -18,9 +18,9 @@ class NonAuthorizedContainer extends Component {
                             <div className="inner">
                                 <span className="masthead-brand">If Wedding</span>
                                 <nav className="nav nav-masthead justify-content-center menu-bar">
-                                    <Link className={`nav-link ${(this.props.location.pathname === '/' ? 'active' : '')}`} to={`${this.props.match.url}`}>Welcome</Link>
-                                    <Link className={`nav-link ${(this.props.location.pathname.indexOf('contactus') !== -1 ? 'active' : '')}`} to={`${this.props.match.url}contactus`}>Contact</Link>
-                                    <Link className={`nav-link ${(this.props.location.pathname.indexOf('login') !== -1 ? 'active' : '')}`} to={`${this.props.match.url}login`}>{i18n.t('label.signIn')}</Link>
+                                    <Link className={`nav-link ${(this.props.location.pathname === '/' ? 'active' : '')}`} to={`${this.props.match.url}`}>{i18n.t('nonauth.welcome')}</Link>
+                                    <Link className={`nav-link ${(this.props.location.pathname.indexOf('contactus') !== -1 ? 'active' : '')}`} to={`${this.props.match.url}contactus`}>{i18n.t('nonauth.contact')}</Link>
+                                    <Link className={`nav-link ${(this.props.location.pathname.indexOf('login') !== -1 ? 'active' : '')}`} to={`${this.props.match.url}login`}>{i18n.t('nonauth.signIn')}</Link>
                                 </nav>
                             </div>
                         </header>

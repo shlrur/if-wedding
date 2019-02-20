@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fromJS } from 'immutable';
 
+import i18n from '../../../i18n/i18n';
+
 import { setWeddingInformation } from '../../../redux/actions/authentication';
 import WeddingHallSearchMap from './weddingHallSearchMap';
 
@@ -11,26 +13,6 @@ class WeddingInformation extends Component {
 
         this.state = {
             data: fromJS(this.props.user.weddingInformation)
-            // data: Map({
-            //     bride: Map({
-            //         firstName: this.props.user.weddingInformation.bride.firstName,
-            //         familyName: this.props.user.weddingInformation.bride.familyName,
-            //         appellation: this.props.user.weddingInformation.bride.appellation,
-            //         fatherName: this.props.user.weddingInformation.bride.fatherName,
-            //         motherName: this.props.user.weddingInformation.bride.motherName,
-            //         phoneNumber: this.props.user.weddingInformation.bride.phoneNumber
-            //     }),
-            //     groom: Map({
-            //         firstName: this.props.user.weddingInformation.groom.firstName,
-            //         familyName: this.props.user.weddingInformation.groom.familyName,
-            //         appellation: this.props.user.weddingInformation.groom.appellation,
-            //         fatherName: this.props.user.weddingInformation.groom.fatherName,
-            //         motherName: this.props.user.weddingInformation.groom.motherName,
-            //         phoneNumber: this.props.user.weddingInformation.groom.phoneNumber
-            //     }),
-            //     greetingText: this.props.user.weddingInformation.greetingText,
-            //     weddingPlace: this.props.user.weddingInformation.weddingPlace
-            // })
         };
     }
     render() {
@@ -38,86 +20,86 @@ class WeddingInformation extends Component {
 
         return (
             <div className="wedding-information container">
-                <button onClick={this.saveWeddingInformation.bind(this)}>저장</button>
+                <button onClick={this.saveWeddingInformation.bind(this)}>{i18n.t('weddingInform.save')}</button>
                 <div className="row couple-information">
                     <div className="col">
-                        <h2 className="text-center">신부</h2>
+                        <h2 className="text-center">{i18n.t('weddingInform.bride')}</h2>
                         <div className="form-row">
                             <div className="form-group col-md-2">
-                                <label htmlFor="bride-family-name">성</label>
-                                <input type="text" className="form-control" id="bride-family-name" placeholder="성"
+                                <label htmlFor="bride-family-name">{i18n.t('weddingInform.familyName')}</label>
+                                <input type="text" className="form-control" id="bride-family-name" placeholder={i18n.t('weddingInform.bridePlaceholder.familyName')}
                                     value={data.getIn(['bride', 'familyName'])}
                                     onChange={(e) => { this.setState({ data: data.setIn(['bride', 'familyName'], e.target.value) }); }} />
                             </div>
                             <div className="form-group col-md-5">
-                                <label htmlFor="bride-first-name">이름</label>
-                                <input type="text" className="form-control" id="bride-first-name" placeholder="춘향"
+                                <label htmlFor="bride-first-name">{i18n.t('weddingInform.firstName')}</label>
+                                <input type="text" className="form-control" id="bride-first-name" placeholder={i18n.t('weddingInform.bridePlaceholder.firstName')}
                                     value={data.getIn(['bride', 'firstName'])}
                                     onChange={(e) => { this.setState({ data: data.setIn(['bride', 'firstName'], e.target.value) }); }} />
                             </div>
                             <div className="form-group col-md-5">
-                                <label htmlFor="bride-appellation">호칭</label>
-                                <input type="text" className="form-control" id="bride-appellation" placeholder="장녀/차녀/..."
+                                <label htmlFor="bride-appellation">{i18n.t('weddingInform.kinshipTerms')}</label>
+                                <input type="text" className="form-control" id="bride-appellation" placeholder={i18n.t('weddingInform.bridePlaceholder.kinshipTerms')}
                                     value={data.getIn(['bride', 'appellation'])}
                                     onChange={(e) => { this.setState({ data: data.setIn(['bride', 'appellation'], e.target.value) }); }} />
                             </div>
                         </div>
                         <div className="form-group">
-                            <label htmlFor="bride-father-name">아버님 성함</label>
-                            <input type="text" className="form-control" id="bride-father-name" placeholder="아버님"
+                            <label htmlFor="bride-father-name">{i18n.t('weddingInform.fatherName')}</label>
+                            <input type="text" className="form-control" id="bride-father-name" placeholder={i18n.t('weddingInform.bridePlaceholder.fatherName')}
                                 value={data.getIn(['bride', 'fatherName'])}
                                 onChange={(e) => { this.setState({ data: data.setIn(['bride', 'fatherName'], e.target.value) }); }} />
                         </div>
                         <div className="form-group">
-                            <label htmlFor="bride-mother-name">어머님 성함</label>
-                            <input type="text" className="form-control" id="bride-mother-name" placeholder="어머님"
+                            <label htmlFor="bride-mother-name">{i18n.t('weddingInform.motherName')}</label>
+                            <input type="text" className="form-control" id="bride-mother-name" placeholder={i18n.t('weddingInform.bridePlaceholder.motherName')}
                                 value={data.getIn(['bride', 'motherName'])}
                                 onChange={(e) => { this.setState({ data: data.setIn(['bride', 'motherName'], e.target.value) }); }} />
                         </div>
                         <div className="form-group">
-                            <label htmlFor="bride-phone-number">전화번호</label>
-                            <input type="tel" className="form-control" id="bride-phone-number" placeholder="010-1234-5678"
+                            <label htmlFor="bride-phone-number">{i18n.t('weddingInform.phone')}</label>
+                            <input type="tel" className="form-control" id="bride-phone-number" placeholder={i18n.t('weddingInform.bridePlaceholder.phone')}
                                 value={data.getIn(['bride', 'phoneNumber'])}
                                 onChange={(e) => { this.setState({ data: data.setIn(['bride', 'phoneNumber'], e.target.value) }); }} />
                         </div>
                     </div>
                     <div className="col">
-                        <h2 className="text-center">신랑</h2>
+                        <h2 className="text-center">{i18n.t('weddingInform.groom')}</h2>
                         <div className="form-row">
                             <div className="form-group col-md-2">
-                                <label htmlFor="groom-family-name">성</label>
-                                <input type="text" className="form-control" id="groom-family-name" placeholder="이"
+                                <label htmlFor="groom-family-name">{i18n.t('weddingInform.familyName')}</label>
+                                <input type="text" className="form-control" id="groom-family-name" placeholder={i18n.t('weddingInform.groomPlaceholder.familyName')}
                                     value={data.getIn(['groom', 'familyName'])}
                                     onChange={(e) => { this.setState({ data: data.setIn(['groom', 'familyName'], e.target.value) }); }} />
                             </div>
                             <div className="form-group col-md-5">
-                                <label htmlFor="groom-first-name">이름</label>
-                                <input type="text" className="form-control" id="groom-first-name" placeholder="몽룡"
+                                <label htmlFor="groom-first-name">{i18n.t('weddingInform.firstName')}</label>
+                                <input type="text" className="form-control" id="groom-first-name" placeholder={i18n.t('weddingInform.groomPlaceholder.firstName')}
                                     value={data.getIn(['groom', 'firstName'])}
                                     onChange={(e) => { this.setState({ data: data.setIn(['groom', 'firstName'], e.target.value) }); }} />
                             </div>
                             <div className="form-group col-md-5">
-                                <label htmlFor="groom-appellation">호칭</label>
-                                <input type="text" className="form-control" id="groom-appellation" placeholder="장남/차남/..."
+                                <label htmlFor="groom-appellation">{i18n.t('weddingInform.kinshipTerms')}</label>
+                                <input type="text" className="form-control" id="groom-appellation" placeholder={i18n.t('weddingInform.groomPlaceholder.kinshipTerms')}
                                     value={data.getIn(['groom', 'appellation'])}
                                     onChange={(e) => { this.setState({ data: data.setIn(['groom', 'appellation'], e.target.value) }); }} />
                             </div>
                         </div>
                         <div className="form-group">
-                            <label htmlFor="groom-father-name">아버님 성함</label>
-                            <input type="text" className="form-control" id="groom-father-name" placeholder="아버님"
+                            <label htmlFor="groom-father-name">{i18n.t('weddingInform.fatherName')}</label>
+                            <input type="text" className="form-control" id="groom-father-name" placeholder={i18n.t('weddingInform.groomPlaceholder.fatherName')}
                                 value={data.getIn(['groom', 'fatherName'])}
                                 onChange={(e) => { this.setState({ data: data.setIn(['groom', 'fatherName'], e.target.value) }); }} />
                         </div>
                         <div className="form-group">
-                            <label htmlFor="groom-mother-name">어머님 성함</label>
-                            <input type="text" className="form-control" id="groom-mother-name" placeholder="어머님"
+                            <label htmlFor="groom-mother-name">{i18n.t('weddingInform.motherName')}</label>
+                            <input type="text" className="form-control" id="groom-mother-name" placeholder={i18n.t('weddingInform.groomPlaceholder.motherName')}
                                 value={data.getIn(['groom', 'motherName'])}
                                 onChange={(e) => { this.setState({ data: data.setIn(['groom', 'motherName'], e.target.value) }); }} />
                         </div>
                         <div className="form-group">
-                            <label htmlFor="groom-phone-number">전화번호</label>
-                            <input type="tel" className="form-control" id="groom-phone-number" placeholder="010-5678-1234"
+                            <label htmlFor="groom-phone-number">{i18n.t('weddingInform.phone')}</label>
+                            <input type="tel" className="form-control" id="groom-phone-number" placeholder={i18n.t('weddingInform.groomPlaceholder.phone')}
                                 value={data.getIn(['groom', 'phoneNumber'])}
                                 onChange={(e) => { this.setState({ data: data.setIn(['groom', 'phoneNumber'], e.target.value) }); }} />
                         </div>
@@ -125,8 +107,8 @@ class WeddingInformation extends Component {
                 </div>
                 <hr />
                 <div className="text-center">
-                    <h2>인사말</h2>
-                    <textarea className="form-control" rows="3" placeholder="ex) 부디 참석하시어 많은 축복과 격려해 주십시오."
+                    <h2>{i18n.t('weddingInform.greeting')}</h2>
+                    <textarea className="form-control" rows="3" placeholder={i18n.t('weddingInform.greetingPlaceholder')}
                         value={data.get('greetingText')}
                         onChange={(e) => { this.setState({ data: data.set('greetingText', e.target.value) }); }} />
                 </div>

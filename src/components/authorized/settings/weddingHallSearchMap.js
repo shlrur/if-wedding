@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import i18n from '../../../i18n/i18n';
+
 export default class WeddingHallSearchMap extends Component {
     constructor(props) {
         super(props);
@@ -14,7 +16,7 @@ export default class WeddingHallSearchMap extends Component {
     render() {
         return (
             <div className="text-center">
-                <h2>결혼식 장소</h2>
+                <h2>{i18n.t('weddingInform.weddingPlace')}</h2>
                 {this.state.selectedPlace ? this.state.selectedPlace.place_name : '선택하세요.'}
                 <div className="row wedding-hall-map">
                     <div id="map" />

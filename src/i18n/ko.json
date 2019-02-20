@@ -1,8 +1,48 @@
 {
     "translation": {
-        "label": {
+        "nonauth": {
             "signIn": "시작",
-            "congratulation": "당신의 결혼을 축하드립니다."
+            "congratulation": "당신의 결혼을 축하드립니다.",
+            "welcome": "환영",
+            "contact": "문의",
+            "forfree": "무료로 청첩장을 직접 만들어보세요.",
+            "start": "시작하기",
+            "contactus": "문의하기",
+            "name": "이름",
+            "email": "e메일 주소",
+            "phone": "전화번호",
+            "contents": "무엇을 도와드릴까요?",
+            "sendemail": "e메일 보내기"
+        },
+        "weddingInfrom": {
+            "save": "저장",
+            "bride": "신부",
+            "groom": "신랑",
+            "familyName": "성",
+            "firstName": "이름",
+            "kinshipTerms": "호칭",
+            "fatherName": "아버님 성함",
+            "motherName": "어머님 성함",
+            "phone": "전화번호",
+            "greeting": "인사말",
+            "greetingPlaceholder": "Please join us and give us a lot of blessings and encouragement.",
+            "weddingPlace": "결혼식 장소",
+            "bridePlaceholder": {
+                "familyName": "성",
+                "firstName": "춘향",
+                "kinshipTerms": "장녀/차녀/...",
+                "fatherName": "아버님",
+                "motherName": "어머님",
+                "phone": "010-1234-5678"
+            },
+            "groomPlaceholder": {
+                "familyName": "이",
+                "firstName": "몽룡",
+                "kinshipTerms": "장남/차남/...",
+                "fatherName": "아버님",
+                "motherName": "어머님",
+                "phone": "010-5678-1234"
+            }
         }
     }
 }
