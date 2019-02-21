@@ -121,7 +121,7 @@ class WeddingInformation extends Component {
     selectWeddingPlace(place) {
         const { data } = this.state;
 
-        this.setState({ data: data.set('weddingPlace', place) });
+        this.setState({ data: data.set('weddingPlace', fromJS(place)) });
     }
 
     saveWeddingInformation() {

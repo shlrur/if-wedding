@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 
 import i18n from '../../../i18n/i18n';
 
+import icon from '../../../../assets/images/icon/icon_weddinghall.png';
+
 export default class WeddingHallSearchMap extends Component {
     constructor(props) {
         super(props);
@@ -21,10 +23,12 @@ export default class WeddingHallSearchMap extends Component {
                 <div className="row wedding-hall-map">
                     <div id="map" />
                     <div id="map-search">
-                        <div className="search-keyword">
-                            <input type="text" value={this.state.searchKeyword} onChange={this.searchKeywordChange.bind(this)} />
-                            <button onClick={this.placeSearch.bind(this)}>찾기</button>
-                        </div>
+                        <form onSubmit={this.submitFormHandler.bind(this)}>
+                            <div className="search-keyword">
+                                <input type="text" value={this.state.searchKeyword} onChange={this.searchKeywordChange.bind(this)} />
+                                <button type="submit">찾기</button>
+                            </div>
+                        </form>
                         <ul id="placesList">
                             {
                                 this.state.searchedPlaces.map((place, ind) => {
@@ -78,7 +82,24 @@ export default class WeddingHallSearchMap extends Component {
 
         if (this.state.selectedPlace) {
             const { selectedPlace } = this.state;
-            this.map.setCenter(new window.daum.maps.LatLng(selectedPlace.y, selectedPlace.x));
+            const placePosition = new window.daum.maps.LatLng(selectedPlace.y, selectedPlace.x);
+
+            var imageSrc = icon, // 마커이미지의 주소입니다    
+                imageSize = new window.daum.maps.Size(64, 69), // 마커이미지의 크기입니다
+                imageOption = { offset: new window.daum.maps.Point(27, 69) }; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+
+            // 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
+            var markerImage = new window.daum.maps.MarkerImage(imageSrc, imageSize, imageOption);
+
+            // 마커를 생성합니다
+            var marker = new window.daum.maps.Marker({
+                position: placePosition,
+                image: markerImage // 마커이미지 설정 
+            });
+
+            // 마커가 지도 위에 표시되도록 설정합니다
+            marker.setMap(this.map);
+            this.map.setCenter(placePosition);
         } else if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition((position) => {
                 this.map.setCenter(new window.daum.maps.LatLng(position.coords.latitude, position.coords.longitude));
@@ -106,6 +127,18 @@ export default class WeddingHallSearchMap extends Component {
         });
 
         this.props.onSelectWeddingPlace(this.state.searchedPlaces[ind]);
+    }
+
+    submitFormHandler(event) {
+        event.preventDefault();
+
+        if (!this.state.searchKeyword.replace(/^\s+|\s+$/g, '')) {
+            console.log('no keyword');
+
+            return;
+        }
+
+        this.ps.keywordSearch(this.state.searchKeyword, this.placesSearchCB.bind(this));
     }
 
     placeSearch() {

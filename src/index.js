@@ -24,4 +24,4 @@ window.onload = () => {
     );
 };
 
-// module.hot.accept();
+module.hot.accept();
