@@ -27,7 +27,7 @@ i18n.use(lngDetector)
         debug: process.env.NODE_ENV === 'development',
         detection: {
             // order and from where user language should be detected
-            order: ['customDetector', 'querystring', 'cookie', 'localStorage', 'navigator', 'htmlTag']
+            order: [/*'customDetector', 'querystring', 'cookie',*/ 'localStorage', 'navigator', 'htmlTag']
         },
         fallbackLng: 'en',
         resources: {
