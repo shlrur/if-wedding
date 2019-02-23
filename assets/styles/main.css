@@ -8,16 +8,27 @@
   unicode-range: U+0-10FFFF;
 }
 
-html, body {
-  font-size: 13px;
-}
-
 html, h1, h2, h3, h4, h5, h6, a, p {
   font-family: OpenSans, sans-serif;
 }
 
 ul {
   list-style-type: none;
+}
+
+.dropdown-toggle::after {
+  position: relative;
+  top: 1px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  height: 10px;
+  width: 10px;
+  border-style: solid;
+  border-color: black;
+  margin-left: .5rem;
+  border-width: 0px 2px 2px 0px;
+  -webkit-transform: rotate(45deg);
+          transform: rotate(45deg);
 }
 
 /* Links */
@@ -44,27 +55,6 @@ a:focus, a:hover {
   /* Prevent inheritance from `body` */
   background-color: #fff;
   border: .05rem solid #fff;
-}
-
-.btn-success,
-.btn-success.focus,
-.btn-success:focus,
-.btn-success.disabled,
-.btn-success.disabled:hover,
-.btn-success:disabled,
-.btn-success:not(:disabled):not(.disabled).active,
-.btn-success:not(:disabled):not(.disabled):active,
-.show > .btn-success.dropdown-toggle {
-  background-color: #222222;
-  border-color: #222222;
-  border-radius: 0;
-  -webkit-box-shadow: none;
-          box-shadow: none;
-}
-
-.btn-success:hover {
-  background-color: #2f2f2f;
-  border-color: #2f2f2f;
 }
 
 /*
@@ -104,10 +94,6 @@ body {
 /*
  * Header
  */
-.masthead {
-  margin-bottom: 5rem;
-}
-
 .masthead-brand {
   margin-bottom: 0;
   text-transform: uppercase;
@@ -139,20 +125,11 @@ body {
 }
 
 .menu-bar {
-  font-size: 13px;
   text-transform: uppercase;
 }
 
-/*
- * Cover
- */
-.cover {
-  padding: 0 1.5rem;
-}
-
-.cover .btn-lg {
-  padding: .75rem 1.25rem;
-  font-weight: 700;
+.container {
+  margin: auto;
 }
 
 /*
@@ -250,8 +227,20 @@ footer {
   cursor: pointer;
 }
 
+/* header */
+.authorized-container nav {
+  width: 100%;
+  height: 60px;
+  -webkit-box-shadow: 0 0px 10px rgba(0, 0, 0, 0.1);
+          box-shadow: 0 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.authorized-container .logout {
+  margin-left: 1rem;
+}
+
 .dashboards {
-  height: calc(100% - 56px);
+  height: calc(100% - 60px);
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -276,8 +265,55 @@ footer {
 }
 
 .dashboards .widget-types {
-  -ms-flex-preferred-size: 400px;
-      flex-basis: 400px;
+  padding: 0rem 1rem;
+  margin: 2rem;
+  border-left: 1px solid #e3e3e3;
+  -ms-flex-preferred-size: 200px;
+      flex-basis: 200px;
+}
+
+.dashboards .widget-types .widget-type {
+  padding: 2rem 0;
+  border-bottom: 1px solid #eee;
+}
+
+.dashboards .widget-types .widget {
+  position: relative;
+  width: 100%;
+  height: 80px;
+  border: 1px solid #ccc;
+  padding: 2rem 1rem;
+  text-align: center;
+}
+
+.dashboards .widget-types .widget:hover .add-btn {
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 80px;
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.dashboards .widget-types .widget:hover .add-btn:before, .dashboards .widget-types .widget:hover .add-btn:after {
+  position: absolute;
+  top: 50%;
+  left: calc(50% - 12px);
+  width: 24px;
+  height: 2px;
+  background: #000;
+  content: '';
+}
+
+.dashboards .widget-types .widget:hover .add-btn.collapsed:after {
+  -webkit-transform: rotate(90deg);
+          transform: rotate(90deg);
+}
+
+.dashboards .widget-types .widget:hover .add-btn.collapsed:before {
+  -webkit-transform: rotate(180deg);
+          transform: rotate(180deg);
 }
 
 .dashboards .widget-gallery .widget-grid {
@@ -361,6 +397,17 @@ footer {
   font-weight: 300;
 }
 
+.contact-us .btn {
+  padding: 1rem 2rem;
+  border-radius: 0;
+  border: transparent;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  font-weight: 100;
+  margin-top: 3rem;
+  font-size: 1rem;
+}
+
 @media (max-width: 768px) {
   .contact-us input {
     margin-bottom: 10px;
@@ -370,7 +417,27 @@ footer {
   }
 }
 
-.cover-heading {
-  margin-top: 4%;
+.cover {
+  padding: 0 1.5rem;
+  margin: auto;
+}
+
+.cover .cover-heading {
+  padding: 2rem 0;
+  margin-bottom: 1.2rem;
+  border-top: 2px solid rgba(255, 255, 255, 0.5);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.5);
+  font-size: 3rem;
+}
+
+.cover .btn {
+  padding: 1rem 2rem;
+  border-radius: 0;
+  border: transparent;
+  background-color: rgba(255, 177, 190, 0.8);
+  color: #fff;
+  font-weight: 100;
+  margin-top: 3rem;
+  font-size: 1rem;
 }
 /*# sourceMappingURL=main.css.map */

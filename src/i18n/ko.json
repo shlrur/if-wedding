@@ -2,17 +2,17 @@
     "translation": {
         "nonauth": {
             "signIn": "시작",
-            "congratulation": "당신의 결혼을 축하드립니다.",
-            "welcome": "환영",
-            "contact": "문의",
+            "congratulation": "우리가 하나 되는 순간",
+            "welcome": "환영합니다",
+            "contact": "1:1문의",
             "forfree": "무료로 청첩장을 직접 만들어보세요.",
             "start": "시작하기",
-            "contactus": "문의하기",
+            "contactus": "궁금한 점이 있다면 메일을 보내주세요",
             "name": "이름",
             "email": "e메일 주소",
             "phone": "전화번호",
             "contents": "무엇을 도와드릴까요?",
-            "sendemail": "e메일 보내기"
+            "sendemail": "문의하기"
         },
         "weddingInform": {
             "save": "저장",
