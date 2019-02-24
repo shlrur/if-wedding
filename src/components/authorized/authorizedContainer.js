@@ -25,8 +25,8 @@ class AuthorizedContainer extends Component {
 
             return (
                 <div className="authorized-container">
-                    <nav className="navbar navbar-expand-lg navbar-light bg-light">
-                        <a className="navbar-brand">If Wedding</a>
+                    <nav className="navbar navbar-expand-lg">
+                        <a className="navbar-brand">HANA</a>
                         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                             <span className="navbar-toggler-icon"></span>
                         </button>
@@ -54,7 +54,7 @@ class AuthorizedContainer extends Component {
                                         <a className="dropdown-item" >Withdraw</a>
                                     </div>
                                 </li>
-                                <li className="nav-item">
+                                <li className="nav-item logout">
                                     <a className="nav-link" onClick={() => { this.props.logout(); }}>Logout</a>
                                 </li>
                             </ul>

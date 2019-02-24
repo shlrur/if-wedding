@@ -6,7 +6,7 @@ export default class ContactUs extends Component {
     render() {
         return (
             <div className="container contact-us">
-                <h4 className="my-4 text-center">{i18n.t('nonauth.contactus')}</h4>
+                <h2 className="my-4 text-center">{i18n.t('nonauth.contactus')}</h2>
                 <form onSubmit={this.submitFormHandler}>
                     <div className="form-row">
                         <div className="col-md-6">

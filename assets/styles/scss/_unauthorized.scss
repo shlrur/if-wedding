@@ -13,10 +13,6 @@
  * Header
  */
 
-.masthead {
-    margin-bottom: 5rem;
-}
-
 .masthead-brand {
     margin-bottom: 0;
     text-transform: uppercase;
@@ -48,20 +44,11 @@
 }
 
 .menu-bar {
-    font-size: 13px;
     text-transform: uppercase;
 }
 
-/*
- * Cover
- */
-
-.cover {
-    padding: 0 1.5rem;
-    .btn-lg {
-        padding: .75rem 1.25rem;
-        font-weight: 700;
-    }
+.container {
+    margin: auto;
 }
 
 /*

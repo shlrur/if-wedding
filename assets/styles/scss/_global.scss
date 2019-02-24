@@ -13,9 +13,6 @@
   unicode-range: U+0-10FFFF; 
 }
 
-html, body {
-    font-size: 13px;
-}
 
 html, h1, h2, h3, h4, h5, h6, a, p {
   font-family: OpenSans, sans-serif;
@@ -23,6 +20,19 @@ html, h1, h2, h3, h4, h5, h6, a, p {
 
 ul {
     list-style-type: none;
+}
+
+.dropdown-toggle::after {
+    position: relative;
+    top: 1px;
+    box-sizing: border-box;
+    height: 10px;
+    width: 10px;
+    border-style: solid;
+    border-color: black;
+    margin-left: .5rem;
+    border-width: 0px 2px 2px 0px;
+    transform: rotate(45deg);
 }
 
 /* Links */
@@ -53,24 +63,24 @@ a {
     }
 }
 
-.btn-success,
-.btn-success.focus,
-.btn-success:focus,
-.btn-success.disabled, 
-.btn-success.disabled:hover, 
-.btn-success:disabled,
-.btn-success:not(:disabled):not(.disabled).active,
-.btn-success:not(:disabled):not(.disabled):active,
-.show>.btn-success.dropdown-toggle {
-    background-color: #222222;
-    border-color: #222222;
-    border-radius: 0;
-    box-shadow: none;
-}
-.btn-success:hover {
-    background-color: lighten(#222222, 5%);
-    border-color: lighten(#222222, 5%);
-}
+// .btn-success,
+// .btn-success.focus,
+// .btn-success:focus,
+// .btn-success.disabled, 
+// .btn-success.disabled:hover, 
+// .btn-success:disabled,
+// .btn-success:not(:disabled):not(.disabled).active,
+// .btn-success:not(:disabled):not(.disabled):active,
+// .show>.btn-success.dropdown-toggle {
+//     background-color: #222222;
+//     border-color: #222222;
+//     border-radius: 0;
+//     box-shadow: none;
+// }
+// .btn-success:hover {
+//     background-color: lighten(#222222, 5%);
+//     border-color: lighten(#222222, 5%);
+// }
 
 /*
  * Base structure
