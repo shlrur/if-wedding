@@ -1,7 +1,29 @@
 .widget-photo-album {
     height: calc(100% - 30px);
-
     .image-gallery {
-        height: 100%;
+        height: calc(100% - 30px);
+        .image-gallery-content {
+            height: 100%;
+            .image-gallery-slide-wrapper.bottom {
+                height: calc(100% - 110px);
+                .image-gallery-swipe {
+                    height: 100%;
+                    .image-gallery-slides {
+                        height: 100%;
+                        .image-gallery-slide {
+                            height: 100%;
+                            .image-gallery-image {
+                                height: 100%;
+                                text-align: center;
+                                img {
+                                    height: 100%;
+                                    width: auto;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }
