@@ -6,7 +6,8 @@ import {
     // getAlbumWidgetImagesSuccess,
     // getAlbumWidgetImagesFailure,
     // setAlbumWidgetImagesSuccess,
-    setAlbumWidgetImagesFailure
+    setAlbumWidgetImagesFailure,
+    setGeneralWidgetConfigsFailure
 } from '../actions/widgetConfig';
 import { changedUseWidgetsConfigs } from '../actions/widgets';
 import { getUser, getUseWidgets, getDashboards, getSelectedDashboardInd } from './selector';
@@ -82,8 +83,36 @@ function* setAlbumWidgetImagesSaga({ images, widgetId }) {
     }
 }
 
+function* setGeneralWidgetConfigsSaga({object, widgetId}) {
+    try{
+        const user = yield select(getUser);
+        const _dashboards = yield select(getDashboards); // no use
+        const _selectedDashboardInd = yield select(getSelectedDashboardInd); // no use
+        const dashboard = _dashboards[_selectedDashboardInd];
+        const _useWidgets = yield select(getUseWidgets); // no use
+        const useWidget = {
+            ..._useWidgets.filter((_useWidget) => {
+                return _useWidget.id === widgetId;
+            })[0]
+        };
+
+        yield call(
+            rsf.firestore.setDocument,
+            `users/${user.uid}/dashboards/${dashboard.id}/use_widgets/${useWidget.id}`,
+            {
+                configs: object
+            },
+            { merge: true }
+        );
+    } catch (err) {
+        console.log(err);
+        yield put(setGeneralWidgetConfigsFailure(err));
+    }
+}
+
 export default function* widgetsRootSaga() {
     yield all([
-        takeEvery(types.SET_ALBUM_WIDGET_IMAGES.REQUEST, setAlbumWidgetImagesSaga)
+        takeEvery(types.SET_ALBUM_WIDGET_IMAGES.REQUEST, setAlbumWidgetImagesSaga),
+        takeEvery(types.SET_GENERAL_WIDGET_CONFIGS.REQUEST, setGeneralWidgetConfigsSaga)
     ]);
 }

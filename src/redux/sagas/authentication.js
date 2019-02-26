@@ -63,7 +63,7 @@ function* registUser(user) {
                     groom: {
                         firstName: '',
                         familyName: '',
-                        appellation: '',
+                        kinshipTerms: '',
                         fatherName: '',
                         motherName: '',
                         phoneNumber: ''
@@ -71,7 +71,7 @@ function* registUser(user) {
                     bride: {
                         firstName: '',
                         familyName: '',
-                        appellation: '',
+                        kinshipTerms: '',
                         fatherName: '',
                         motherName: '',
                         phoneNumber: ''
