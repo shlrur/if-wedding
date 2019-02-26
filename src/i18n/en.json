@@ -43,6 +43,11 @@
                 "motherName": "Lady Montague",
                 "phone": "010-5678-1234"
             }
+        },
+        "widgets": {
+            "greeting_1": {
+                "bride": "{{}} of Mr. {{}} and Mrs. {{}}"
+            }
         }
     }
 }
