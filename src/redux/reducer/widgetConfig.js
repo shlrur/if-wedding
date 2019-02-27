@@ -21,7 +21,7 @@ export default function widgetReducer(state = initialState, action = {}) {
         case types.GET_GUESTBOOK_WIDGET_MESSAGES.SUCCESS:
             return {
                 ...state,
-                guestbookMessages: { ...state.guestbookMessages, [action.widgetid]: action.messages },
+                guestbookMessages: { ...state.guestbookMessages, [action.widgetId]: action.messages },
                 loadings: { ...state.loadings, [action.widgetId]: false }
             };
         case types.GET_GUESTBOOK_WIDGET_MESSAGES.FAILURE:
@@ -40,6 +40,7 @@ export default function widgetReducer(state = initialState, action = {}) {
         case types.SET_GUESTBOOK_WIDGET_MESSAGE.SUCCESS:
             return {
                 ...state,
+                guestbookMessages: { ...state.guestbookMessages, [action.widgetId]: [action.message, ...state.guestbookMessages[action.widgetId]] },
                 loadings: { ...state.loadings, [action.widgetId]: false }
             };
         case types.SET_GUESTBOOK_WIDGET_MESSAGE.FAILURE:

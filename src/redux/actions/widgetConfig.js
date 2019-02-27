@@ -97,9 +97,9 @@ export const setGuestbookWidgetMessageRequest = (message, widgetId) => ({
     message, widgetId
 });
 
-export const setGuestbookWidgetMessageSuccess = (widgetId) => ({
+export const setGuestbookWidgetMessageSuccess = (message, widgetId) => ({
     type: types.SET_GUESTBOOK_WIDGET_MESSAGE.SUCCESS,
-    widgetId
+    message, widgetId
 });
 
 export const setGuestbookWidgetMessageFailure = () => ({

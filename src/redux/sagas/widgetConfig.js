@@ -93,16 +93,10 @@ function* setGeneralWidgetConfigsSaga({ object, widgetId }) {
         const _dashboards = yield select(getDashboards); // no use
         const _selectedDashboardInd = yield select(getSelectedDashboardInd); // no use
         const dashboard = _dashboards[_selectedDashboardInd];
-        const _useWidgets = yield select(getUseWidgets); // no use
-        const useWidget = {
-            ..._useWidgets.filter((_useWidget) => {
-                return _useWidget.id === widgetId;
-            })[0]
-        };
 
         yield call(
             rsf.firestore.setDocument,
-            `users/${user.uid}/dashboards/${dashboard.id}/use_widgets/${useWidget.id}`,
+            `users/${user.uid}/dashboards/${dashboard.id}/use_widgets/${widgetId}`,
             {
                 configs: object
             },
@@ -120,23 +114,24 @@ function* getGuestbookWidgetMessagesSaga({/* pageInd, */widgetId }) {
         const _dashboards = yield select(getDashboards); // no use
         const _selectedDashboardInd = yield select(getSelectedDashboardInd); // no use
         const dashboard = _dashboards[_selectedDashboardInd];
-        const _useWidgets = yield select(getUseWidgets); // no use
-        const useWidget = {
-            ..._useWidgets.filter((_useWidget) => {
-                return _useWidget.id === widgetId;
-            })[0]
-        };
 
         const snapshot = yield call(
             rsf.firestore.getCollection,
-            `users/${user.uid}/dashboards/${dashboard.id}/use_widgets/${useWidget.id}/messages`
+            `users/${user.uid}/dashboards/${dashboard.id}/use_widgets/${widgetId}/messages`
         );
 
-        let messages = snapshot.map((message) => {
-            return message.data();
+        let messages = [];
+
+        snapshot.forEach((message) => {
+            messages = [
+                ...messages,
+                { ...message.data(), id: message.id }
+            ];
         });
 
-        yield put(getGuestbookWidgetMessagesSuccess(messages, useWidget.id));
+        messages.sort((a, b) => { return b.date - a.date; });
+
+        yield put(getGuestbookWidgetMessagesSuccess(messages, widgetId));
     } catch (err) {
         console.log(err);
         yield put(getGuestbookWidgetMessagesFailure(err));
@@ -150,23 +145,22 @@ function* setGuestbookWidgetMessageSaga({ message, widgetId }) {
         const _dashboards = yield select(getDashboards); // no use
         const _selectedDashboardInd = yield select(getSelectedDashboardInd); // no use
         const dashboard = _dashboards[_selectedDashboardInd];
-        const _useWidgets = yield select(getUseWidgets); // no use
-        const useWidget = {
-            ..._useWidgets.filter((_useWidget) => {
-                return _useWidget.id === widgetId;
-            })[0]
+        const now = new Date().getTime();
+        const setMessage = {
+            ...message,
+            date: now
         };
 
-        yield call(
+        const docRef = yield call(
             rsf.firestore.addDocument,
-            `users/${user.uid}/dashboards/${dashboard.id}/use_widgets/${useWidget.id}/messages`,
-            {
-                ...message,
-                date: new Date().getTime()
-            }
+            `users/${user.uid}/dashboards/${dashboard.id}/use_widgets/${widgetId}/messages`,
+            setMessage
         );
 
-        yield put(setGuestbookWidgetMessageSuccess(useWidget.id));
+        yield put(setGuestbookWidgetMessageSuccess({
+            ...setMessage,
+            id: docRef.id
+        }, widgetId));
     } catch (err) {
         console.log(err);
         yield put(setGuestbookWidgetMessageFailure(err));
