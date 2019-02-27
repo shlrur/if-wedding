@@ -7,7 +7,11 @@ import {
     // getAlbumWidgetImagesFailure,
     // setAlbumWidgetImagesSuccess,
     setAlbumWidgetImagesFailure,
-    setGeneralWidgetConfigsFailure
+    setGeneralWidgetConfigsFailure,
+    setGuestbookWidgetMessageSuccess,
+    setGuestbookWidgetMessageFailure,
+    getGuestbookWidgetMessagesSuccess,
+    getGuestbookWidgetMessagesFailure
 } from '../actions/widgetConfig';
 import { changedUseWidgetsConfigs } from '../actions/widgets';
 import { getUser, getUseWidgets, getDashboards, getSelectedDashboardInd } from './selector';
@@ -40,7 +44,7 @@ function* setAlbumWidgetImagesSaga({ images, widgetId }) {
                     var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
                     console.log('Upload is ' + progress + '% done');
                 }, (error) => {
-                    throw(error);
+                    throw (error);
                 }, () => {
                     task.task.snapshot.ref.getDownloadURL().then((downloadURL) => {
                         resolve({
@@ -83,8 +87,8 @@ function* setAlbumWidgetImagesSaga({ images, widgetId }) {
     }
 }
 
-function* setGeneralWidgetConfigsSaga({object, widgetId}) {
-    try{
+function* setGeneralWidgetConfigsSaga({ object, widgetId }) {
+    try {
         const user = yield select(getUser);
         const _dashboards = yield select(getDashboards); // no use
         const _selectedDashboardInd = yield select(getSelectedDashboardInd); // no use
@@ -110,9 +114,70 @@ function* setGeneralWidgetConfigsSaga({object, widgetId}) {
     }
 }
 
+function* getGuestbookWidgetMessagesSaga({/* pageInd, */widgetId }) {
+    try {
+        const user = yield select(getUser);
+        const _dashboards = yield select(getDashboards); // no use
+        const _selectedDashboardInd = yield select(getSelectedDashboardInd); // no use
+        const dashboard = _dashboards[_selectedDashboardInd];
+        const _useWidgets = yield select(getUseWidgets); // no use
+        const useWidget = {
+            ..._useWidgets.filter((_useWidget) => {
+                return _useWidget.id === widgetId;
+            })[0]
+        };
+
+        const snapshot = yield call(
+            rsf.firestore.getCollection,
+            `users/${user.uid}/dashboards/${dashboard.id}/use_widgets/${useWidget.id}/messages`
+        );
+
+        let messages = snapshot.map((message) => {
+            return message.data();
+        });
+
+        yield put(getGuestbookWidgetMessagesSuccess(messages, useWidget.id));
+    } catch (err) {
+        console.log(err);
+        yield put(getGuestbookWidgetMessagesFailure(err));
+    }
+
+}
+
+function* setGuestbookWidgetMessageSaga({ message, widgetId }) {
+    try {
+        const user = yield select(getUser);
+        const _dashboards = yield select(getDashboards); // no use
+        const _selectedDashboardInd = yield select(getSelectedDashboardInd); // no use
+        const dashboard = _dashboards[_selectedDashboardInd];
+        const _useWidgets = yield select(getUseWidgets); // no use
+        const useWidget = {
+            ..._useWidgets.filter((_useWidget) => {
+                return _useWidget.id === widgetId;
+            })[0]
+        };
+
+        yield call(
+            rsf.firestore.addDocument,
+            `users/${user.uid}/dashboards/${dashboard.id}/use_widgets/${useWidget.id}/messages`,
+            {
+                ...message,
+                date: new Date().getTime()
+            }
+        );
+
+        yield put(setGuestbookWidgetMessageSuccess(useWidget.id));
+    } catch (err) {
+        console.log(err);
+        yield put(setGuestbookWidgetMessageFailure(err));
+    }
+}
+
 export default function* widgetsRootSaga() {
     yield all([
         takeEvery(types.SET_ALBUM_WIDGET_IMAGES.REQUEST, setAlbumWidgetImagesSaga),
-        takeEvery(types.SET_GENERAL_WIDGET_CONFIGS.REQUEST, setGeneralWidgetConfigsSaga)
+        takeEvery(types.SET_GENERAL_WIDGET_CONFIGS.REQUEST, setGeneralWidgetConfigsSaga),
+        takeEvery(types.GET_GUESTBOOK_WIDGET_MESSAGES.REQUEST, getGuestbookWidgetMessagesSaga),
+        takeEvery(types.SET_GUESTBOOK_WIDGET_MESSAGE.REQUEST, setGuestbookWidgetMessageSaga)
     ]);
 }

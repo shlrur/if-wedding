@@ -13,6 +13,16 @@ export const types = {
         REQUEST: 'SET_GENERAL_WIDGET_CONFIGS.REQUEST',
         SUCCESS: 'SET_GENERAL_WIDGET_CONFIGS.SUCCESS',
         FAILURE: 'SET_GENERAL_WIDGET_CONFIGS.FAILURE'
+    },
+    GET_GUESTBOOK_WIDGET_MESSAGES: {
+        REQUEST: 'GET_GUESTBOOK_WIDGET_MESSAGES.REQUEST',
+        SUCCESS: 'GET_GUESTBOOK_WIDGET_MESSAGES.SUCCESS',
+        FAILURE: 'GET_GUESTBOOK_WIDGET_MESSAGES.FAILURE'
+    },
+    SET_GUESTBOOK_WIDGET_MESSAGE: {
+        REQUEST: 'SET_GUESTBOOK_WIDGET_MESSAGE.REQUEST',
+        SUCCESS: 'SET_GUESTBOOK_WIDGET_MESSAGE.SUCCESS',
+        FAILURE: 'SET_GUESTBOOK_WIDGET_MESSAGE.FAILURE'
     }
 };
 
@@ -62,4 +72,36 @@ export const setGeneralWidgetConfigsRequest = (object, widgetId) => ({
 
 export const setGeneralWidgetConfigsFailure = () => ({
     type: types.SET_GENERAL_WIDGET_CONFIGS.FAILURE
+});
+
+
+// get guestbook messages
+export const getGuestbookWidgetMessagesRequest = (/*pageInd, */widgetId) => ({
+    type: types.GET_GUESTBOOK_WIDGET_MESSAGES.REQUEST,
+    /*pageInd, */widgetId
+});
+
+export const getGuestbookWidgetMessagesSuccess = (messages, widgetId) => ({
+    type: types.GET_GUESTBOOK_WIDGET_MESSAGES.SUCCESS,
+    messages, widgetId
+});
+
+export const getGuestbookWidgetMessagesFailure = () => ({
+    type: types.GET_GUESTBOOK_WIDGET_MESSAGES.FAILURE
+});
+
+
+// set guestbook message
+export const setGuestbookWidgetMessageRequest = (message, widgetId) => ({
+    type: types.SET_GUESTBOOK_WIDGET_MESSAGE.REQUEST,
+    message, widgetId
+});
+
+export const setGuestbookWidgetMessageSuccess = (widgetId) => ({
+    type: types.SET_GUESTBOOK_WIDGET_MESSAGE.SUCCESS,
+    widgetId
+});
+
+export const setGuestbookWidgetMessageFailure = () => ({
+    type: types.SET_GUESTBOOK_WIDGET_MESSAGE.FAILURE
 });
