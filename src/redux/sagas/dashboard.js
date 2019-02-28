@@ -97,6 +97,13 @@ function* deleteDashboardSaga({ dashboard }) {
                 for(jnd=0 ; jnd<useWidgets[ind].configs.showingImageInfos.length ; jnd++) {
                     yield call(rsf.storage.deleteFile, useWidgets[ind].configs.showingImageInfos[jnd].filePath);
                 }
+            } else if (useWidgets[ind].name.indexOf('guestBook') !== -1) {
+                // delete collection of messages
+                const messages = yield call(rsf.firestore.getCollection, `users/${user.uid}/dashboards/${dashboard.id}/use_widgets/${useWidgets[ind].id}/messages`);
+                let jnd;
+                for(jnd=0 ; jnd<messages.size ; jnd++) {
+                    yield call(rsf.firestore.deleteDocument, `users/${user.uid}/dashboards/${dashboard.id}/use_widgets/${useWidgets[ind].id}/messages/${messages.docs[jnd].id}`);
+                }
             }
 
             yield call(
