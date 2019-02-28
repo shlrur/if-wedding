@@ -145,14 +145,14 @@ function* deleteUseWidgetSaga({ widget }) {
 
         if (widget.name.indexOf('photoAlbum') !== -1) {
             // delete images if widget is album
-            for(ind=0 ; ind<widget.configs.showingImageInfos.length ; ind++) {
+            for (ind = 0; ind < widget.configs.showingImageInfos.length; ind++) {
                 yield call(rsf.storage.deleteFile, widget.configs.showingImageInfos[ind].filePath);
             }
         } else if (widget.name.indexOf('guestBook') !== -1) {
             // delete collection of messages
             const messages = yield call(rsf.firestore.getCollection, `users/${user.uid}/dashboards/${dashboard.id}/use_widgets/${widget.id}/messages`);
-            
-            for(ind=0 ; ind<messages.size ; ind++) {
+
+            for (ind = 0; ind < messages.size; ind++) {
                 yield call(rsf.firestore.deleteDocument, `users/${user.uid}/dashboards/${dashboard.id}/use_widgets/${widget.id}/messages/${messages.docs[ind].id}`);
             }
         }

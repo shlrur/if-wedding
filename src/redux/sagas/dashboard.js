@@ -94,14 +94,14 @@ function* deleteDashboardSaga({ dashboard }) {
         for (ind = 0; ind < useWidgets.length; ind++) {
             if (useWidgets[ind].name.indexOf('photoAlbum') !== -1) {
                 // delete images if widget is album
-                for(jnd=0 ; jnd<useWidgets[ind].configs.showingImageInfos.length ; jnd++) {
+                for (jnd = 0; jnd < useWidgets[ind].configs.showingImageInfos.length; jnd++) {
                     yield call(rsf.storage.deleteFile, useWidgets[ind].configs.showingImageInfos[jnd].filePath);
                 }
             } else if (useWidgets[ind].name.indexOf('guestBook') !== -1) {
                 // delete collection of messages
                 const messages = yield call(rsf.firestore.getCollection, `users/${user.uid}/dashboards/${dashboard.id}/use_widgets/${useWidgets[ind].id}/messages`);
                 let jnd;
-                for(jnd=0 ; jnd<messages.size ; jnd++) {
+                for (jnd = 0; jnd < messages.size; jnd++) {
                     yield call(rsf.firestore.deleteDocument, `users/${user.uid}/dashboards/${dashboard.id}/use_widgets/${useWidgets[ind].id}/messages/${messages.docs[jnd].id}`);
                 }
             }
@@ -125,8 +125,8 @@ function* deleteDashboardSaga({ dashboard }) {
             }
         }
 
-        if(ind === dashboards.length-1) {
-            selectedDashboardInd = ind-1;
+        if (ind === dashboards.length - 1) {
+            selectedDashboardInd = ind - 1;
         } else {
             selectedDashboardInd = ind;
         }
