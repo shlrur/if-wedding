@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import i18n from '../../../i18n/i18n';
+
 import {
     getGuestbookWidgetMessagesRequest,
     setGuestbookWidgetMessageRequest
@@ -41,13 +43,13 @@ class BrightGuestbook1 extends Component {
                     <form onSubmit={this.submitMessageHandler.bind(this)}>
                         <div className="form-row">
                             <div className="col-md-3">
-                                <input type="text" className="form-control" placeholder="Name" required />
+                                <input type="text" className="form-control" placeholder={i18n.t('widgets.guestbook_1.placeholder.name')} required />
                             </div>
                             <div className="col-md-7">
-                                <textarea className="form-control" placeholder="Message to Couple" rows="1" required />
+                                <textarea className="form-control" placeholder={i18n.t('widgets.guestbook_1.placeholder.message')} rows="1" required />
                             </div>
                             <div className="col-md-2">
-                                <button type="submit" className="btn btn-success">Input</button>
+                                <button type="submit" className="btn btn-success">{i18n.t('widgets.guestbook_1.placeholder.input')}</button>
                             </div>
                         </div>
                     </form>

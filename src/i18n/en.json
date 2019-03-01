@@ -12,7 +12,16 @@
             "email": "E-mail",
             "phone": "Phone",
             "contents": "May I help you?",
-            "sendemail": "Send E-mail"
+            "sendemail": "Send E-mail",
+            "startWith": "Start with"
+        },
+        "auth": {
+            "dashboard": "Dashboard",
+            "preview": "Preview",
+            "settings": "Settings",
+            "weddingInformation": "Wedding Information",
+            "withdraw": "Withdraw",
+            "logout": "Logout"
         },
         "weddingInform": {
             "save": "Save",
@@ -26,7 +35,6 @@
             "phone": "Phone",
             "greeting": "Greeting Text",
             "greetingPlaceholder": "Please join us and give us a lot of blessings and encouragement.",
-            "weddingPlace": "Wedding Hall Place",
             "bridePlaceholder": {
                 "familyName": "Capulet",
                 "firstName": "Juliet",
@@ -42,11 +50,32 @@
                 "fatherName": "Montague",
                 "motherName": "Lady Montague",
                 "phone": "010-5678-1234"
-            }
+            },
+            "weddingPlace": "Wedding Hall Place",
+            "selectWedddingPlace": "Please select a wedding hall.",
+            "search": "Search"
         },
         "widgets": {
             "greeting_1": {
-                "parents": "{{kinshipTerms}} of Mr. {{fatherName}} and Mrs. {{motherName}}"
+                "parents": "{{kinshipTerms}} of Mr. {{fatherName}} and Mrs. {{motherName}}",
+                "placeholder": {
+                    "groomName": "Romeo",
+                    "groomParents": "Son of Mr. Montague and Mrs. Lady Montague",
+                    "brideName": "Juliet",
+                    "brideParents": "Daughter of Mr. Capulet and Mrs. Lady Capulet",
+                    "greetingText": "Please join us and give us a lot of blessings and encouragement."
+                }
+            },
+            "guestbook_1": {
+                "placeholder": {
+                    "name": "Name",
+                    "message": "Message",
+                    "input": "Input"
+                }
+            },
+            "map_1": {
+                "setting": "settings.",
+                "pleaseSelect": "Please select a wedding hall from the"
             }
         }
     }

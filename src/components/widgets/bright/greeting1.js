@@ -48,22 +48,22 @@ class BrightGreeting1 extends Component {
         return (
             <div className="widget-greeting-bright-1">
                 <div id="groom">
-                    <input type="text" className="form-control" id="groom-name" placeholder=""
+                    <input type="text" className="form-control" id="groom-name" placeholder={i18n.t('widgets.greeting_1.placeholder.groomName')}
                         value={this.state.groomName}
                         onChange={this.onChangeHandler.bind(this, 'groomName')} />
-                    <input type="text" className="form-control" id="groom-parents" placeholder=""
+                    <input type="text" className="form-control" id="groom-parents" placeholder={i18n.t('widgets.greeting_1.placeholder.groomParents')}
                         value={this.state.groomParents}
                         onChange={this.onChangeHandler.bind(this, 'groomParents')} />
                 </div>
                 <div id="bride">
-                    <input type="text" className="form-control" id="bride-name" placeholder=""
+                    <input type="text" className="form-control" id="bride-name" placeholder={i18n.t('widgets.greeting_1.placeholder.brideName')}
                         value={this.state.brideName}
                         onChange={this.onChangeHandler.bind(this, 'brideName')} />
-                    <input type="text" className="form-control" id="bride-parents" placeholder=""
+                    <input type="text" className="form-control" id="bride-parents" placeholder={i18n.t('widgets.greeting_1.placeholder.brideParents')}
                         value={this.state.brideParents}
                         onChange={this.onChangeHandler.bind(this, 'brideParents')} />
                 </div>
-                <input type="text" className="form-control" id="greeting-text" placeholder=""
+                <input type="text" className="form-control" id="greeting-text" placeholder={i18n.t('widgets.greeting_1.placeholder.greetingText')}
                     value={this.state.greetingText}
                     onChange={this.onChangeHandler.bind(this, 'greetingText')} />
             </div>

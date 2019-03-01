@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Route, Link } from 'react-router-dom';
 
+import i18n from '../../i18n/i18n';
+
 import {
     logout
 } from '../../redux/actions/authentication';
@@ -15,10 +17,10 @@ class AuthorizedContainer extends Component {
         if (this.props.isChecked) {
             const mainMenus = [
                 {
-                    alias: 'Dashboards',
+                    alias: i18n.t('auth.dashboard'),
                     link: '/auth/dashboards'
                 }, {
-                    alias: 'Preview',
+                    alias: i18n.t('auth.preview'),
                     link: '/auth/preview'
                 }
             ];
@@ -44,18 +46,18 @@ class AuthorizedContainer extends Component {
                             <ul className="navbar-nav">
                                 <li className="nav-item dropdown">
                                     <a className="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Settings
+                                        {i18n.t('auth.settings')}
                                     </a>
                                     <div className="dropdown-menu dropdown-menu-lg-right" aria-labelledby="navbarDropdown">
                                         <Link className="dropdown-item" to="/auth/settings/weddinginform">
-                                            Wedding Information
+                                            {i18n.t('auth.weddingInformation')}
                                         </Link>
                                         <div className="dropdown-divider"></div>
-                                        <a className="dropdown-item" >Withdraw</a>
+                                        <a className="dropdown-item" >{i18n.t('auth.withdraw')}</a>
                                     </div>
                                 </li>
                                 <li className="nav-item logout">
-                                    <a className="nav-link" onClick={() => { this.props.logout(); }}>Logout</a>
+                                    <a className="nav-link" onClick={() => { this.props.logout(); }}>{i18n.t('auth.logout')}</a>
                                 </li>
                             </ul>
                         </div>

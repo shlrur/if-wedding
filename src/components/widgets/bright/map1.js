@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
+import i18n from '../../../i18n/i18n';
+
 import icon from '../../../../assets/images/icon/icon_weddinghall.png';
 
 class BrightMap1 extends Component {
@@ -35,14 +37,21 @@ class BrightMap1 extends Component {
                 </div>
             );
         } else {
-            selectedPlaceJSX = (
-                <div>
-                    <Link className="btn btn-secondary" role="button" to="/auth/settings/weddinginform">
-                        설정
-                    </Link>
-                    에서 웨딩홀을 선택하세요
-                </div>
-            );
+            if (i18n.language === 'en') {
+                selectedPlaceJSX = (
+                    <div>
+                        {i18n.t('widgets.map_1.pleaseSelect')}
+                        <Link className="btn btn-secondary" role="button" to="/auth/settings/weddinginform">{i18n.t('widgets.map_1.setting')}</Link>
+                    </div>
+                );
+            } else {
+                selectedPlaceJSX = (
+                    <div>
+                        <Link className="btn btn-secondary" role="button" to="/auth/settings/weddinginform">{i18n.t('widgets.map_1.setting')}</Link>
+                        {i18n.t('widgets.map_1.pleaseSelect')}
+                    </div>
+                );
+            }
         }
 
         return (

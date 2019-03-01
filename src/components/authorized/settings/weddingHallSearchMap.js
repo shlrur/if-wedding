@@ -51,7 +51,7 @@ export default class WeddingHallSearchMap extends Component {
         } else {
             selectedPlaceJSX = (
                 <div>
-                    선택하세요
+                    {i18n.t('weddingInform.selectWedddingPlace')}
                 </div>
             );
         }
@@ -64,7 +64,7 @@ export default class WeddingHallSearchMap extends Component {
                     <div id="map" />
                     <div id="map-search">
                         <div className="search-keyword">
-                            <span>검색</span>
+                            <span>{i18n.t('weddingInform.search')}</span>
                             <input type="text" value={this.state.searchKeyword} onChange={this.searchKeywordChange.bind(this)} />
                         </div>
                         <ul id="placesList">

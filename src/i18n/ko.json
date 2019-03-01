@@ -12,7 +12,16 @@
             "email": "e메일 주소",
             "phone": "전화번호",
             "contents": "무엇을 도와드릴까요?",
-            "sendemail": "문의하기"
+            "sendemail": "문의하기",
+            "startWith": "시작하기"
+        },
+        "auth": {
+            "dashboard": "대시보드",
+            "preview": "미리보기",
+            "settings": "설정",
+            "weddingInformation": "결혼 정보",
+            "withdraw": "회원 탈퇴",
+            "logout": "로그아웃"
         },
         "weddingInform": {
             "save": "저장",
@@ -31,22 +40,42 @@
                 "familyName": "성",
                 "firstName": "춘향",
                 "kinshipTerms": "장녀/차녀/...",
-                "fatherName": "아버님",
-                "motherName": "어머님",
+                "fatherName": "성참판",
+                "motherName": "월매",
                 "phone": "010-1234-5678"
             },
             "groomPlaceholder": {
                 "familyName": "이",
                 "firstName": "몽룡",
                 "kinshipTerms": "장남/차남/...",
-                "fatherName": "아버님",
-                "motherName": "어머님",
+                "fatherName": "이한림",
+                "motherName": "김연아",
                 "phone": "010-5678-1234"
-            }
+            },
+            "selectWedddingPlace": "결혼식장을 선택하세요.",
+            "search": "검색"
         },
         "widgets": {
             "greeting_1": {
-                "parents": "{{fatherName}} {{motherName}} 의 {{kinshipTerms}}"
+                "parents": "{{fatherName}} {{motherName}} 의 {{kinshipTerms}}",
+                "placeholder": {
+                    "groomName": "몽룡",
+                    "groomParents": "이한림 김연아 의 장남",
+                    "brideName": "춘향",
+                    "brideParents": "성참판 월매 의 장녀",
+                    "greetingText": "저희 결혼식에 초대합니다. 부디 참석하셔서 많은 축북과 격려를 부탁드립니다."
+                }
+            },
+            "guestbook_1": {
+                "placeholder": {
+                    "name": "이름",
+                    "message": "내용",
+                    "input": "입력"
+                }
+            },
+            "map_1": {
+                "setting": "설정",
+                "pleaseSelect": "에서 웨딩홀을 선택하세요."
             }
         }
     }
