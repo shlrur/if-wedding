@@ -240,20 +240,23 @@ footer {
 }
 
 .dashboards {
-  width: 100%;
-  height: calc(100% - 60px);
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+  width: 100%;
+  height: calc(100% - 60px);
+  background-color: #f9f9f9;
 }
 
 .dashboards .dashboard-container {
-  -ms-flex-preferred-size: 900px;
-      flex-basis: 900px;
+  -ms-flex-preferred-size: 770px;
+      flex-basis: 770px;
   padding: 2rem;
+  background-color: #fff;
+  border-left: 1px solid #e3e3e3;
   overflow-y: auto;
 }
 
@@ -293,7 +296,9 @@ footer {
       flex-basis: 300px;
   padding: 0rem 2rem;
   padding-top: 2rem;
+  background-color: #fff;
   border-left: 1px solid #e3e3e3;
+  border-right: 1px solid #e3e3e3;
   overflow-y: auto;
 }
 
