@@ -367,12 +367,51 @@ footer {
   float: right;
 }
 
-.widget-photo-album {
+.widget-photo-album-bright-1 {
   height: calc(100% - 30px);
 }
 
-.widget-photo-album .image-gallery {
+.widget-photo-album-bright-1 .image-gallery {
+  height: calc(100% - 30px);
+}
+
+.widget-photo-album-bright-1 .image-gallery .image-gallery-content {
   height: 100%;
+}
+
+.widget-photo-album-bright-1 .image-gallery .image-gallery-slide-wrapper.bottom {
+  height: calc(100% - 110px);
+}
+
+.widget-photo-album-bright-1 .image-gallery .image-gallery-swipe {
+  height: 100%;
+}
+
+.widget-photo-album-bright-1 .image-gallery .image-gallery-slides {
+  height: 100%;
+}
+
+.widget-photo-album-bright-1 .image-gallery .image-gallery-slide {
+  height: 100%;
+}
+
+.widget-photo-album-bright-1 .image-gallery .image-gallery-image {
+  height: 100%;
+  text-align: center;
+}
+
+.widget-photo-album-bright-1 .image-gallery .image-gallery-image img {
+  height: 100%;
+  width: auto;
+}
+
+.widget-map-bright-1 {
+  height: calc(100% - 30px);
+}
+
+.widget-map-bright-1 .map {
+  height: calc(100% - 120px);
+  margin: 20px 20px 20px 20px;
 }
 
 .wedding-information {

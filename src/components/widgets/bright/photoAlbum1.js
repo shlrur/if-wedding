@@ -27,7 +27,7 @@ class BrightPhotoalbum1 extends Component {
         });
 
         return (
-            <div className="widget-photo-album">
+            <div className="widget-photo-album-bright-1">
                 <input id={`${this.props.inform.id}-setImages`}
                     type="file" multiple accept='image/*' onChange={this.setImages.bind(this)}></input>
                 <button onClick={this.uploadImages.bind(this)}>upload</button>

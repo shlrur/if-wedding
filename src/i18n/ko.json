@@ -43,6 +43,11 @@
                 "motherName": "어머님",
                 "phone": "010-5678-1234"
             }
+        },
+        "widgets": {
+            "greeting_1": {
+                "parents": "{{fatherName}} {{motherName}} 의 {{kinshipTerms}}"
+            }
         }
     }
 }

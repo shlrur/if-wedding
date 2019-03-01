@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+import _ from 'lodash';
 import i18n from '../../../i18n/i18n';
 
 import icon from '../../../../assets/images/icon/icon_weddinghall.png';
@@ -7,6 +8,9 @@ import icon from '../../../../assets/images/icon/icon_weddinghall.png';
 export default class WeddingHallSearchMap extends Component {
     constructor(props) {
         super(props);
+
+        this.debounced = _.debounce(this.submitFormHandler.bind(this), 1000);
+        this.valueForPreventDuplicated = '';
 
         this.state = {
             searchKeyword: '',
@@ -16,19 +20,53 @@ export default class WeddingHallSearchMap extends Component {
         };
     }
     render() {
+        let selectedPlaceJSX = null;
+
+        if (this.state.selectedPlace) {
+            let place = this.state.selectedPlace;
+            let address;
+
+            if (place.road_address_name) {
+                address = (
+                    <div className="address">
+                        <span>{place.road_address_name}</span>
+                        <span className="jibun gray">{place.address_name}</span>
+                    </div>
+                );
+            } else {
+                address = (
+                    <div className="address">
+                        <span>{place.address_name}</span>
+                    </div>
+                );
+            }
+
+            selectedPlaceJSX = (
+                <div className="info">
+                    <h5>{place.place_name}</h5>
+                    {address}
+                    <span className="tel">{place.phone}</span>
+                </div>
+            );
+        } else {
+            selectedPlaceJSX = (
+                <div>
+                    '선택하세요'
+                </div>
+            );
+        }
+
         return (
             <div className="text-center">
                 <h2>{i18n.t('weddingInform.weddingPlace')}</h2>
-                {this.state.selectedPlace ? this.state.selectedPlace.place_name : '선택하세요.'}
+                {selectedPlaceJSX}
                 <div className="row wedding-hall-map">
                     <div id="map" />
                     <div id="map-search">
-                        <form onSubmit={this.submitFormHandler.bind(this)}>
-                            <div className="search-keyword">
-                                <input type="text" value={this.state.searchKeyword} onChange={this.searchKeywordChange.bind(this)} />
-                                <button type="submit">찾기</button>
-                            </div>
-                        </form>
+                        <div className="search-keyword">
+                            <span>검색</span>
+                            <input type="text" value={this.state.searchKeyword} onChange={this.searchKeywordChange.bind(this)} />
+                        </div>
                         <ul id="placesList">
                             {
                                 this.state.searchedPlaces.map((place, ind) => {
@@ -129,25 +167,17 @@ export default class WeddingHallSearchMap extends Component {
         this.props.onSelectWeddingPlace(this.state.searchedPlaces[ind]);
     }
 
-    submitFormHandler(event) {
-        event.preventDefault();
+    submitFormHandler() {
+        if(this.valueForPreventDuplicated === this.state.searchKeyword) {
+            return;
+        }
 
         if (!this.state.searchKeyword.replace(/^\s+|\s+$/g, '')) {
             console.log('no keyword');
 
             return;
         }
-
-        this.ps.keywordSearch(this.state.searchKeyword, this.placesSearchCB.bind(this));
-    }
-
-    placeSearch() {
-        if (!this.state.searchKeyword.replace(/^\s+|\s+$/g, '')) {
-            console.log('no keyword');
-
-            return;
-        }
-
+        this.valueForPreventDuplicated = this.state.searchKeyword;
         this.ps.keywordSearch(this.state.searchKeyword, this.placesSearchCB.bind(this));
     }
 
@@ -155,6 +185,8 @@ export default class WeddingHallSearchMap extends Component {
         this.setState({
             searchKeyword: e.target.value
         });
+
+        this.debounced();
     }
 
     placesSearchCB(data, status, pagination) {

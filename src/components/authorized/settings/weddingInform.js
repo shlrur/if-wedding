@@ -38,10 +38,10 @@ class WeddingInformation extends Component {
                                     onChange={(e) => { this.setState({ data: data.setIn(['bride', 'firstName'], e.target.value) }); }} />
                             </div>
                             <div className="form-group col-md-5">
-                                <label htmlFor="bride-appellation">{i18n.t('weddingInform.kinshipTerms')}</label>
-                                <input type="text" className="form-control" id="bride-appellation" placeholder={i18n.t('weddingInform.bridePlaceholder.kinshipTerms')}
-                                    value={data.getIn(['bride', 'appellation'])}
-                                    onChange={(e) => { this.setState({ data: data.setIn(['bride', 'appellation'], e.target.value) }); }} />
+                                <label htmlFor="bride-kinshipTerms">{i18n.t('weddingInform.kinshipTerms')}</label>
+                                <input type="text" className="form-control" id="bride-kinshipTerms" placeholder={i18n.t('weddingInform.bridePlaceholder.kinshipTerms')}
+                                    value={data.getIn(['bride', 'kinshipTerms'])}
+                                    onChange={(e) => { this.setState({ data: data.setIn(['bride', 'kinshipTerms'], e.target.value) }); }} />
                             </div>
                         </div>
                         <div className="form-group">
@@ -79,10 +79,10 @@ class WeddingInformation extends Component {
                                     onChange={(e) => { this.setState({ data: data.setIn(['groom', 'firstName'], e.target.value) }); }} />
                             </div>
                             <div className="form-group col-md-5">
-                                <label htmlFor="groom-appellation">{i18n.t('weddingInform.kinshipTerms')}</label>
-                                <input type="text" className="form-control" id="groom-appellation" placeholder={i18n.t('weddingInform.groomPlaceholder.kinshipTerms')}
-                                    value={data.getIn(['groom', 'appellation'])}
-                                    onChange={(e) => { this.setState({ data: data.setIn(['groom', 'appellation'], e.target.value) }); }} />
+                                <label htmlFor="groom-kinshipTerms">{i18n.t('weddingInform.kinshipTerms')}</label>
+                                <input type="text" className="form-control" id="groom-kinshipTerms" placeholder={i18n.t('weddingInform.groomPlaceholder.kinshipTerms')}
+                                    value={data.getIn(['groom', 'kinshipTerms'])}
+                                    onChange={(e) => { this.setState({ data: data.setIn(['groom', 'kinshipTerms'], e.target.value) }); }} />
                             </div>
                         </div>
                         <div className="form-group">
