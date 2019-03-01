@@ -51,7 +51,7 @@ export default class WeddingHallSearchMap extends Component {
         } else {
             selectedPlaceJSX = (
                 <div>
-                    '선택하세요'
+                    선택하세요
                 </div>
             );
         }

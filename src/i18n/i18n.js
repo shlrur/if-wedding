@@ -1,10 +1,11 @@
 import i18n from 'i18next';
-import LanguageDetector from 'i18next-browser-languagedetector';
+// import LanguageDetector from 'i18next-browser-languagedetector';
+// TODO: "i18next-browser-languagedetector": "^3.0.1",
 
 import en from './en.json';
 import ko from './ko.json';
 
-const lngDetector = new LanguageDetector();
+// const lngDetector = new LanguageDetector();
 
 // lngDetector.addDetector({
 //     name: 'customDetector',
@@ -22,13 +23,15 @@ const lngDetector = new LanguageDetector();
 // });
 
 
-i18n.use(lngDetector)
+i18n
+    //.use(lngDetector)
     .init({
         debug: process.env.NODE_ENV === 'development',
-        detection: {
-            // order and from where user language should be detected
-            order: [/*'customDetector', 'querystring', 'cookie',*/ 'localStorage', 'navigator', 'htmlTag']
-        },
+        // detection: {
+        //     // order and from where user language should be detected
+        //     order: ['navigator', 'htmlTag', 'path', 'subdomain']
+        // },
+        lng: navigator.language || navigator.userLanguage,
         fallbackLng: 'en',
         resources: {
             'en': en,

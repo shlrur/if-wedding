@@ -113,7 +113,7 @@ class WeddingInformation extends Component {
                         onChange={(e) => { this.setState({ data: data.set('greetingText', e.target.value) }); }} />
                 </div>
                 <hr />
-                <WeddingHallSearchMap weddingPlace={data.get('weddingPlace').toJS()} onSelectWeddingPlace={this.selectWeddingPlace.bind(this)} />
+                <WeddingHallSearchMap weddingPlace={data.get('weddingPlace') ? data.get('weddingPlace').toJS() : null} onSelectWeddingPlace={this.selectWeddingPlace.bind(this)} />
             </div>
         );
     }
