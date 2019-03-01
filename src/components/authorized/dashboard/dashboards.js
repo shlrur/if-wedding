@@ -51,11 +51,13 @@ class Dashboards extends Component {
                 <div className="dashboards">
                     <div className="dashboard-container">
                         <div className="dashboard-header">
-                            <button onClick={this.getPrevDashboard.bind(this)} disabled={this.props.selectedDashboardInd === 0}>{'<'}</button>
-                            <span>{this.state.showedDashboard.alias}</span>
-                            <button onClick={this.getNextDashboard.bind(this)} disabled={this.props.dashboards.length - 1 === this.props.selectedDashboardInd}>{'>'}</button>
-                            <button onClick={() => { this.setState({ showingCreateDashboardModal: true }); }}>{'+'}</button>
-                            <button onClick={() => { this.setState({ showingDeleteDashboardModal: true }); }}>{'-'}</button>
+                            <h5>{this.state.showedDashboard.alias}</h5>
+                            <div className="btn-wrapper">
+                                <button onClick={this.getPrevDashboard.bind(this)} disabled={this.props.selectedDashboardInd === 0}>{'<'}</button>
+                                <button onClick={this.getNextDashboard.bind(this)} disabled={this.props.dashboards.length - 1 === this.props.selectedDashboardInd}>{'>'}</button>
+                                <button onClick={() => { this.setState({ showingCreateDashboardModal: true }); }}>{'+'}</button>
+                                <button onClick={() => { this.setState({ showingDeleteDashboardModal: true }); }}>{'-'}</button>
+                            </div>
                         </div>
                         <div className="dashboard-body">
                             <WidgetGallery dashboard={this.state.showedDashboard} />
