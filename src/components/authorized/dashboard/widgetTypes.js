@@ -36,7 +36,7 @@ class WidgetTypes extends Component {
                 {this.props.widgetTypes.map((widgetType) => {
                     return (
                         <div className="widget-type" key={widgetType.id}>
-                            <h5>{widgetType.alias}</h5>
+                            <span className="widget-title">{widgetType.alias}</span>
                             <div className="widget">
                                 <span onClick={this.addWidget.bind(this, widgetType)} className="add-btn collapsed"></span>
                             </div>
