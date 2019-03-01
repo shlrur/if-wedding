@@ -11,26 +11,65 @@
 }
     
     .dashboards {
-    height: calc(100% - 60px);
-    display: flex;
-    justify-content: space-evenly;
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        height: calc(100% - 60px);
+        background-color: #f9f9f9;
+
     .dashboard-container {
-        flex-basis: 700px;
+        // width: calc(100% - 300px);
+        flex-basis: 770px;
+        padding: 2rem;
+        background-color: #fff;
+        border-left: 1px solid #e3e3e3;
+        overflow-y: auto;
+
         .dashboard-header {
             height: 50px;
             display: flex;
             justify-content: space-between;
+
+            h5 {
+                line-height: 40px;
+            }
+
+            .btn-wrapper {
+                display: flex;
+                justify-content: space-between;
+                min-width: 200px;
+            }
+
+            button {
+                width: 40px;
+                height: 40px;
+                background-color: #ededed;
+                border: 1px solid #ccc;
+            }
         }
     }
     .widget-types {
-        padding: 0rem 1rem;
-        margin: 2rem;
+        // width: 300px;
+        flex-basis: 300px;
+        padding: 0rem 2rem;
+        padding-top: 2rem;
+        background-color: #fff;
         border-left: 1px solid #e3e3e3;
-        flex-basis: 200px;
+        border-right: 1px solid #e3e3e3;
+        overflow-y: auto;
 
         .widget-type {
             padding: 2rem 0;
             border-bottom: 1px solid #eee;
+
+            &:first-child {
+                padding-top: 0;
+            }
+
+            .widget-title {
+                display: block;
+                margin-bottom: .5rem;
+            }
         }
 
         .widget {
