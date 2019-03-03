@@ -49,6 +49,7 @@ class Dashboards extends Component {
         } else {
             return (
                 <div className="dashboards">
+                    <WidgetTypes theme={this.state.showedDashboard ? this.state.showedDashboard.theme : null} />
                     <div className="dashboard-container">
                         <div className="dashboard-header">
                             <h5>{this.state.showedDashboard.alias}</h5>
@@ -63,7 +64,6 @@ class Dashboards extends Component {
                             <WidgetGallery dashboard={this.state.showedDashboard} />
                         </div>
                     </div>
-                    <WidgetTypes theme={this.state.showedDashboard ? this.state.showedDashboard.theme : null} />
                 </div>
             );
         }

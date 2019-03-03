@@ -33,6 +33,8 @@ class WidgetTypes extends Component {
         }
         return (
             <div className="widget-types">
+                <span className="title">위젯 추가</span>
+                <div className="widgets-wrapper">
                 {this.props.widgetTypes.map((widgetType) => {
                     return (
                         <div className="widget-type" key={widgetType.id}>
@@ -44,6 +46,7 @@ class WidgetTypes extends Component {
                         </div>
                     );
                 })}
+                </div>
             </div>
         );
     }
