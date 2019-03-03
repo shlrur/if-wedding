@@ -1,5 +1,5 @@
 .widget-photo-album-bright-1 {
-    height: calc(100% - 30px);
+    height: calc(100% - 40px);
     .image-gallery {
         height: calc(100% - 30px);
         .image-gallery-content {
@@ -23,6 +23,24 @@
             img {
                 height: 100%;
                 width: auto;
+            }
+        }
+    }
+
+    .image-gallery-left-nav,
+    .image-gallery-right-nav {
+        padding: 10px;
+        font-size: 3em;
+
+        &:before {
+            color: #ccc;
+            text-shadow: none;
+            transition: color .3s ease-out;
+        }
+
+        &:hover {
+            &:before {
+                color: #333;
             }
         }
     }

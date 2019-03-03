@@ -19,7 +19,7 @@
 
     .dashboard-container {
         // width: calc(100% - 300px);
-        flex-basis: 770px;
+        flex-basis: 85%;
         padding: 2rem;
         background-color: #fff;
         border-left: 1px solid #e3e3e3;
@@ -51,12 +51,22 @@
     .widget-types {
         // width: 300px;
         flex-basis: 300px;
-        padding: 0rem 2rem;
-        padding-top: 2rem;
+        margin: 2rem;
         background-color: #fff;
-        border-left: 1px solid #e3e3e3;
-        border-right: 1px solid #e3e3e3;
-        overflow-y: auto;
+        border: 1px solid #dddddd;
+
+        .title {
+            display: block;
+            height: 55px;
+            padding: 15px 20px;
+            font-weight: bold;
+            border-bottom: 1px solid #dddddd;
+        }
+        .widgets-wrapper {
+            height: calc(100% - 55px);
+            padding: 15px 20px;
+            overflow-y: auto;
+        }
 
         .widget-type {
             padding: 2rem 0;
@@ -114,17 +124,71 @@
     }
     .widget-gallery {
         .widget-grid {
-            border-width: 1px;
-            border-color: white;
-            border-style: dashed;
+            border: 1px solid #ddd;
+
+            &:hover {
+                border: 1px solid rgba(255, 177, 190, .8);
+            }
         }
         .widget-wrapper-header {
-            border-width: 1px;
-            border-color: red;
-            border-style: dashed;
-            height: 30px;
+            display: flex;
+            justify-content: space-between;
+            height: 40px;
+            padding: 7px 10px;
+            border-bottom: 1px solid #ddd;
+            font-size: 1rem;
+
+            &:hover {
+                background-color: rgba(255, 177, 190, .1);
+                border-bottom: 1px solid rgba(255, 177, 190, .8);
+                cursor: all-scroll;
+            }
+
+            .close-icon {
+                position: relative;
+                display: inline-block;
+                width: 1.2rem;
+                height: 1.2rem;
+                overflow: hidden;
+                cursor: pointer;
+
+                &::before {
+                    transform: rotate(45deg);
+                }
+
+                &::after {
+                    transform: rotate(-45deg);
+                }
+
+                &::before, &::after {
+                    content: '';
+                    position: absolute;
+                    height: 1px;
+                    width: 100%;
+                    top: 63%;
+                    left: 0;
+                    background-color: #888;
+                }
+                &:hover {
+                    &::before, &::after {
+                        background: #333;
+                    }
+                }
+            }
             .delete_widget_btn {
                 float: right;
+            }
+        }
+        .react-resizable-handle {
+            background: none;
+
+            &::after {
+                right: 5px;
+                bottom: 5px;
+                width: 12px;
+                height: 12px;
+                border-right: 1px solid #888;
+                border-bottom: 1px solid #888;
             }
         }
     }

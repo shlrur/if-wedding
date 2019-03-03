@@ -78,6 +78,29 @@ body {
   max-width: 55em;
 }
 
+/*
+ * Scroll
+ */
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #464646;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 177, 190, 0.8);
+}
+
 .unauthorized {
   height: 100%;
   background-image: url(../images/index.jpg);
@@ -252,8 +275,8 @@ footer {
 }
 
 .dashboards .dashboard-container {
-  -ms-flex-preferred-size: 770px;
-      flex-basis: 770px;
+  -ms-flex-preferred-size: 85%;
+      flex-basis: 85%;
   padding: 2rem;
   background-color: #fff;
   border-left: 1px solid #e3e3e3;
@@ -294,11 +317,22 @@ footer {
 .dashboards .widget-types {
   -ms-flex-preferred-size: 300px;
       flex-basis: 300px;
-  padding: 0rem 2rem;
-  padding-top: 2rem;
+  margin: 2rem;
   background-color: #fff;
-  border-left: 1px solid #e3e3e3;
-  border-right: 1px solid #e3e3e3;
+  border: 1px solid #dddddd;
+}
+
+.dashboards .widget-types .title {
+  display: block;
+  height: 55px;
+  padding: 15px 20px;
+  font-weight: bold;
+  border-bottom: 1px solid #dddddd;
+}
+
+.dashboards .widget-types .widgets-wrapper {
+  height: calc(100% - 55px);
+  padding: 15px 20px;
   overflow-y: auto;
 }
 
@@ -356,24 +390,84 @@ footer {
 }
 
 .dashboards .widget-gallery .widget-grid {
-  border-width: 1px;
-  border-color: white;
-  border-style: dashed;
+  border: 1px solid #ddd;
+}
+
+.dashboards .widget-gallery .widget-grid:hover {
+  border: 1px solid rgba(255, 177, 190, 0.8);
 }
 
 .dashboards .widget-gallery .widget-wrapper-header {
-  border-width: 1px;
-  border-color: red;
-  border-style: dashed;
-  height: 30px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  height: 40px;
+  padding: 7px 10px;
+  border-bottom: 1px solid #ddd;
+  font-size: 1rem;
+}
+
+.dashboards .widget-gallery .widget-wrapper-header:hover {
+  background-color: rgba(255, 177, 190, 0.1);
+  border-bottom: 1px solid rgba(255, 177, 190, 0.8);
+  cursor: all-scroll;
+}
+
+.dashboards .widget-gallery .widget-wrapper-header .close-icon {
+  position: relative;
+  display: inline-block;
+  width: 1.2rem;
+  height: 1.2rem;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.dashboards .widget-gallery .widget-wrapper-header .close-icon::before {
+  -webkit-transform: rotate(45deg);
+          transform: rotate(45deg);
+}
+
+.dashboards .widget-gallery .widget-wrapper-header .close-icon::after {
+  -webkit-transform: rotate(-45deg);
+          transform: rotate(-45deg);
+}
+
+.dashboards .widget-gallery .widget-wrapper-header .close-icon::before, .dashboards .widget-gallery .widget-wrapper-header .close-icon::after {
+  content: '';
+  position: absolute;
+  height: 1px;
+  width: 100%;
+  top: 63%;
+  left: 0;
+  background-color: #888;
+}
+
+.dashboards .widget-gallery .widget-wrapper-header .close-icon:hover::before, .dashboards .widget-gallery .widget-wrapper-header .close-icon:hover::after {
+  background: #333;
 }
 
 .dashboards .widget-gallery .widget-wrapper-header .delete_widget_btn {
   float: right;
 }
 
+.dashboards .widget-gallery .react-resizable-handle {
+  background: none;
+}
+
+.dashboards .widget-gallery .react-resizable-handle::after {
+  right: 5px;
+  bottom: 5px;
+  width: 12px;
+  height: 12px;
+  border-right: 1px solid #888;
+  border-bottom: 1px solid #888;
+}
+
 .widget-photo-album-bright-1 {
-  height: calc(100% - 30px);
+  height: calc(100% - 40px);
 }
 
 .widget-photo-album-bright-1 .image-gallery {
@@ -408,6 +502,25 @@ footer {
 .widget-photo-album-bright-1 .image-gallery .image-gallery-image img {
   height: 100%;
   width: auto;
+}
+
+.widget-photo-album-bright-1 .image-gallery-left-nav,
+.widget-photo-album-bright-1 .image-gallery-right-nav {
+  padding: 10px;
+  font-size: 3em;
+}
+
+.widget-photo-album-bright-1 .image-gallery-left-nav:before,
+.widget-photo-album-bright-1 .image-gallery-right-nav:before {
+  color: #ccc;
+  text-shadow: none;
+  -webkit-transition: color .3s ease-out;
+  transition: color .3s ease-out;
+}
+
+.widget-photo-album-bright-1 .image-gallery-left-nav:hover:before,
+.widget-photo-album-bright-1 .image-gallery-right-nav:hover:before {
+  color: #333;
 }
 
 .widget-map-bright-1 {

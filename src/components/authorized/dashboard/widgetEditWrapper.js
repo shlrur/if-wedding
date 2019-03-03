@@ -10,7 +10,8 @@ class WidgetEditWrapper extends Component {
             <div style={{height:'100%'}}>
                 <div className="widget-wrapper-header" >
                     {this.props.inform.alias}
-                    <button className="delete_widget_btn" onClick={this.deleteWidget.bind(this)}>X</button>
+                    <span className="close-icon" onClick={this.deleteWidget.bind(this)}></span>
+                    {/* <button className="delete_widget_btn" onClick={this.deleteWidget.bind(this)}>X</button> */}
                 </div>
                 <WidgetComponent inform={this.props.inform}></WidgetComponent>
             </div>
