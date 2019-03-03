@@ -6,7 +6,7 @@ import ImageGallery from 'react-image-gallery';
 import {
     getAlbumWidgetImagesRequest,
     setAlbumWidgetImagesRequest
-} from '../../../redux/actions/widgetConfig';
+} from '../../../../redux/actions/widgetConfig';
 
 class BrightPhotoalbum1 extends Component {
     constructor(props) {

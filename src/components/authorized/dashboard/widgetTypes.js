@@ -35,17 +35,17 @@ class WidgetTypes extends Component {
             <div className="widget-types">
                 <span className="title">위젯 추가</span>
                 <div className="widgets-wrapper">
-                {this.props.widgetTypes.map((widgetType) => {
-                    return (
-                        <div className="widget-type" key={widgetType.id}>
-                            <span className="widget-title">{widgetType.alias}</span>
-                            <div className="widget">
-                                <span onClick={this.addWidget.bind(this, widgetType)} className="add-btn collapsed"></span>
+                    {this.props.widgetTypes.map((widgetType) => {
+                        return (
+                            <div className="widget-type" key={widgetType.id}>
+                                <span className="widget-title">{widgetType.alias}</span>
+                                <div className="widget">
+                                    <span onClick={this.addWidget.bind(this, widgetType)} className="add-btn collapsed"></span>
+                                </div>
+                                {/* <button onClick={this.addWidget.bind(this, widgetType)}>add</button> */}
                             </div>
-                            {/* <button onClick={this.addWidget.bind(this, widgetType)}>add</button> */}
-                        </div>
-                    );
-                })}
+                        );
+                    })}
                 </div>
             </div>
         );

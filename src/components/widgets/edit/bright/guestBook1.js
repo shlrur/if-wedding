@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import i18n from '../../../i18n/i18n';
+import i18n from '../../../../i18n/i18n';
 
 import {
     getGuestbookWidgetMessagesRequest,
     setGuestbookWidgetMessageRequest
-} from '../../../redux/actions/widgetConfig';
+} from '../../../../redux/actions/widgetConfig';
 
-class BrightGuestbook1 extends Component {
+class BrightGuestbook1Edit extends Component {
     constructor(props) {
         super(props);
 
@@ -100,4 +100,4 @@ const mapDispatchToProps = {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(BrightGuestbook1);
+)(BrightGuestbook1Edit);

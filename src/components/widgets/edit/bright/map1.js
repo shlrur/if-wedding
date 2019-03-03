@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import i18n from '../../../i18n/i18n';
+import i18n from '../../../../i18n/i18n';
 
-import icon from '../../../../assets/images/icon/icon_weddinghall.png';
+import icon from '../../../../../assets/images/icon/icon_weddinghall.png';
 
-class BrightMap1 extends Component {
+class BrightMap1Edit extends Component {
     render() {
         const { weddingPlace } = this.props.user.weddingInformation;
         let selectedPlaceJSX = null;
@@ -108,4 +108,4 @@ const mapDispatchToProps = {};
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(BrightMap1);
+)(BrightMap1Edit);

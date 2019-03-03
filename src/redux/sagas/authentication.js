@@ -111,7 +111,7 @@ function* loginStatusWatcher() {
     while (true) {
         let { user } = yield take(channel);
 
-        yield firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION);
+        // yield firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION);
 
         if (user) {
             const snapshot = yield call(rsf.firestore.getDocument, `users/${user.uid}`);

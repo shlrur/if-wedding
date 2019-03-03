@@ -46,7 +46,7 @@ class WidgetGallery extends Component {
                     {this.props.useWidgets.map((widgetInform) => {
                         return (
                             <div className="widget-grid" key={widgetInform.id} data-grid={widgetInform.layout}>
-                                <WidgetEditWrapper widgetComponent={getWidgetComponent(`${widgetInform.theme}_${widgetInform.name}`)} inform={widgetInform} />
+                                <WidgetEditWrapper widgetComponent={getWidgetComponent(`${widgetInform.theme}_${widgetInform.name}_edit`)} inform={widgetInform} />
                             </div>
                         );
                     })}

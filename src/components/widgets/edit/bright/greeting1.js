@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 
-import i18n from '../../../i18n/i18n';
+import i18n from '../../../../i18n/i18n';
 
-import { setGeneralWidgetConfigsRequest } from '../../../redux/actions/widgetConfig';
+import { setGeneralWidgetConfigsRequest } from '../../../../redux/actions/widgetConfig';
 
-class BrightGreeting1 extends Component {
+class BrightGreeting1Edit extends Component {
     constructor(props) {
         super(props);
 
@@ -104,4 +104,4 @@ const mapDispatchToProps = {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(BrightGreeting1);
+)(BrightGreeting1Edit);
