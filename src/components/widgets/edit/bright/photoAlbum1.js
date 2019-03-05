@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { fromJS } from 'immutable';
 import _ from 'lodash';
+import Compressor from 'compressorjs';
 import ImageGallery from 'react-image-gallery';
 
 import {
@@ -14,46 +16,86 @@ class BrightPhotoalbum1Edit extends Component {
 
         this.state = {
             addingImages: [],
-            showingImageInfos: this.props.inform.configs.showingImageInfos
+            // showingImageInfos: this.props.inform.configs.showingImageInfos
+            showingThumbnails: []
         };
     }
 
     render() {
-        const images = this.state.showingImageInfos.map((imageInfo) => {
-            return {
-                original: imageInfo.fileUrl,
-                thumbnail: imageInfo.fileUrl
-            };
-        });
+        // const images = this.state.showingImageInfos.map((imageInfo) => {
+        //     return {
+        //         original: imageInfo.fileUrl,
+        //         thumbnail: imageInfo.fileUrl
+        //     };
+        // });
 
         return (
             <div className="widget-photo-album-bright-1">
                 <input id={`${this.props.inform.id}-setImages`}
-                    type="file" multiple accept='image/*' onChange={this.setImages.bind(this)}></input>
-                <button onClick={this.uploadImages.bind(this)}>upload</button>
+                    type="file" multiple accept='image/*' onChange={this.addImagesButtonHandler.bind(this)}></input>
+                { /*<button onClick={this.uploadImages.bind(this)}>upload</button> */}
 
-                <ImageGallery items={images}/>
+                { /*<ImageGallery items={images}/> */}
             </div>
         );
     }
 
     componentWillReceiveProps(nextProps) {
-        let widgetProp = nextProps.useWidgets.filter((useWidget) => {
-            return useWidget.id === this.props.inform.id;
-        })[0];
+        // let widgetProp = nextProps.useWidgets.filter((useWidget) => {
+        //     return useWidget.id === this.props.inform.id;
+        // })[0];
 
-        if (!_.isEqual(this.state.showingImageInfos, widgetProp.configs.showingImageInfos)) {
-            this.setState({
-                showingImageInfos: widgetProp.configs.showingImageInfos
-            });
-        }
+        // if (!_.isEqual(this.state.showingImageInfos, widgetProp.configs.showingImageInfos)) {
+        //     this.setState({
+        //         showingImageInfos: widgetProp.configs.showingImageInfos
+        //     });
+        // }
+    }
+
+    addImagesButtonHandler(e) {
+        const arr = fromJS([
+            { a: 1, b: 11 },
+            { a: 2, b: 22 }
+        ]);
+
+        const bb = arr.set(4, { a: 3, b: 33 });
+
+        console.log(arr, bb);
+
+        // const images = e.target.files;
+        // const thumbnails = [];
+        // const currentImageLength = this.state.showingThumbnails.length;
+        // let i;
+
+        // // parallel processing
+        // for (i = 0; i < images.length; i++) {
+        //     const ind = i + currentImageLength;
+
+        //     new Compressor(images[i], {
+        //         quality: 0.6,
+        //         success(result) {
+        //             const formData = new FormData();
+
+        //             // The third parameter is required for server
+        //             formData.append('file', result, result.name);
+
+        //             // Send the compressed image file to server with XMLHttpRequest.
+        //             axios.post('/path/to/upload', formData).then(() => {
+        //                 console.log('Upload success');
+        //             });
+        //         },
+        //         error(err) {
+        //             console.log(err.message);
+        //         },
+        //     });
+        // }
     }
 
     setImages(e) {
         // TODO: limit file size.
-        this.setState({
-            addingImages: e.target.files
-        });
+        // this.setState({
+        //     addingImages: e.target.files
+        // });
     }
 
     uploadImages() {
