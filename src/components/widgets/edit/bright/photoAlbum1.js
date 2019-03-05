@@ -15,9 +15,8 @@ class BrightPhotoalbum1Edit extends Component {
         super(props);
 
         this.state = {
-            addingImages: [],
             // showingImageInfos: this.props.inform.configs.showingImageInfos
-            showingThumbnails: []
+            showingThumbnailInfos: []
         };
     }
 
@@ -53,42 +52,34 @@ class BrightPhotoalbum1Edit extends Component {
     }
 
     addImagesButtonHandler(e) {
-        const arr = fromJS([
-            { a: 1, b: 11 },
-            { a: 2, b: 22 }
-        ]);
+        // const arr = fromJS([
+        //     { a: 1, b: 11 },
+        //     { a: 2, b: 22 }
+        // ]);
 
-        const bb = arr.set(4, { a: 3, b: 33 });
+        // const bb = arr.set(4, { a: 3, b: 33 });
 
-        console.log(arr, bb);
+        // console.log(arr, bb);
 
-        // const images = e.target.files;
-        // const thumbnails = [];
-        // const currentImageLength = this.state.showingThumbnails.length;
-        // let i;
+        const images = e.target.files;
+        const currentImageLength = this.state.showingThumbnailInfos.length;
+        let i;
 
-        // // parallel processing
-        // for (i = 0; i < images.length; i++) {
-        //     const ind = i + currentImageLength;
+        // parallel processing
+        for (i = 0; i < images.length; i++) {
+            const ind = i;
+            const targetInd = i + currentImageLength;
 
-        //     new Compressor(images[i], {
-        //         quality: 0.6,
-        //         success(result) {
-        //             const formData = new FormData();
-
-        //             // The third parameter is required for server
-        //             formData.append('file', result, result.name);
-
-        //             // Send the compressed image file to server with XMLHttpRequest.
-        //             axios.post('/path/to/upload', formData).then(() => {
-        //                 console.log('Upload success');
-        //             });
-        //         },
-        //         error(err) {
-        //             console.log(err.message);
-        //         },
-        //     });
-        // }
+            new Compressor(images[i], {
+                quality: 0.6,
+                success(result) {
+                    console.log(ind, targetInd, images[ind], result);
+                },
+                error(err) {
+                    console.log(err.message);
+                },
+            });
+        }
     }
 
     setImages(e) {
