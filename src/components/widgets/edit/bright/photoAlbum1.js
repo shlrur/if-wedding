@@ -6,7 +6,8 @@ import { fromJS } from 'immutable';
 
 import {
     getAlbumWidgetImagesRequest,
-    addAlbumWidgetImagesRequest
+    addAlbumWidgetImagesRequest,
+    setAlbumWidgetImageSelectionRequest
 } from '../../../../redux/actions/widgetConfig';
 
 class BrightPhotoalbum1Edit extends Component {
@@ -132,6 +133,8 @@ class BrightPhotoalbum1Edit extends Component {
             data: data.setIn(['showingImageInfos', ind, 'isShowing'], e.target.checked)
         }, () => {
             console.log(this.state.data.get('showingImageInfos').toJS());
+            const showingImageInfos = this.state.data.get('showingImageInfos').toJS();
+            this.props.setAlbumWidgetImageSelectionRequest(showingImageInfos[ind].id, showingImageInfos[ind].isShowing, this.props.inform.id);
         });
     }
 }
@@ -142,7 +145,8 @@ const mapStateToProps = state => ({
 });
 const mapDispatchToProps = {
     getAlbumWidgetImagesRequest,
-    addAlbumWidgetImagesRequest
+    addAlbumWidgetImagesRequest,
+    setAlbumWidgetImageSelectionRequest
 };
 
 export default connect(

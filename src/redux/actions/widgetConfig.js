@@ -9,6 +9,11 @@ export const types = {
         SUCCESS: 'GET_ALBUM_WIDGET_IMAGES.SUCCESS',
         FAILURE: 'GET_ALBUM_WIDGET_IMAGES.FAILURE'
     },
+    SET_ALBUM_WIDGET_IMAGE_SELECTION: {
+        REQUEST: 'SET_ALBUM_WIDGET_IMAGE_SELECTION.REQUEST',
+        SUCCESS: 'SET_ALBUM_WIDGET_IMAGE_SELECTION.SUCCESS',
+        FAILURE: 'SET_ALBUM_WIDGET_IMAGE_SELECTION.FAILURE'
+    },
     SET_GENERAL_WIDGET_CONFIGS: {
         REQUEST: 'SET_GENERAL_WIDGET_CONFIGS.REQUEST',
         SUCCESS: 'SET_GENERAL_WIDGET_CONFIGS.SUCCESS',
@@ -56,6 +61,24 @@ export const addAlbumWidgetImagesSuccess = (imageInfos, widgetId) => ({
 
 export const addAlbumWidgetImagesFailure = () => ({
     type: types.ADD_ALBUM_WIDGET_IMAGES.FAILURE
+});
+
+
+// set image selection
+export const setAlbumWidgetImageSelectionRequest = (imageId, isShowing, widgetId) => ({
+    type: types.SET_ALBUM_WIDGET_IMAGE_SELECTION.REQUEST,
+    imageId,
+    isShowing,
+    widgetId
+});
+
+export const setAlbumWidgetImageSelectionSuccess = (widgetId) => ({
+    type: types.SET_ALBUM_WIDGET_IMAGE_SELECTION.SUCCESS,
+    widgetId
+});
+
+export const setAlbumWidgetImageSelectionFailure = () => ({
+    type: types.SET_ALBUM_WIDGET_IMAGE_SELECTION.FAILURE
 });
 
 

@@ -7,6 +7,8 @@ import {
     getAlbumWidgetImagesFailure,
     addAlbumWidgetImagesSuccess,
     addAlbumWidgetImagesFailure,
+    setAlbumWidgetImageSelectionSuccess,
+    setAlbumWidgetImageSelectionFailure,
     setGeneralWidgetConfigsFailure,
     setGuestbookWidgetMessageSuccess,
     setGuestbookWidgetMessageFailure,
@@ -16,7 +18,7 @@ import {
 import { getUser, getDashboards, getSelectedDashboardInd } from './selector';
 
 function* getAlbumWidgetImagesSaga({ widgetId }) {
-    try{
+    try {
         const user = yield select(getUser);
         const _dashboards = yield select(getDashboards); // no use
         const _selectedDashboardInd = yield select(getSelectedDashboardInd); // no use
@@ -29,10 +31,10 @@ function* getAlbumWidgetImagesSaga({ widgetId }) {
 
         let imageInfos = [];
 
-        snapshot.forEach((message) => {
+        snapshot.forEach((imageInfo) => {
             imageInfos = [
                 ...imageInfos,
-                { ...message.data(), id: message.id }
+                { ...imageInfo.data(), id: imageInfo.id }
             ];
         });
 
@@ -109,6 +111,28 @@ function* addAlbumWidgetImagesSaga({ addingImages, widgetId }) {
     } catch (err) {
         console.log(err);
         yield put(addAlbumWidgetImagesFailure(err));
+    }
+}
+
+function* setAlbumWidgetImageSelectionSaga({ imageId, isShowing, widgetId }) {
+    try {
+        const user = yield select(getUser);
+        const _dashboards = yield select(getDashboards); // no use
+        const _selectedDashboardInd = yield select(getSelectedDashboardInd); // no use
+        const dashboard = _dashboards[_selectedDashboardInd];
+
+        yield call(
+            rsf.firestore.setDocument,
+            `users/${user.uid}/dashboards/${dashboard.id}/use_widgets/${widgetId}/image_infos/${imageId}`,
+            {
+                isShowing
+            },
+            { merge: true }
+        );
+
+        yield put(setAlbumWidgetImageSelectionSuccess(widgetId));
+    } catch (err) {
+        yield put(setAlbumWidgetImageSelectionFailure(err));
     }
 }
 
@@ -196,6 +220,7 @@ export default function* widgetsRootSaga() {
     yield all([
         takeEvery(types.GET_ALBUM_WIDGET_IMAGES.REQUEST, getAlbumWidgetImagesSaga),
         takeEvery(types.ADD_ALBUM_WIDGET_IMAGES.REQUEST, addAlbumWidgetImagesSaga),
+        takeEvery(types.SET_ALBUM_WIDGET_IMAGE_SELECTION.REQUEST, setAlbumWidgetImageSelectionSaga),
         takeEvery(types.SET_GENERAL_WIDGET_CONFIGS.REQUEST, setGeneralWidgetConfigsSaga),
         takeEvery(types.GET_GUESTBOOK_WIDGET_MESSAGES.REQUEST, getGuestbookWidgetMessagesSaga),
         takeEvery(types.SET_GUESTBOOK_WIDGET_MESSAGE.REQUEST, setGuestbookWidgetMessageSaga)

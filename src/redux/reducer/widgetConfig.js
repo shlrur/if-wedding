@@ -50,6 +50,25 @@ export default function widgetReducer(state = initialState, action = {}) {
                 loadings: { ...state.loadings, [action.widgetId]: false }
             };
 
+        
+            // set album image selection
+            // case types.SET_ALBUM_WIDGET_IMAGE_SELECTION.REQUEST:
+            //     return {
+            //         ...state,
+            //         loadings: { ...state.loadings, [action.widgetId]: true }
+            //     };
+            // case types.SET_ALBUM_WIDGET_IMAGE_SELECTION.SUCCESS:
+            //     return {
+            //         ...state,
+            //         // imageInfos: { ...state.imageInfos, [action.widgetId]: [action.imageInfo, ...state.imageInfos[action.widgetId]] },
+            //         loadings: { ...state.loadings, [action.widgetId]: false }
+            //     };
+            // case types.SET_ALBUM_WIDGET_IMAGE_SELECTION.FAILURE:
+            //     return {
+            //         ...state,
+            //         loadings: { ...state.loadings, [action.widgetId]: false }
+            //     };
+
 
         // get guestbook messages
         case types.GET_GUESTBOOK_WIDGET_MESSAGES.REQUEST:
