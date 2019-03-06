@@ -74,9 +74,9 @@ class WidgetGallery extends Component {
         dashboardLayout.sort((a, b) => { return a.y - b.y; });
         layout.sort((a, b) => { return a.y - b.y; });
 
-        if(dashboardLayout[0].i !== layout[0].i) {
-            return ;
-        }
+        // if(dashboardLayout[0].i !== layout[0].i) {
+        //     return ;
+        // }
 
         // if perfectely same layout, just return.
         let isSame = true,
