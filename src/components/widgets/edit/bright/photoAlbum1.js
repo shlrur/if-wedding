@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 import Compressor from 'compressorjs';
-import { Map } from 'immutable';
+import { fromJS } from 'immutable';
 
 import {
+    getAlbumWidgetImagesRequest,
     addAlbumWidgetImagesRequest
 } from '../../../../redux/actions/widgetConfig';
 
@@ -13,15 +14,23 @@ class BrightPhotoalbum1Edit extends Component {
         super(props);
 
         this.state = {
-            data: Map({
-                showingImageInfos: this.props.inform.configs.showingImageInfos
-            }),
-            loading: false
+            loading: false,
+            data: fromJS({
+                showingImageInfos: []
+            })
         };
     }
 
     render() {
-        const showingImageInfos = this.state.data.get('showingImageInfos');
+        if (this.state.loading) {
+            return (
+                <div>
+                    loading...
+                </div>
+            );
+        }
+
+        const showingImageInfos = this.state.data.get('showingImageInfos').toJS();
 
         return (
             <div className="widget-photo-album-bright-1-edit">
@@ -43,20 +52,30 @@ class BrightPhotoalbum1Edit extends Component {
         );
     }
 
+    componentDidMount() {
+        this.props.getAlbumWidgetImagesRequest(this.props.inform.id);
+    }
+
     componentWillReceiveProps(nextProps) {
-        let widgetProp = nextProps.useWidgets.filter((useWidget) => {
-            return useWidget.id === this.props.inform.id;
-        })[0];
-
-        if (!_.isEqual(this.state.showingImageInfos, widgetProp.configs.showingImageInfos)) {
-            this.setState({
-                showingImageInfos: widgetProp.configs.showingImageInfos,
-            });
-        }
-
         this.setState({
-            loading: nextProps.loadings[this.props.inform.id]
+            loading: nextProps.loadings[this.props.inform.id],
+            data: fromJS({
+                showingImageInfos: nextProps.imageInfos[this.props.inform.id] || []
+            })
         });
+        // let widgetProp = nextProps.useWidgets.filter((useWidget) => {
+        //     return useWidget.id === this.props.inform.id;
+        // })[0];
+
+        // if (!_.isEqual(this.state.showingImageInfos, widgetProp.configs.showingImageInfos)) {
+        //     this.setState({
+        //         showingImageInfos: widgetProp.configs.showingImageInfos,
+        //     });
+        // }
+
+        // this.setState({
+        //     loading: nextProps.loadings[this.props.inform.id]
+        // });
     }
 
     addImagesButtonHandler(e) {
@@ -85,7 +104,6 @@ class BrightPhotoalbum1Edit extends Component {
             new Compressor(image, {
                 quality: 0.6,
                 success(result) {
-                    console.log(ind, image, result);
                     doneCount++;
 
                     addingImages[ind] = {
@@ -113,16 +131,17 @@ class BrightPhotoalbum1Edit extends Component {
         this.setState({
             data: data.setIn(['showingImageInfos', ind, 'isShowing'], e.target.checked)
         }, () => {
-            console.log(this.state.data.get('showingImageInfos'));
+            console.log(this.state.data.get('showingImageInfos').toJS());
         });
     }
 }
 
 const mapStateToProps = state => ({
-    useWidgets: state.widget.useWidgets,
+    imageInfos: state.widgetConfig.imageInfos,
     loadings: state.widgetConfig.loadings
 });
 const mapDispatchToProps = {
+    getAlbumWidgetImagesRequest,
     addAlbumWidgetImagesRequest
 };
 

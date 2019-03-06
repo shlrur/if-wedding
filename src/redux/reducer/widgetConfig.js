@@ -7,11 +7,31 @@ const initialState = {
     //     useWidgets: null
     //     // TODO
     loadings: {},
-    guestbookMessages: {}
+    guestbookMessages: {},
+    imageInfos: {}
 };
 
 export default function widgetReducer(state = initialState, action = {}) {
     switch (action.type) {
+        // get album images
+        case types.GET_ALBUM_WIDGET_IMAGES.REQUEST:
+            return {
+                ...state,
+                loadings: { ...state.loadings, [action.widgetId]: true }
+            };
+        case types.GET_ALBUM_WIDGET_IMAGES.SUCCESS:
+            return {
+                ...state,
+                imageInfos: { ...state.imageInfos, [action.widgetId]: action.imageInfos },
+                loadings: { ...state.loadings, [action.widgetId]: false }
+            };
+        case types.GET_ALBUM_WIDGET_IMAGES.FAILURE:
+            return {
+                ...state,
+                loadings: { ...state.loadings, [action.widgetId]: false }
+            };
+
+
         // add album images
         case types.ADD_ALBUM_WIDGET_IMAGES.REQUEST:
             return {
@@ -21,6 +41,7 @@ export default function widgetReducer(state = initialState, action = {}) {
         case types.ADD_ALBUM_WIDGET_IMAGES.SUCCESS:
             return {
                 ...state,
+                imageInfos: { ...state.imageInfos, [action.widgetId]: [...action.imageInfos, ...state.imageInfos[action.widgetId]] },
                 loadings: { ...state.loadings, [action.widgetId]: false }
             };
         case types.ADD_ALBUM_WIDGET_IMAGES.FAILURE:
@@ -28,6 +49,7 @@ export default function widgetReducer(state = initialState, action = {}) {
                 ...state,
                 loadings: { ...state.loadings, [action.widgetId]: false }
             };
+
 
         // get guestbook messages
         case types.GET_GUESTBOOK_WIDGET_MESSAGES.REQUEST:

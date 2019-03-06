@@ -26,6 +26,22 @@ export const types = {
     }
 };
 
+// get images
+export const getAlbumWidgetImagesRequest = (widgetId) => ({
+    type: types.GET_ALBUM_WIDGET_IMAGES.REQUEST,
+    widgetId
+});
+
+export const getAlbumWidgetImagesSuccess = (imageInfos, widgetId) => ({
+    type: types.GET_ALBUM_WIDGET_IMAGES.SUCCESS,
+    imageInfos, widgetId
+});
+
+export const getAlbumWidgetImagesFailure = () => ({
+    type: types.GET_ALBUM_WIDGET_IMAGES.FAILURE
+});
+
+
 // set images
 export const addAlbumWidgetImagesRequest = (addingImages, widgetId) => ({
     type: types.ADD_ALBUM_WIDGET_IMAGES.REQUEST,
@@ -33,29 +49,13 @@ export const addAlbumWidgetImagesRequest = (addingImages, widgetId) => ({
     widgetId
 });
 
-// export const setAlbumWidgetImagesSuccess = (urls) => ({
-//     type: types.ADD_ALBUM_WIDGET_IMAGES.SUCCESS,
-//     urls
-// });
+export const addAlbumWidgetImagesSuccess = (imageInfos, widgetId) => ({
+    type: types.ADD_ALBUM_WIDGET_IMAGES.SUCCESS,
+    imageInfos, widgetId
+});
 
-export const setAlbumWidgetImagesFailure = () => ({
+export const addAlbumWidgetImagesFailure = () => ({
     type: types.ADD_ALBUM_WIDGET_IMAGES.FAILURE
-});
-
-
-// get images
-export const getAlbumWidgetImagesRequest = (urls) => ({
-    type: types.GET_ALBUM_WIDGET_IMAGES.REQUEST,
-    urls
-});
-
-// export const getAlbumWidgetImagesSuccess = (images) => ({
-//     type: types.GET_ALBUM_WIDGET_IMAGES.SUCCESS,
-//     images
-// });
-
-export const getAlbumWidgetImagesFailure = () => ({
-    type: types.GET_ALBUM_WIDGET_IMAGES.FAILURE
 });
 
 
