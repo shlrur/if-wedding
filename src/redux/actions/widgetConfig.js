@@ -1,8 +1,8 @@
 export const types = {
-    SET_ALBUM_WIDGET_IMAGES: {
-        REQUEST: 'SET_ALBUM_WIDGET_IMAGES.REQUEST',
-        SUCCESS: 'SET_ALBUM_WIDGET_IMAGES.SUCCESS',
-        FAILURE: 'SET_ALBUM_WIDGET_IMAGES.FAILURE'
+    ADD_ALBUM_WIDGET_IMAGES: {
+        REQUEST: 'ADD_ALBUM_WIDGET_IMAGES.REQUEST',
+        SUCCESS: 'ADD_ALBUM_WIDGET_IMAGES.SUCCESS',
+        FAILURE: 'ADD_ALBUM_WIDGET_IMAGES.FAILURE'
     },
     GET_ALBUM_WIDGET_IMAGES: {
         REQUEST: 'GET_ALBUM_WIDGET_IMAGES.REQUEST',
@@ -27,19 +27,19 @@ export const types = {
 };
 
 // set images
-export const setAlbumWidgetImagesRequest = (images, widgetId) => ({
-    type: types.SET_ALBUM_WIDGET_IMAGES.REQUEST,
-    images,
+export const addAlbumWidgetImagesRequest = (addingImages, widgetId) => ({
+    type: types.ADD_ALBUM_WIDGET_IMAGES.REQUEST,
+    addingImages,
     widgetId
 });
 
 // export const setAlbumWidgetImagesSuccess = (urls) => ({
-//     type: types.SET_ALBUM_WIDGET_IMAGES.SUCCESS,
+//     type: types.ADD_ALBUM_WIDGET_IMAGES.SUCCESS,
 //     urls
 // });
 
 export const setAlbumWidgetImagesFailure = () => ({
-    type: types.SET_ALBUM_WIDGET_IMAGES.FAILURE
+    type: types.ADD_ALBUM_WIDGET_IMAGES.FAILURE
 });
 
 

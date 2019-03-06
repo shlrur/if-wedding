@@ -1,4 +1,4 @@
-.widget-photo-album-bright-1 {
+.widget-photo-album-bright-1-view {
     height: calc(100% - 40px);
     .image-gallery {
         height: calc(100% - 30px);
@@ -26,22 +26,36 @@
             }
         }
     }
-
     .image-gallery-left-nav,
     .image-gallery-right-nav {
         padding: 10px;
         font-size: 3em;
-
         &:before {
             color: #ccc;
             text-shadow: none;
             transition: color .3s ease-out;
         }
-
         &:hover {
             &:before {
                 color: #333;
             }
+        }
+    }
+}
+
+.widget-photo-album-bright-1-edit {
+    height: calc(100% - 40px);
+    .edit-image-gallery {
+        height: calc(100% - 30px);
+        overflow: auto;
+    }
+    .edit-image {
+        height: 50px;
+        label {
+            height: 100%;
+        }
+        img {
+            height: 100%;
         }
     }
 }

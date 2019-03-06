@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fromJS } from 'immutable';
 import _ from 'lodash';
 import Compressor from 'compressorjs';
-import ImageGallery from 'react-image-gallery';
+import { Map } from 'immutable';
 
 import {
-    getAlbumWidgetImagesRequest,
-    setAlbumWidgetImagesRequest
+    addAlbumWidgetImagesRequest
 } from '../../../../redux/actions/widgetConfig';
 
 class BrightPhotoalbum1Edit extends Component {
@@ -15,40 +13,50 @@ class BrightPhotoalbum1Edit extends Component {
         super(props);
 
         this.state = {
-            // showingImageInfos: this.props.inform.configs.showingImageInfos
-            showingThumbnailInfos: []
+            data: Map({
+                showingImageInfos: this.props.inform.configs.showingImageInfos
+            }),
+            loading: false
         };
     }
 
     render() {
-        // const images = this.state.showingImageInfos.map((imageInfo) => {
-        //     return {
-        //         original: imageInfo.fileUrl,
-        //         thumbnail: imageInfo.fileUrl
-        //     };
-        // });
+        const showingImageInfos = this.state.data.get('showingImageInfos');
 
         return (
-            <div className="widget-photo-album-bright-1">
+            <div className="widget-photo-album-bright-1-edit">
                 <input id={`${this.props.inform.id}-setImages`}
                     type="file" multiple accept='image/*' onChange={this.addImagesButtonHandler.bind(this)}></input>
-                { /*<button onClick={this.uploadImages.bind(this)}>upload</button> */}
-
-                { /*<ImageGallery items={images}/> */}
+                <div className="edit-image-gallery">
+                    {showingImageInfos.map((imageInfo, ind) => {
+                        return (
+                            <div key={ind} className="edit-image">
+                                <label>
+                                    <input type="checkbox" checked={imageInfo.isShowing} onChange={this.onChangeHandler.bind(this, ind)} />
+                                    <img src={imageInfo.thumbnail.fileUrl} />
+                                </label>
+                            </div>
+                        );
+                    })}
+                </div>
             </div>
         );
     }
 
     componentWillReceiveProps(nextProps) {
-        // let widgetProp = nextProps.useWidgets.filter((useWidget) => {
-        //     return useWidget.id === this.props.inform.id;
-        // })[0];
+        let widgetProp = nextProps.useWidgets.filter((useWidget) => {
+            return useWidget.id === this.props.inform.id;
+        })[0];
 
-        // if (!_.isEqual(this.state.showingImageInfos, widgetProp.configs.showingImageInfos)) {
-        //     this.setState({
-        //         showingImageInfos: widgetProp.configs.showingImageInfos
-        //     });
-        // }
+        if (!_.isEqual(this.state.showingImageInfos, widgetProp.configs.showingImageInfos)) {
+            this.setState({
+                showingImageInfos: widgetProp.configs.showingImageInfos,
+            });
+        }
+
+        this.setState({
+            loading: nextProps.loadings[this.props.inform.id]
+        });
     }
 
     addImagesButtonHandler(e) {
@@ -62,18 +70,35 @@ class BrightPhotoalbum1Edit extends Component {
         // console.log(arr, bb);
 
         const images = e.target.files;
-        const currentImageLength = this.state.showingThumbnailInfos.length;
+        const addingImages = [];
+
         let i;
+        let doneCount = 0;
+        const target = e.target;
+        const self = this;
 
         // parallel processing
         for (i = 0; i < images.length; i++) {
             const ind = i;
-            const targetInd = i + currentImageLength;
+            const image = images[i];
 
-            new Compressor(images[i], {
+            new Compressor(image, {
                 quality: 0.6,
                 success(result) {
-                    console.log(ind, targetInd, images[ind], result);
+                    console.log(ind, image, result);
+                    doneCount++;
+
+                    addingImages[ind] = {
+                        origin: image,
+                        thumbnail: result
+                    };
+
+                    // invoke when all parallel processes are done.
+                    if (doneCount === images.length) {
+                        self.props.addAlbumWidgetImagesRequest(addingImages, self.props.inform.id);
+
+                        target.value = '';
+                    }
                 },
                 error(err) {
                     console.log(err.message);
@@ -82,30 +107,23 @@ class BrightPhotoalbum1Edit extends Component {
         }
     }
 
-    setImages(e) {
-        // TODO: limit file size.
-        // this.setState({
-        //     addingImages: e.target.files
-        // });
-    }
-
-    uploadImages() {
-        this.props.setAlbumWidgetImagesRequest([...this.state.addingImages], this.props.inform.id);
+    onChangeHandler(ind, e) {
+        const { data } = this.state;
 
         this.setState({
-            addingImages: []
+            data: data.setIn(['showingImageInfos', ind, 'isShowing'], e.target.checked)
+        }, () => {
+            console.log(this.state.data.get('showingImageInfos'));
         });
-
-        document.getElementById(`${this.props.inform.id}-setImages`).value = '';
     }
 }
 
 const mapStateToProps = state => ({
-    useWidgets: state.widget.useWidgets
+    useWidgets: state.widget.useWidgets,
+    loadings: state.widgetConfig.loadings
 });
 const mapDispatchToProps = {
-    getAlbumWidgetImagesRequest,
-    setAlbumWidgetImagesRequest
+    addAlbumWidgetImagesRequest
 };
 
 export default connect(

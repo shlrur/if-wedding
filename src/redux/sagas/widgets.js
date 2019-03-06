@@ -146,7 +146,8 @@ function* deleteUseWidgetSaga({ widget }) {
         if (widget.name.indexOf('photoAlbum') !== -1) {
             // delete images if widget is album
             for (ind = 0; ind < widget.configs.showingImageInfos.length; ind++) {
-                yield call(rsf.storage.deleteFile, widget.configs.showingImageInfos[ind].filePath);
+                yield call(rsf.storage.deleteFile, widget.configs.showingImageInfos[ind].origin.filePath);
+                yield call(rsf.storage.deleteFile, widget.configs.showingImageInfos[ind].thumbnail.filePath);
             }
         } else if (widget.name.indexOf('guestBook') !== -1) {
             // delete collection of messages

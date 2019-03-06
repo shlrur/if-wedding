@@ -12,6 +12,23 @@ const initialState = {
 
 export default function widgetReducer(state = initialState, action = {}) {
     switch (action.type) {
+        // add album images
+        case types.ADD_ALBUM_WIDGET_IMAGES.REQUEST:
+            return {
+                ...state,
+                loadings: { ...state.loadings, [action.widgetId]: true }
+            };
+        case types.ADD_ALBUM_WIDGET_IMAGES.SUCCESS:
+            return {
+                ...state,
+                loadings: { ...state.loadings, [action.widgetId]: false }
+            };
+        case types.ADD_ALBUM_WIDGET_IMAGES.FAILURE:
+            return {
+                ...state,
+                loadings: { ...state.loadings, [action.widgetId]: false }
+            };
+
         // get guestbook messages
         case types.GET_GUESTBOOK_WIDGET_MESSAGES.REQUEST:
             return {
