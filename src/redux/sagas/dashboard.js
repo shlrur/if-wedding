@@ -93,9 +93,18 @@ function* deleteDashboardSaga({ dashboard }) {
         // delete widgets on firestore
         for (ind = 0; ind < useWidgets.length; ind++) {
             if (useWidgets[ind].name.indexOf('photoAlbum') !== -1) {
-                // delete images if widget is album
-                for (jnd = 0; jnd < useWidgets[ind].configs.showingImageInfos.length; jnd++) {
-                    yield call(rsf.storage.deleteFile, useWidgets[ind].configs.showingImageInfos[jnd].filePath);
+                // delete image files and documents in collection if widget is album
+                const imageInfos = yield call(rsf.firestore.getCollection, `users/${user.uid}/dashboards/${dashboard.id}/use_widgets/${useWidgets[ind].id}/image_infos`);
+
+                for (jnd = 0; jnd < imageInfos.size; jnd++) {
+                    const imageInfo = imageInfos.docs[jnd].data();
+
+                    // delete files
+                    yield call(rsf.storage.deleteFile, imageInfo.origin.filePath);
+                    yield call(rsf.storage.deleteFile, imageInfo.thumbnail.filePath);
+
+                    // delete image info documents
+                    yield call(rsf.firestore.deleteDocument, `users/${user.uid}/dashboards/${dashboard.id}/use_widgets/${useWidgets[ind].id}/image_infos/${imageInfos.docs[jnd].id}`);
                 }
             } else if (useWidgets[ind].name.indexOf('guestBook') !== -1) {
                 // delete collection of messages

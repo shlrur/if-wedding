@@ -144,10 +144,18 @@ function* deleteUseWidgetSaga({ widget }) {
         let ind;
 
         if (widget.name.indexOf('photoAlbum') !== -1) {
-            // delete images if widget is album
-            for (ind = 0; ind < widget.configs.showingImageInfos.length; ind++) {
-                yield call(rsf.storage.deleteFile, widget.configs.showingImageInfos[ind].origin.filePath);
-                yield call(rsf.storage.deleteFile, widget.configs.showingImageInfos[ind].thumbnail.filePath);
+            // delete image files and documents in collection if widget is album
+            const imageInfos = yield call(rsf.firestore.getCollection, `users/${user.uid}/dashboards/${dashboard.id}/use_widgets/${widget.id}/image_infos`);
+
+            for (ind = 0; ind < imageInfos.size; ind++) {
+                const imageInfo = imageInfos.docs[ind].data();
+
+                // delete files
+                yield call(rsf.storage.deleteFile, imageInfo.origin.filePath);
+                yield call(rsf.storage.deleteFile, imageInfo.thumbnail.filePath);
+
+                // delete image info documents
+                yield call(rsf.firestore.deleteDocument, `users/${user.uid}/dashboards/${dashboard.id}/use_widgets/${widget.id}/image_infos/${imageInfos.docs[ind].id}`);
             }
         } else if (widget.name.indexOf('guestBook') !== -1) {
             // delete collection of messages
