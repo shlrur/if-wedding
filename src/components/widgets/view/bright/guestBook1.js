@@ -8,7 +8,7 @@ import {
     setGuestbookWidgetMessageRequest
 } from '../../../../redux/actions/widgetConfig';
 
-class BrightGuestbook1Edit extends Component {
+class BrightGuestbook1View extends Component {
     constructor(props) {
         super(props);
 
@@ -100,4 +100,4 @@ const mapDispatchToProps = {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(BrightGuestbook1Edit);
+)(BrightGuestbook1View);
