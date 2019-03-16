@@ -8,7 +8,7 @@ import {
     setAlbumWidgetImagesRequest
 } from '../../../../redux/actions/widgetConfig';
 
-class BrightPhotoalbum1 extends Component {
+class BrightPhotoalbum1View extends Component {
     constructor(props) {
         super(props);
 
@@ -78,4 +78,4 @@ const mapDispatchToProps = {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(BrightPhotoalbum1);
+)(BrightPhotoalbum1View);
