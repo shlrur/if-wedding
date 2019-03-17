@@ -55,7 +55,7 @@ class BrightMap1View extends Component {
         }
 
         return (
-            <div className="widget-map-bright-1">
+            <div className="widget-map-bright-1-view">
                 {selectedPlaceJSX}
                 <div id={`${this.props.inform.id}-map`} className="map"></div>
             </div>

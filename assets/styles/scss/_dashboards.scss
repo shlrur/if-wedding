@@ -26,6 +26,7 @@
         overflow-y: auto;
 
         .dashboard-header {
+            width: 700px;
             height: 50px;
             display: flex;
             justify-content: space-between;
@@ -46,6 +47,10 @@
                 background-color: #ededed;
                 border: 1px solid #ccc;
             }
+        }
+        
+        .dashboard-body {
+            width: 700px;
         }
     }
     .widget-types {

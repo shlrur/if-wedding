@@ -284,6 +284,7 @@ footer {
 }
 
 .dashboards .dashboard-container .dashboard-header {
+  width: 700px;
   height: 50px;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -312,6 +313,10 @@ footer {
   height: 40px;
   background-color: #ededed;
   border: 1px solid #ccc;
+}
+
+.dashboards .dashboard-container .dashboard-body {
+  width: 700px;
 }
 
 .dashboards .widget-types {
@@ -544,13 +549,42 @@ footer {
   height: 100%;
 }
 
-.widget-map-bright-1 {
-  height: calc(100% - 30px);
+.widget-map-bright-1-view {
+  height: calc(100% - 40px);
 }
 
-.widget-map-bright-1 .map {
+.widget-map-bright-1-view .map {
   height: calc(100% - 120px);
   margin: 20px 20px 20px 20px;
+}
+
+.widget-map-bright-1-edit {
+  height: calc(100% - 40px);
+}
+
+.widget-map-bright-1-edit .info {
+  height: 80px;
+}
+
+.widget-map-bright-1-edit .wedding-hall-map {
+  height: calc(100% - 80px);
+  width: 100%;
+  margin: 0 0 0 0;
+}
+
+.widget-map-bright-1-edit .wedding-hall-map #map {
+  width: calc(100% - 300px);
+  height: 100%;
+}
+
+.widget-map-bright-1-edit .wedding-hall-map #map-search {
+  width: 300px;
+  height: 100%;
+}
+
+.widget-map-bright-1-edit .wedding-hall-map #map-search #placesList {
+  height: calc(100% - 60px);
+  overflow: auto;
 }
 
 .wedding-information {

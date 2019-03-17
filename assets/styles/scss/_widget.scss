@@ -60,10 +60,34 @@
     }
 }
 
-.widget-map-bright-1 {
-    height: calc(100% - 30px);
+.widget-map-bright-1-view {
+    height: calc(100% - 40px);
     .map {
         height: calc(100% - 120px);
         margin: 20px 20px 20px 20px;
+    }
+}
+
+.widget-map-bright-1-edit {
+    height: calc(100% - 40px);
+    .info {
+        height: 80px;
+    }
+    .wedding-hall-map {
+        height: calc(100% - 80px);
+        width: 100%;
+        margin: 0 0 0 0;
+        #map {
+            width: calc(100% - 300px);
+            height: 100%;
+        }
+        #map-search {
+            width: 300px;
+            height: 100%;
+            #placesList {
+                height: calc(100% - 60px);
+                overflow: auto;
+            }
+        }
     }
 }

@@ -57,8 +57,7 @@ export default class WeddingHallSearchMap extends Component {
         }
 
         return (
-            <div className="text-center">
-                <h2>{i18n.t('weddingInform.weddingPlace')}</h2>
+            <div className="text-center h-100">
                 {selectedPlaceJSX}
                 <div className="row wedding-hall-map">
                     <div id="map" />
