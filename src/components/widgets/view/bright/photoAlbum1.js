@@ -4,8 +4,7 @@ import _ from 'lodash';
 import ImageGallery from 'react-image-gallery';
 
 import {
-    getAlbumWidgetImagesRequest,
-    setAlbumWidgetImagesRequest
+    getAlbumWidgetImagesRequest
 } from '../../../../redux/actions/widgetConfig';
 
 class BrightPhotoalbum1View extends Component {
@@ -14,25 +13,25 @@ class BrightPhotoalbum1View extends Component {
 
         this.state = {
             addingImages: [],
-            showingImageInfos: this.props.inform.configs.showingImageInfos
+            showingImageInfos: []
         };
     }
 
     render() {
-        const images = this.state.showingImageInfos.map((imageInfo) => {
-            return {
-                original: imageInfo.fileUrl,
-                thumbnail: imageInfo.fileUrl
-            };
-        });
+        const images = this.state.showingImageInfos
+            .filter((imageInfo) => {
+                return imageInfo.isShowing;
+            })
+            .map((imageInfo) => {
+                return {
+                    original: imageInfo.original.fileUrl,
+                    thumbnail: imageInfo.thumbnail.fileUrl
+                };
+            });
 
         return (
             <div className="widget-photo-album-bright-1-view">
-                <input id={`${this.props.inform.id}-setImages`}
-                    type="file" multiple accept='image/*' onChange={this.setImages.bind(this)}></input>
-                <button onClick={this.uploadImages.bind(this)}>upload</button>
-
-                <ImageGallery items={images}/>
+                <ImageGallery items={images} />
             </div>
         );
     }
@@ -48,34 +47,13 @@ class BrightPhotoalbum1View extends Component {
             });
         }
     }
-
-    setImages(e) {
-        // TODO: limit file size.
-        this.setState({
-            addingImages: e.target.files
-        });
-    }
-
-    uploadImages() {
-        this.props.setAlbumWidgetImagesRequest([...this.state.addingImages], this.props.inform.id);
-
-        this.setState({
-            addingImages: []
-        });
-
-        document.getElementById(`${this.props.inform.id}-setImages`).value = '';
-    }
 }
 
-const mapStateToProps = state => ({
-    useWidgets: state.widget.useWidgets
-});
 const mapDispatchToProps = {
-    getAlbumWidgetImagesRequest,
-    setAlbumWidgetImagesRequest
+    getAlbumWidgetImagesRequest
 };
 
 export default connect(
-    mapStateToProps,
+    null,
     mapDispatchToProps
 )(BrightPhotoalbum1View);
