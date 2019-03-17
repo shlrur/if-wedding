@@ -5,7 +5,7 @@ import { fromJS } from 'immutable';
 import i18n from '../../../i18n/i18n';
 
 import { setWeddingInformation } from '../../../redux/actions/authentication';
-import WeddingHallSearchMap from './weddingHallSearchMap';
+import WeddingHallSearchMap from '../../common/weddingHallSearchMap';
 
 class WeddingInformation extends Component {
     constructor(props) {

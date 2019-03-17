@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 
 import _ from 'lodash';
-import i18n from '../../../i18n/i18n';
+import i18n from '../../i18n/i18n';
 
-import icon from '../../../../assets/images/icon/icon_weddinghall.png';
+import icon from '../../../assets/images/icon/icon_weddinghall.png';
 
 export default class WeddingHallSearchMap extends Component {
     constructor(props) {
