@@ -7,8 +7,16 @@ import i18n from '../../../../i18n/i18n';
 import icon from '../../../../../assets/images/icon/icon_weddinghall.png';
 
 class BrightMap1View extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            weddingPlace: null
+        };
+    }
+
     render() {
-        const { weddingPlace } = this.props.user.weddingInformation;
+        const { weddingPlace } = this.state;
         let selectedPlaceJSX = null;
 
         if (weddingPlace) {
@@ -37,21 +45,26 @@ class BrightMap1View extends Component {
                 </div>
             );
         } else {
-            if (i18n.language === 'en') {
-                selectedPlaceJSX = (
-                    <div>
-                        {i18n.t('widgets.map_1.pleaseSelect')}
-                        <Link className="btn btn-secondary" role="button" to="/auth/settings/weddinginform">{i18n.t('widgets.map_1.setting')}</Link>
-                    </div>
-                );
-            } else {
-                selectedPlaceJSX = (
-                    <div>
-                        <Link className="btn btn-secondary" role="button" to="/auth/settings/weddinginform">{i18n.t('widgets.map_1.setting')}</Link>
-                        {i18n.t('widgets.map_1.pleaseSelect')}
-                    </div>
-                );
-            }
+            // if (i18n.language === 'en') {
+            //     selectedPlaceJSX = (
+            //         <div>
+            //             {i18n.t('widgets.map_1.pleaseSelect')}
+            //             <Link className="btn btn-secondary" role="button" to="/auth/settings/weddinginform">{i18n.t('widgets.map_1.setting')}</Link>
+            //         </div>
+            //     );
+            // } else {
+            //     selectedPlaceJSX = (
+            //         <div>
+            //             <Link className="btn btn-secondary" role="button" to="/auth/settings/weddinginform">{i18n.t('widgets.map_1.setting')}</Link>
+            //             {i18n.t('widgets.map_1.pleaseSelect')}
+            //         </div>
+            //     );
+            // }
+            selectedPlaceJSX = (
+                <div>
+                    there is no place
+                </div>
+            );
         }
 
         return (
@@ -63,7 +76,11 @@ class BrightMap1View extends Component {
     }
 
     componentDidMount() {
-        const { weddingPlace } = this.props.user.weddingInformation;
+        const userWeddingPlace = this.props.user.weddingInformation.weddingPlace;
+        const widgetWeddingPlace = this.props.inform.configs.weddingPlace;
+        const weddingPlace = widgetWeddingPlace ? widgetWeddingPlace : userWeddingPlace;
+
+        this.setState({ weddingPlace });
 
         const el = document.getElementById(`${this.props.inform.id}-map`);
         this.map = new window.daum.maps.Map(el, {
