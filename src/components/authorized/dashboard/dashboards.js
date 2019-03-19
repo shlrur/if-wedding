@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import Modal from 'react-modal';
+
+import i18n from '../../../i18n/i18n';
 
 import {
     getDashboardsRequest,
@@ -15,6 +18,9 @@ import {
 
 import WidgetTypes from './widgetTypes';
 import WidgetGallery from './widgetGallery';
+import DashboardPreview from './dashboardPreview';
+
+Modal.setAppElement('#app');
 
 class Dashboards extends Component {
     constructor(props) {
@@ -25,6 +31,8 @@ class Dashboards extends Component {
             showingCreateDashboardModal: false,
             showingDeleteDashboardModal: false
         };
+
+        this.dashboardPreviewRef = React.createRef();
     }
 
     render() {
@@ -38,7 +46,7 @@ class Dashboards extends Component {
                     <button onClick={this.createDashboard.bind(this, 'bright')}>bright theme</button>
                 </div>
             );
-        } else if(this.state.showingDeleteDashboardModal) {
+        } else if (this.state.showingDeleteDashboardModal) {
             return (
                 <div>
                     <p>showing delete dashboard modal</p>
@@ -54,6 +62,7 @@ class Dashboards extends Component {
                         <div className="dashboard-header">
                             <h5>{this.state.showedDashboard.alias}</h5>
                             <div className="btn-wrapper">
+                                <button onClick={this.showPreviewModal.bind(this)}>{i18n.t('auth.preview')}</button>
                                 <button onClick={this.getPrevDashboard.bind(this)} disabled={this.props.selectedDashboardInd === 0}>{'<'}</button>
                                 <button onClick={this.getNextDashboard.bind(this)} disabled={this.props.dashboards.length - 1 === this.props.selectedDashboardInd}>{'>'}</button>
                                 <button onClick={() => { this.setState({ showingCreateDashboardModal: true }); }}>{'+'}</button>
@@ -64,10 +73,11 @@ class Dashboards extends Component {
                             <WidgetGallery dashboard={this.state.showedDashboard} />
                         </div>
                     </div>
+
+                    <DashboardPreview ref={instance => { this.dashboardPreviewRef = instance; }} dashboard={this.state.showedDashboard} />
                 </div>
             );
         }
-
     }
 
     componentWillUnmount() {
@@ -105,6 +115,10 @@ class Dashboards extends Component {
         this.props.deleteDashboardRequest(dashboard);
 
         this.setState({ showingDeleteDashboardModal: false });
+    }
+
+    showPreviewModal() {
+        this.dashboardPreviewRef.getWrappedInstance().showModal();
     }
 }
 
