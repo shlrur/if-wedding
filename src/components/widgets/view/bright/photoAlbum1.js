@@ -12,19 +12,27 @@ class BrightPhotoalbum1View extends Component {
         super(props);
 
         this.state = {
-            addingImages: [],
+            loading: false,
             showingImageInfos: []
         };
     }
 
     render() {
+        if (this.state.loading) {
+            return (
+                <div>
+                    loading...
+                </div>
+            );
+        }
+
         const images = this.state.showingImageInfos
             .filter((imageInfo) => {
                 return imageInfo.isShowing;
             })
             .map((imageInfo) => {
                 return {
-                    original: imageInfo.original.fileUrl,
+                    original: imageInfo.origin.fileUrl,
                     thumbnail: imageInfo.thumbnail.fileUrl
                 };
             });
@@ -36,24 +44,27 @@ class BrightPhotoalbum1View extends Component {
         );
     }
 
-    componentWillReceiveProps(nextProps) {
-        let widgetProp = nextProps.useWidgets.filter((useWidget) => {
-            return useWidget.id === this.props.inform.id;
-        })[0];
+    componentDidMount() {
+        this.props.getAlbumWidgetImagesRequest(this.props.inform.id);
+    }
 
-        if (!_.isEqual(this.state.showingImageInfos, widgetProp.configs.showingImageInfos)) {
-            this.setState({
-                showingImageInfos: widgetProp.configs.showingImageInfos
-            });
-        }
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            loading: nextProps.loadings[this.props.inform.id],
+            showingImageInfos: nextProps.imageInfos[this.props.inform.id] || []
+        });
     }
 }
 
+const mapStateToProps = state => ({
+    imageInfos: state.widgetConfig.imageInfos,
+    loadings: state.widgetConfig.loadings
+});
 const mapDispatchToProps = {
     getAlbumWidgetImagesRequest
 };
 
 export default connect(
-    null,
+    mapStateToProps,
     mapDispatchToProps
 )(BrightPhotoalbum1View);
